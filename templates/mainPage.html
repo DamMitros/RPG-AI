@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RPG AI Adventure</title>
+</head>
+<body>
+  <h1> Welcome, {{player.name}}!</h1>
+  <p> Level: {{player.level}} | Gold: {{player.gold}}</p>
+
+  <h2> Where are you heading today?</h2>
+  <p> Choose a location to explore:</p>
+  
+  <ul>
+    <li><a href="{{ url_for('pub') }}">🍺 Tavern</a></li>
+    <li><a href="{{ url_for('shop') }}">🛒 Tradesman</a></li>
+    <li><a href="{{ url_for('smithy') }}">⚒️ Smithy</a></li>
+    <li><a href="{{ url_for('pickboard') }}">📜 Pickboard</a></li>
+  </ul>
+</body>
+</html>
