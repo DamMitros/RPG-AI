@@ -6,17 +6,27 @@
 </head>
 <body>
   <h1>🍺 Tavern</h1>
-  <p> Hello, {{player.name}}. You are sitting by the fire, and a mysterious guest is sitting next to you...</p>
+  <p> Hello, {{player.name}}. You are sitting by the fire...</p>
+
+  <!-- Display Conversation History -->
+  <div id="conversation" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; margin-bottom: 10px; padding: 5px;">
+    {% if history %}
+      {% for turn in history %}
+        <p><strong>You:</strong> {{ turn.user }}</p>
+        <p><strong>NPC:</strong> {{ turn.npc }}</p>
+        <hr>
+      {% endfor %}
+    {% else %}
+      <p><i>The conversation begins...</i></p>
+    {% endif %}
+  </div>
+
   <form method="POST" action="/tavern">
     <label for="message"> Ask any question: </label><br>
-    <input type="text" id="message" name="message" required>
+    <input type="text" id="message" name="message" required autocomplete="off">
     <button type="submit">Ask</button>
   </form>
-  {% if response %}
-    <h3>NPC says:</h3>
-    <p><em>{{ response }}</em></p>
-  {% endif %}
 
-  <p><a href="{{ url_for('mainPage') }}">⬅️ Return to menu</a></p>
+  <p><a href="{{ url_for('mainPage') }}">⬅️ Return to menu (resets conversation)</a></p>
 </body>
 </html>

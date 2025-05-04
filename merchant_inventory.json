@@ -1,0 +1,34 @@
+[
+    {
+      "id": "potion_health_small",
+      "name": "Small Health Potion",
+      "description": "Restores a small amount of health.",
+      "price": 15,
+      "sell_value": 5,
+      "quantity": 10
+    },
+    {
+      "id": "torch",
+      "name": "Torch",
+      "description": "Provides light in dark places.",
+      "price": 5,
+      "sell_value": 1,
+      "quantity": 20
+    },
+    {
+      "id": "bread",
+      "name": "Loaf of Bread",
+      "description": "Simple sustenance.",
+      "price": 3,
+      "sell_value": 1,
+      "quantity": 15
+    },
+    {
+      "id": "dagger_rusty",
+      "name": "Rusty Dagger",
+      "description": "A basic, worn dagger.",
+      "price": 10,
+      "sell_value": 3,
+      "quantity": 3
+    }
+  ]

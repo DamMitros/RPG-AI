@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Erik's Wares</title>
+	<style>
+		.inventory-section { margin-top: 20px; border: 1px solid #eee; padding: 10px; }
+		.inventory-section h2 { margin-top: 0; }
+		.item { border-bottom: 1px dashed #eee; padding-bottom: 5px; margin-bottom: 5px; }
+		.item:last-child { border-bottom: none; }
+		.shop-message { color: green; font-weight: bold; margin: 10px 0; }
+		.error-message { color: red; font-weight: bold; margin: 10px 0; } 
+	</style>
+</head>
+<body>
+	<h1>🛒 Erik's Wares</h1>
+	<p> Welcome, {{player.name}} (Gold: {{player.gold}}). Erik the merchant looks you over as you approach his cart.</p>
+
+	<!-- Display Shop Messages (Buy/Sell confirmations, errors) -->
+	{% if shop_message %}
+		<p class="shop-message">{{ shop_message }}</p>
+	{% endif %}
+
+	<!-- Merchant Wares -->
+	<div class="inventory-section">
+		<h2>Erik's Wares for Sale</h2>
+		{% if merchant_wares %}
+			{% for item in merchant_wares %}
+			<div class="item">
+				<strong>{{ item.name }}</strong> ({{ item.price }} Gold) - {{ item.quantity }} left<br>
+				<em>{{ item.description }}</em>
+				<form method="POST" action="{{ url_for('shop') }}" style="display: inline; margin-left: 10px;">
+					<input type="hidden" name="action" value="buy">
+					<input type="hidden" name="item_id" value="{{ item.id }}">
+					<button type="submit" {% if player.gold < item.price %}disabled title="Not enough gold"{% endif %}>Buy</button>
+				</form>
+			</div>
+			{% endfor %}
+		{% else %}
+			<p>Erik seems to be out of stock right now.</p>
+		{% endif %}
+	</div>
+
+	<!-- Player Inventory -->
+	<div class="inventory-section">
+		<h2>Your Inventory to Sell</h2>
+		{% if player_inventory %}
+			{% for item in player_inventory %}
+			<div class="item">
+				<strong>{{ item.name }}</strong> (Sell for {{ item.sell_value | default(1) }} Gold)<br>
+				<em>{{ item.description }}</em>
+				<form method="POST" action="{{ url_for('shop') }}" style="display: inline; margin-left: 10px;">
+					<input type="hidden" name="action" value="sell">
+					<input type="hidden" name="item_id" value="{{ item.id }}">
+					<button type="submit">Sell</button>
+				</form>
+			</div>
+			{% endfor %}
+		{% else %}
+			<p>Your inventory is empty.</p>
+		{% endif %}
+	</div>
+
+	<!-- Conversation -->
+	<div class="inventory-section">
+		<h2>Talk to Erik</h2>
+		<p><i>"Looking for something specific, or just browsing?"</i> he asks.</p>
+		<div id="conversation" style="height: 200px; overflow-y: scroll; border: 1px solid #ccc; margin-bottom: 10px; padding: 5px;">
+			{% if history %}
+			  {% for turn in history %}
+				<p><strong>You:</strong> {{ turn.user }}</p>
+				<p><strong>Erik:</strong> {{ turn.npc }}</p>
+				<hr>
+			  {% endfor %}
+			{% else %}
+				<p><i>You approach the merchant...</i></p>
+			{% endif %}
+		</div>
+
+		<form method="POST" action="{{ url_for('shop') }}">
+			<input type="hidden" name="action" value="talk"> 
+			<label for="message"> What do you say or ask? </label><br>
+			<input type="text" id="message" name="message" required autocomplete="off" style="width: 80%;">
+			<button type="submit">Speak</button>
+		</form>
+	</div>
+
+	<p><a href="{{ url_for('mainPage') }}">⬅️ Leave the shop (resets conversation)</a></p>
+</body>
+</html>

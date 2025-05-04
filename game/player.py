@@ -18,18 +18,16 @@ class Player:
 
   def add_item(self, item):
     self.inventory.append(item)
-  
-  def has_item(self, item_name):
-    return any(item["name"] == item_name for item in self.inventory)
-  
-  def remove_item(self, item_name):
-    for item in self.inventory:
-      if item["name"] == item_name:
-        self.inventory.remove(item)
-        return True
-    return False
-  
+
+  def has_item(self, item_id):
+    return any(item["id"] == item_id for item in self.inventory)
+
+  def remove_item(self, item_id):
+    for i, item in enumerate(self.inventory):
+      if item["id"] == item_id:
+        del self.inventory[i]
+        return True 
+    return False 
+
   def __repr__(self):
     return f"Player({self.name}, Level: {self.level}, Gold: {self.gold})"
-  
-  
