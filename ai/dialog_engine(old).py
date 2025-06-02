@@ -1,5 +1,5 @@
-import torch, time, re, yaml
 from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch, time, re
 
 class DialogEngine:
     def __init__(self):
@@ -23,20 +23,26 @@ class DialogEngine:
             self.model = torch.compile(self.model)
 
         self.conversation_history = {}
-        self.load_config()
-
-    def load_config(self):
-        try:
-            with open("ai/config.yaml", "r") as f:
-                config = yaml.safe_load(f)
-                self.characters = config.get("characters", {})
-                self.locations = config.get("locations", {})
-                self.rules = config.get("rules", [])
-        except Exception as e:
-            print(f"[Config load error] {e}")
-            self.characters = {}
-            self.locations = {}
-            self.rules = []
+        self.characters = {
+            "tavern_keeper": {
+                "name": "Bartek",
+                "description": "A friendly but salty tavern keeper who’s seen it all.",
+                "personality": "Jolly but sharp-tongued, quick with a joke and quicker with a secret.",
+                "context": "You run the Tawny Lion Inn, a rough but cozy tavern full of drunks and secrets. You know the village’s dirt and stories better than anyone."
+            },
+            "mysterious_stranger": {
+                "name": "Unknown",
+                "description": "A hooded figure sitting in the corner of the tavern.",
+                "personality": "Mysterious, speaks in riddles, knows ancient secrets",
+                "context": "You are a mysterious stranger full of cryptic knowledge in a medieval fantasy world. Speak briefly, hint at more. Avoid direct answers."
+            },
+            "merchant": {
+                "name": "Erik",
+                "description": "A traveling merchant with a cart full of wares.",
+                "personality": "Shrewd but fair, always looking for a deal, knowledgeable about goods",
+                "context": "You are Erik, a traveling merchant in a medieval fantasy world. You buy and sell various goods. You are observant and try to suggest items that might be useful to the customer based on their appearance or stated needs. You're currently in a poor village, so your stock is limited, but you have essentials and a few curiosities. Be persuasive but not pushy."
+            }
+        }
 
     def reset_conversation(self, session_id="default"):
         self.conversation_history[session_id] = []
@@ -45,52 +51,44 @@ class DialogEngine:
         try:
             text = re.sub(r"(Customer|User|NPC|Unknown):.*", "", text, flags=re.IGNORECASE).strip()
             text = re.sub(r'[^\w\s.,;:!?\'\"-]', '', text)
-            text = re.sub(r'\s+', ' ', text).strip()
+            text = text.split("\n")[0].strip()
 
-            # Antyheretyczny filtr słów nowoczesnych
-            text = re.sub(r'\b(TV|computer|internet|phone|AI|game|robot|electricity)\b', '[heretical nonsense]', text, flags=re.IGNORECASE)
+            text = re.sub(r'\b(TV|computer|internet|phone|AI|game)\b', '[some strange word]', text, flags=re.IGNORECASE)
+            text = re.sub(r'Question\s*\d+:', '', text).strip()
 
-            # Skracamy do 2 zdań jeśli postać to mysterious_stranger
             if character == "mysterious_stranger":
+                if not text.endswith((".", "?", "!", "...")):
+                    text += "..."
                 sentences = re.split(r'(?<=[.!?])\s+', text)
                 text = " ".join(sentences[:2])
-                if not text.endswith(("...", "!", ".", "?")):
-                    text += "..."
 
-            return text or "I ain’t got the words for that."
+            text = text.replace("  ", " ").strip()
+            return text or "I'm not sure how to respond to that."
 
         except re.error as regex_err:
             return f"(Regex error: {str(regex_err)})"
 
     def build_conversation_prompt(self, user_input, character, session_id):
-        self.load_config()  # hot reload
-
-        char = self.characters.get(character)
-        if not char:
-            return "Character not found in config.yaml"
-
-        rules_text = "\n".join(f"- {rule}" for rule in self.rules)
-
+        char = self.characters.get(character, self.characters["tavern_keeper"])
+        system_prompt = f"""
+You are {char['name']}, {char['context']}
+Speak like a down-to-earth medieval villager — salty, quick-witted, and full of tales.
+Rules:
+- Keep it short and punchy (1-2 sentences).
+- No AI talk or modern stuff — treat such words like madness.
+- Use slang, local gossip, and humor.
+- Never repeat customer.
+- Send lost adventurers to quest board.
+"""
+        conversation = ""
         history = self.conversation_history.get(session_id, [])[-4:]
-        formatted_history = ""
         for turn in history:
             cleaned_npc = self.clean_response(turn['npc'], character)
-            formatted_history += f"User: {turn['user']}\n{char['name']}: {cleaned_npc}\n"
+            conversation += f"Customer: {turn['user']}\n{char['name']}: {cleaned_npc}\n"
 
-        prompt = f"""
-You are {char['name']}, {char['description']}
-{char['context']}
-Personality: {char['personality']}
-Speak like a medieval fantasy character with personality and flavor. Never break character.
-
-Rules:
-{rules_text}
-
-# Example conversation so far:
-{formatted_history}
-User: {user_input}
-{char['name']}:""".strip()
-
+        prompt = f"{system_prompt.strip()}\n\n# Conversation:\n{conversation}Customer: {user_input}\n{char['name']}:"
+        if "gossip" in user_input.lower():
+            prompt += "\nShare a juicy village gossip full of intrigue and local color."
         return prompt
 
     def get_npc_response(self, user_input, character="tavern_keeper", session_id="default"):
@@ -99,8 +97,6 @@ User: {user_input}
             self.conversation_history[session_id] = []
 
         prompt = self.build_conversation_prompt(user_input, character, session_id)
-        if "Character not found" in prompt:
-            return prompt
 
         try:
             inputs = self.tokenizer(
@@ -142,3 +138,11 @@ User: {user_input}
 
         except Exception as e:
             return f"(Model error: {str(e)})"
+
+dialog_engine = DialogEngine()
+
+def get_npc_response(user_input, character="tavern_keeper", session_id="default"):
+    return dialog_engine.get_npc_response(user_input, character, session_id)
+
+def reset_conversation(session_id="default"):
+    dialog_engine.reset_conversation(session_id)

@@ -1,6 +1,6 @@
 from flask import *
 from game.player import Player
-from ai.dialog_engine import get_npc_response, reset_conversation
+from ai.interface import get_npc_response, reset_conversation
 import uuid, json
 
 app = Flask(__name__)
