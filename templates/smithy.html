@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grimbrand's Forge - Stonehaven</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background: linear-gradient(135deg, #8b0000, #b22222);
+      color: #ffe4b5;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(139, 0, 0, 0.9);
+      border: 3px solid #cd853f;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+    }
+    
+    h1 {
+      text-align: center;
+      color: #ffd700;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+      margin-bottom: 10px;
+    }
+    
+    .forge-description {
+      text-align: center;
+      font-style: italic;
+      color: #ffe4b5;
+      margin: 20px 0;
+      font-size: 1.1em;
+      background: rgba(178, 34, 34, 0.6);
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #ffd700;
+    }
+    
+    .atmosphere {
+      text-align: center;
+      color: #daa520;
+      font-size: 0.9em;
+      margin: 15px 0;
+      font-style: italic;
+    }
+    
+    .blacksmith-note {
+      background: rgba(205, 133, 63, 0.2);
+      border: 1px solid #cd853f;
+      padding: 20px;
+      margin: 30px 0;
+      border-radius: 8px;
+      color: #ffe4b5;
+      text-align: center;
+    }
+    
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    
+    .service-card {
+      background: rgba(178, 34, 34, 0.6);
+      border: 2px solid #cd853f;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .service-card h3 {
+      color: #ffd700;
+      margin-top: 0;
+      font-size: 1.3em;
+    }
+    
+    .service-card p {
+      color: #ffe4b5;
+      margin: 10px 0;
+    }
+    
+    .coming-soon {
+      background: rgba(255, 140, 0, 0.2);
+      color: #ffa500;
+      padding: 10px;
+      border-radius: 5px;
+      font-style: italic;
+      margin-top: 15px;
+    }
+    
+    .return-link {
+      text-align: center;
+      margin-top: 30px;
+    }
+    
+    .return-link a {
+      color: #daa520;
+      text-decoration: none;
+      font-size: 1.1em;
+      transition: color 0.3s ease;
+      padding: 10px 20px;
+      border: 1px solid #cd853f;
+      border-radius: 5px;
+      background: rgba(178, 34, 34, 0.6);
+    }
+    
+    .return-link a:hover {
+      color: #ffd700;
+      border-color: #ffd700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⚒️ Grimbrand's Forge</h1>
+    
+    <div class="forge-description">
+      The heart of craftsmanship in Stonehaven - where steel meets fire<br>
+      and legends are forged in flame and sweat.
+    </div>
+    
+    <div class="atmosphere">
+      The forge burns bright, filling the air with heat and the rhythmic ringing of hammer on anvil.<br>
+      Sparks fly like dying stars in the smoky darkness.
+    </div>
+    
+    <div class="blacksmith-note">
+      <h2 style="color: #ffd700; margin-top: 0;">🔨 Master Grimbrand's Workshop</h2>
+      <p><strong>Grimbrand the Smith:</strong> <em>"Welcome, traveler! My forge has been cold too often since the mine closed, but I still craft the finest blades in these mountains. What brings you to my workshop?"</em></p>
+    </div>
+    
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>⚔️ Weapon Smithing</h3>
+        <p>Custom swords, axes, and daggers forged to your specifications</p>
+        <div class="coming-soon">Service coming soon...</div>
+      </div>
+      
+      <div class="service-card">
+        <h3>🛡️ Armor Crafting</h3>
+        <p>Protective gear from leather to full plate armor</p>
+        <div class="coming-soon">Service coming soon...</div>
+      </div>
+      
+      <div class="service-card">
+        <h3>🔧 Repairs & Upgrades</h3>
+        <p>Restore damaged equipment and enhance existing gear</p>
+        <div class="coming-soon">Service coming soon...</div>
+      </div>
+      
+      <div class="service-card">
+        <h3>⛏️ Mining Tools</h3>
+        <p>Pickaxes, shovels, and other tools for the brave miners</p>
+        <div class="coming-soon">Service coming soon...</div>
+      </div>
+    </div>
+    
+    <div class="blacksmith-note">
+      <p style="color: #cd853f; font-style: italic;">
+        "The silver veins may have run dry, but my forge still burns strong. 
+        When you're ready for real equipment, come back and we'll craft something worthy of your adventures."
+      </p>
+    </div>
+
+    <div class="return-link">
+      <a href="{{ url_for('mainPage') }}">⬅️ Leave the forge (return to village)</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Village Notice Board - Stonehaven</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(135deg, #2c1810 0%, #4a2c1a 50%, #6b3e2a 100%);
+            color: #f4e4c1;
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23000000" opacity="0.1"/><circle cx="50" cy="50" r="30" fill="none" stroke="%23d4af37" stroke-width="0.5" opacity="0.3"/></svg>') repeat;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .notice-board {
+            background: linear-gradient(145deg, #8b4513, #a0522d);
+            border: 8px solid #654321;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 
+                0 0 30px rgba(212, 175, 55, 0.3),
+                inset 0 0 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .notice-board::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            right: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, #654321, #8b4513);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .board-header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .board-title {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5rem;
+            color: #d4af37;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+            margin-bottom: 10px;
+        }
+        
+        .board-subtitle {
+            font-size: 1.2rem;
+            color: #f4e4c1;
+            font-style: italic;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .quest-btn {
+            background: linear-gradient(145deg, #b8860b, #daa520);
+            color: #2c1810;
+            border: 2px solid #d4af37;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .quest-btn:hover {
+            background: linear-gradient(145deg, #daa520, #ffd700);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        .quest-type-selector {
+            margin-bottom: 20px;
+        }
+        
+        .quest-type-selector select {
+            background: #3c2415;
+            color: #f4e4c1;
+            border: 2px solid #d4af37;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .message {
+            background: linear-gradient(145deg, #2d5016, #3a6b1c);
+            border: 2px solid #4caf50;
+            color: #c8e6c9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .quests-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .quests-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .section-title {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.8rem;
+            color: #d4af37;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        
+        .quest-parchment {
+            background: linear-gradient(145deg, #f4e4c1, #e8d7b1);
+            color: #2c1810;
+            border: 3px solid #8b4513;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.3),
+                inset 0 0 10px rgba(139, 69, 19, 0.1);
+            position: relative;
+            transform: rotate(-0.5deg);
+            transition: transform 0.3s ease;
+        }
+        
+        .quest-parchment:nth-child(even) {
+            transform: rotate(0.5deg);
+        }
+        
+        .quest-parchment:hover {
+            transform: rotate(0deg) scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .quest-parchment::before {
+            content: '📌';
+            position: absolute;
+            top: -5px;
+            right: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .quest-title {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.3rem;
+            color: #8b0000;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .quest-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .quest-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid #8b4513;
+            padding-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .quest-contact {
+            font-style: italic;
+            color: #654321;
+        }
+        
+        .quest-reward {
+            font-weight: 700;
+            color: #b8860b;
+        }
+        
+        .quest-type-badge {
+            background: #8b0000;
+            color: #f4e4c1;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .quest-actions {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .quest-accept-btn {
+            background: linear-gradient(145deg, #228b22, #32cd32);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quest-accept-btn:hover {
+            background: linear-gradient(145deg, #32cd32, #7fff00);
+            box-shadow: 0 0 10px rgba(50, 205, 50, 0.5);
+        }
+        
+        .quest-complete-btn {
+            background: linear-gradient(145deg, #b8860b, #daa520);
+            color: #2c1810;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quest-complete-btn:hover {
+            background: linear-gradient(145deg, #daa520, #ffd700);
+            box-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
+        }
+        
+        .ai-generated {
+            position: relative;
+        }
+        
+        .ai-generated::after {
+            content: '✨ AI Generated';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: #9932cc;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(145deg, #654321, #8b4513);
+            color: #f4e4c1;
+            border: 2px solid #d4af37;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-btn:hover {
+            background: linear-gradient(145deg, #8b4513, #a0522d);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .empty-notice {
+            text-align: center;
+            font-style: italic;
+            color: #8b4513;
+            background: rgba(139, 69, 19, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px dashed #8b4513;
+        }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('mainPage') }}" class="back-btn">← Return to Village</a>
+    
+    <div class="container">
+        <div class="notice-board">
+            <div class="board-header">
+                <h1 class="board-title">VILLAGE NOTICE BOARD</h1>
+                <p class="board-subtitle">Stonehaven - Opportunities for Bold Adventurers</p>
+            </div>
+            
+            <div class="controls">
+                <form method="POST" style="display: inline;">
+                    <input type="hidden" name="action" value="refresh_quests">
+                    <button type="submit" class="quest-btn">🔄 Refresh Quests</button>
+                </form>
+                
+                <form method="POST" style="display: inline;">
+                    <div class="quest-type-selector">
+                        <select name="quest_type">
+                            <option value="">Random Quest Type</option>
+                            <option value="investigation">Investigation</option>
+                            <option value="delivery">Delivery</option>
+                            <option value="combat">Combat</option>
+                            <option value="gathering">Gathering</option>
+                            <option value="rescue">Rescue</option>
+                        </select>
+                        <input type="hidden" name="action" value="generate_quest">
+                        <button type="submit" class="quest-btn">✨ Generate New Quest</button>
+                    </div>
+                </form>
+            </div>
+            
+            {% if message %}
+            <div class="message">{{ message }}</div>
+            {% endif %}
+            
+            <div class="quests-section">
+                <div class="available-quests">
+                    <h2 class="section-title">🗞️ Available Quests</h2>
+                    
+                    {% if available_quests %}
+                        {% for quest in available_quests %}
+                        <div class="quest-parchment {% if quest.get('generated') %}ai-generated{% endif %}">
+                            <h3 class="quest-title">{{ quest.title }}</h3>
+                            <p class="quest-description">{{ quest.description }}</p>
+                            
+                            <div class="quest-meta">
+                                <div>
+                                    <span class="quest-type-badge">{{ quest.type }}</span>
+                                    <p class="quest-contact">Contact: {{ quest.contact }}</p>
+                                </div>
+                                <div class="quest-reward">
+                                    💰 {{ quest.reward_gold }} gold<br>
+                                    ⭐ {{ quest.reward_exp }} exp
+                                </div>
+                            </div>
+                            
+                            <div class="quest-actions">
+                                <form method="POST" style="display: inline;">
+                                    <input type="hidden" name="action" value="accept_quest">
+                                    <input type="hidden" name="quest_id" value="{{ quest.id }}">
+                                    <button type="submit" class="quest-accept-btn">Accept Quest</button>
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="empty-notice">
+                            <p>📜 No new quests available at this time.</p>
+                            <p>Check back later or try generating new opportunities!</p>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="active-quests">
+                    <h2 class="section-title">⚔️ Active Quests</h2>
+                    
+                    {% if active_quests %}
+                        {% for quest in active_quests %}
+                        <div class="quest-parchment">
+                            <h3 class="quest-title">{{ quest.title }}</h3>
+                            <p class="quest-description">{{ quest.description }}</p>
+                            
+                            <div class="quest-meta">
+                                <div>
+                                    <span class="quest-type-badge">{{ quest.type }}</span>
+                                    <p class="quest-contact">Contact: {{ quest.contact }}</p>
+                                </div>
+                                <div class="quest-reward">
+                                    💰 {{ quest.reward_gold }} gold<br>
+                                    ⭐ {{ quest.reward_exp }} exp
+                                </div>
+                            </div>
+                            
+                            <div class="quest-actions">
+                                <form method="POST" style="display: inline;">
+                                    <input type="hidden" name="action" value="complete_quest">
+                                    <input type="hidden" name="quest_id" value="{{ quest.id }}">
+                                    <button type="submit" class="quest-complete-btn">Complete Quest</button>
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="empty-notice">
+                            <p>📋 No active quests.</p>
+                            <p>Accept some quests to get started on your adventures!</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

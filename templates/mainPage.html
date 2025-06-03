@@ -3,20 +3,348 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RPG AI Adventure</title>
+  <title>RPG AI Adventure - Stonehaven</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Cinzel', serif;
+      background: linear-gradient(135deg, #2c1810 0%, #4a2c1a 50%, #6b3e2a 100%);
+      color: #f4e4c1;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      background-attachment: fixed;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23000000" opacity="0.1"/><circle cx="50" cy="50" r="30" fill="none" stroke="%23d4af37" stroke-width="0.5" opacity="0.3"/></svg>') repeat;
+      opacity: 0.3;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: linear-gradient(145deg, #3d2817, #553a25);
+      border: 4px solid #d4af37;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 
+        0 0 40px rgba(212, 175, 55, 0.3),
+        inset 0 0 20px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+    
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #d4af37, #f4e4c1, #d4af37);
+      border-radius: 22px;
+      z-index: -1;
+    }
+    
+    h1 {
+      text-align: center;
+      color: #d4af37;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 3em;
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+      margin-bottom: 15px;
+      letter-spacing: 2px;
+    }
+    
+    .player-info {
+      text-align: center;
+      background: linear-gradient(145deg, #654321, #8b4513);
+      border: 3px solid #d4af37;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 25px 0;
+      font-size: 1.3em;
+      box-shadow: 
+        0 0 15px rgba(212, 175, 55, 0.2),
+        inset 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .village-description {
+      text-align: center;
+      font-style: italic;
+      color: #deb887;
+      margin: 25px 0;
+      font-size: 1.2em;
+      line-height: 1.6;
+    }
+    
+    h2 {
+      color: #d4af37;
+      text-align: center;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 2.2em;
+      margin: 35px 0 25px 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+    
+    .locations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin: 25px 0;
+    }
+    
+    .location-card {
+      background: linear-gradient(145deg, #654321, #8b4513);
+      border: 3px solid #d4af37;
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: #f4e4c1;
+      display: block;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 
+        0 5px 15px rgba(0, 0, 0, 0.4),
+        inset 0 0 10px rgba(212, 175, 55, 0.1);
+    }
+    
+    .location-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+      transform: rotate(-45deg);
+      transition: all 0.5s ease;
+      opacity: 0;
+    }
+    
+    .location-card:hover {
+      transform: translateY(-8px);
+      border-color: #d4af37;
+      box-shadow: 
+        0 10px 25px rgba(212, 175, 55, 0.4),
+        inset 0 0 15px rgba(212, 175, 55, 0.2);
+      color: #d4af37;
+    }
+    
+    .location-card:hover::before {
+      opacity: 1;
+      animation: shimmer 1s ease-in-out;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: rotate(-45deg) translateX(-200%); }
+      100% { transform: rotate(-45deg) translateX(200%); }
+    }
+    
+    .location-icon {
+      font-size: 3em;
+      margin-bottom: 12px;
+      display: block;
+      filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+    }
+    
+    .location-name {
+      font-size: 1.4em;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-family: 'Cinzel', serif;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    }
+    
+    .location-desc {
+      font-size: 1em;
+      color: #deb887;
+      font-style: italic;
+      line-height: 1.4;
+    }
+    
+    .hidden-path {
+      margin-top: 50px;
+      text-align: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      border: 2px dashed #8b4513;
+    }
+    
+    .mine-hint {
+      color: #a0522d;
+      font-size: 0.9em;
+      font-style: italic;
+      margin-bottom: 15px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+    
+    .mine-link {
+      color: #8b4513;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border: 2px solid #8b4513;
+      border-radius: 8px;
+      display: inline-block;
+    }
+    
+    .mine-link:hover {
+      color: #d4af37;
+      border-color: #d4af37;
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    }
+
+    .quest-updates, .quest-actions {
+      background: linear-gradient(145deg, rgba(13, 69, 19, 0.8), rgba(34, 139, 34, 0.6));
+      border: 2px solid #228b22;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 25px 0;
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .quest-updates h3, .quest-actions h3 {
+      color: #90ee90;
+      font-family: 'Cinzel Decorative', serif;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+      text-align: center;
+    }
+    
+    .quest-update {
+      background: rgba(0, 100, 0, 0.3);
+      border: 1px solid #32cd32;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+      font-size: 1em;
+      text-align: center;
+    }
+    
+    .quest-button {
+      background: linear-gradient(145deg, #228b22, #32cd32, #228b22);
+      border: 2px solid #90ee90;
+      color: #f0fff0;
+      padding: 12px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1em;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      margin: 8px;
+      display: inline-block;
+    }
+    
+    .quest-button:hover {
+      background: linear-gradient(145deg, #32cd32, #90ee90, #32cd32);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+    }
+  </style>
 </head>
 <body>
-  <h1> Welcome, {{player.name}}!</h1>
-  <p> Level: {{player.level}} | Gold: {{player.gold}}</p>
+  <div class="container">
+    <h1>🏰 Welcome to Stonehaven, {{player.name}}!</h1>
+    
+    <div class="player-info">
+      <strong>Level:</strong> {{player.level}} | <strong>Gold:</strong> {{player.gold}} coins
+    </div>
+    
+    <div class="village-description">
+      A remote mountain village at the edge of the known world.<br>
+      Once prosperous from silver mining, now shrouded in mystery...
+    </div>
 
-  <h2> Where are you heading today?</h2>
-  <p> Choose a location to explore:</p>
-  
-  <ul>
-    <li><a href="{{ url_for('pub') }}">🍺 Tavern</a></li>
-    <li><a href="{{ url_for('shop') }}">🛒 Tradesman</a></li>
-    <li><a href="{{ url_for('smithy') }}">⚒️ Smithy</a></li>
-    <li><a href="{{ url_for('pickboard') }}">📜 Pickboard</a></li>
-  </ul>
+    <h2>⚔️ Choose Your Destination</h2>
+    
+    <!-- Quest Updates -->
+    {% if quest_updates %}
+      <div class="quest-updates">
+        <h3>🏆 Quest Updates:</h3>
+        {% for update in quest_updates %}
+          <div class="quest-update">
+            <strong>{{ update.quest_title }}</strong><br>
+            ✅ {{ update.action }} completed!
+            {% if update.quest_completed %}
+              <br>🎉 <strong>Quest Completed!</strong>
+              {% if update.rewards %}
+                <br>💰 Received: {{ update.rewards.gold }} gold, {{ update.rewards.exp }} experience
+              {% endif %}
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Available Quest Actions -->
+    {% if available_actions %}
+      <div class="quest-actions">
+        <h3>📋 Available Quest Actions in Village:</h3>
+        {% for action in available_actions %}
+          <form method="POST" action="/" style="display: inline-block; margin: 10px;">
+            <input type="hidden" name="quest_action" value="{{ action.action }}">
+            <button type="submit" class="quest-button">
+              🎯 {{ action.description }} ({{ action.quest_title }})
+            </button>
+          </form>
+        {% endfor %}
+      </div>
+    {% endif %}
+    
+    <div class="locations-grid">
+      <a href="{{ url_for('pub') }}" class="location-card">
+        <span class="location-icon">🍺</span>
+        <div class="location-name">Tawny Lion Inn</div>
+        <div class="location-desc">The village tavern buzzes with gossip and ale</div>
+      </a>
+      
+      <a href="{{ url_for('shop') }}" class="location-card">
+        <span class="location-icon">🛒</span>
+        <div class="location-name">Erik's Wares</div>
+        <div class="location-desc">Strange goods from distant lands</div>
+      </a>
+      
+      <a href="{{ url_for('smithy') }}" class="location-card">
+        <span class="location-icon">⚒️</span>
+        <div class="location-name">Grimbrand's Forge</div>
+        <div class="location-desc">Weapons and armor crafted with skill</div>
+      </a>
+      
+      <a href="{{ url_for('pickboard') }}" class="location-card">
+        <span class="location-icon">📜</span>
+        <div class="location-name">Notice Board</div>
+        <div class="location-desc">Quests and urgent messages</div>
+      </a>
+    </div>
+    
+    <div class="hidden-path">
+      <div class="mine-hint">You notice a narrow path leading into the mountains...</div>
+      <a href="{{ url_for('mine_entrance') }}" class="mine-link">⛰️ Follow the old mining trail</a>
+    </div>
+  </div>
 </body>
 </html>
