@@ -240,6 +240,69 @@
             text-align: center;
         }
         
+        .quest-progress {
+            text-align: left;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        .quest-progress h4 {
+            color: #d4af37;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        
+        .progress-step.completed {
+            background: rgba(34, 139, 34, 0.2);
+            border-left: 3px solid #228b22;
+        }
+        
+        .progress-step.pending {
+            background: rgba(184, 134, 11, 0.2);
+            border-left: 3px solid #b8860b;
+        }
+        
+        .step-icon {
+            font-size: 1.2rem;
+        }
+        
+        .step-text {
+            flex-grow: 1;
+            font-size: 0.9rem;
+        }
+        
+        .missing-items {
+            color: #ff6b6b;
+            font-style: italic;
+            font-size: 0.8rem;
+        }
+        
+        .quest-hint {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #d4af37;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        
+        .quest-hint p {
+            margin: 0;
+            color: #d4af37;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+        
         .quest-accept-btn {
             background: linear-gradient(145deg, #228b22, #32cd32);
             color: white;
@@ -419,11 +482,26 @@
                             </div>
                             
                             <div class="quest-actions">
-                                <form method="POST" style="display: inline;">
-                                    <input type="hidden" name="action" value="complete_quest">
-                                    <input type="hidden" name="quest_id" value="{{ quest.id }}">
-                                    <button type="submit" class="quest-complete-btn">Complete Quest</button>
-                                </form>
+                                {% if quest.get('progress') %}
+                                <div class="quest-progress">
+                                    <h4>Progress:</h4>
+                                    {% for step in quest.progress %}
+                                    <div class="progress-step {% if step.completed %}completed{% else %}pending{% endif %}">
+                                        <span class="step-icon">{% if step.completed %}✅{% else %}⏳{% endif %}</span>
+                                        <span class="step-text">{{ step.description }}</span>
+                                        {% if step.get('missing_items') %}
+                                        <div class="missing-items">
+                                            <small>Missing: {{ step.missing_items|join(', ') }}</small>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                <div class="quest-hint">
+                                    <p>💡 Complete the required actions to progress this quest.</p>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                         {% endfor %}

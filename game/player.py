@@ -7,7 +7,9 @@ class Player:
     self.inventory = []
     self.skills = []
     self.health = 100
+    self.max_health = 100
     self.mana = 100
+    self.max_mana = 100
     self.strength = 10
     self.agility = 10
     self.intelligence = 10
@@ -40,7 +42,9 @@ class Player:
   def check_level_up(self):
     while self.level < 10 and self.experience >= self.experience_thresholds.get(self.level + 1, float('inf')):
         self.level += 1
-        self.health += 20
+        self.max_health += 20
+        self.health += 20 
+        self.max_mana += 15
         self.mana += 15
         self.strength += 2
         self.agility += 2

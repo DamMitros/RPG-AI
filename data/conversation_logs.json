@@ -2133,5 +2133,280 @@
       "character_specific": false,
       "overall_score": 0.5
     }
+  },
+  {
+    "timestamp": "2025-06-04T13:35:39.683095",
+    "session_id": "7c356c33-f2d2-488d-ab79-baa803a6b931",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Hi where are we?",
+    "bot_response": "We're in an old mining town called Silver Hill that was once booming until something terrible happened there - it all started when some bandits broke into our place of business!",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "experience": 0,
+      "location": "tavern"
+    },
+    "response_length": 177,
+    "input_length": 16,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-04T13:36:29.351272",
+    "session_id": "7c356c33-f2d2-488d-ab79-baa803a6b931",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "What happend to toMEK?",
+    "bot_response": "I don t know what you mean...",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "experience": 0,
+      "location": "tavern"
+    },
+    "response_length": 29,
+    "input_length": 22,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-04T13:36:43.614656",
+    "session_id": "7c356c33-f2d2-488d-ab79-baa803a6b931",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "I heard sth terrible happend",
+    "bot_response": "shakes head That must have been bad news indeed; they took everything outta my establishment including your character too..",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "experience": 0,
+      "location": "tavern"
+    },
+    "response_length": 123,
+    "input_length": 28,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-04T19:16:43.806625",
+    "session_id": "66da750c-fb6e-4df3-ad83-88a16f29446c",
+    "location": "mine_entrance",
+    "character": "mysterious_stranger",
+    "user_input": "Do you know anything about Tomek?",
+    "bot_response": "I do not have a name or any other personal information as this character does exist only for me and my purpose here within your worldrealm...",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "experience": 0,
+      "location": "mine_entrance"
+    },
+    "response_length": 141,
+    "input_length": 33,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": true,
+      "overall_score": 0.75
+    }
+  },
+  {
+    "timestamp": "2025-06-04T19:17:10.058367",
+    "session_id": "66da750c-fb6e-4df3-ad83-88a16f29446c",
+    "location": "mine_entrance",
+    "character": "mysterious_stranger",
+    "user_input": "The fuck you talking about",
+    "bot_response": "smiling Oh come now...",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "experience": 0,
+      "location": "mine_entrance"
+    },
+    "response_length": 22,
+    "input_length": 26,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": true,
+      "overall_score": 0.75
+    }
+  },
+  {
+    "timestamp": "2025-06-04T19:17:21.337102",
+    "session_id": "66da750c-fb6e-4df3-ad83-88a16f29446c",
+    "location": "mine_entrance",
+    "character": "mysterious_stranger",
+    "user_input": "Im coomiiing",
+    "bot_response": "smirk Well then tell us what happened with that group we were supposedly chasing down there before...",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "experience": 0,
+      "location": "mine_entrance"
+    },
+    "response_length": 101,
+    "input_length": 12,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": true,
+      "overall_score": 0.75
+    }
+  },
+  {
+    "timestamp": "2025-06-04T19:17:52.247946",
+    "session_id": "d3306cf5-9ad9-4003-b6e8-7dd63a5715e1",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Pour me a beer",
+    "bot_response": "smiling Alright then!",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "experience": 0,
+      "location": "tavern"
+    },
+    "response_length": 21,
+    "input_length": 14,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-04T19:18:09.689200",
+    "session_id": "d3306cf5-9ad9-4003-b6e8-7dd63a5715e1",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Do you know anything about tomek?",
+    "bot_response": "Talking to him now...",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "experience": 0,
+      "location": "tavern"
+    },
+    "response_length": 21,
+    "input_length": 33,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-04T19:19:42.972151",
+    "session_id": "7e200e49-bcbd-40b5-9648-fc39d27385a4",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "DO you know anything about gold bank thief?",
+    "bot_response": "smirks Yes I do!",
+    "player_stats": {
+      "level": 2,
+      "gold": 180,
+      "experience": 160,
+      "location": "tavern"
+    },
+    "response_length": 16,
+    "input_length": 43,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-04T19:19:54.597788",
+    "session_id": "7e200e49-bcbd-40b5-9648-fc39d27385a4",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Where are they?",
+    "bot_response": "Well there're rumors of them in this area...",
+    "player_stats": {
+      "level": 2,
+      "gold": 180,
+      "experience": 160,
+      "location": "tavern"
+    },
+    "response_length": 44,
+    "input_length": 15,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-04T19:20:05.044026",
+    "session_id": "7e200e49-bcbd-40b5-9648-fc39d27385a4",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Soooo where?",
+    "bot_response": "They usually work alone or two men working together to steal small amounts 15 coins every day when it rained heavily - so we don t hear much news nowadays......smiles.",
+    "player_stats": {
+      "level": 2,
+      "gold": 180,
+      "experience": 160,
+      "location": "tavern"
+    },
+    "response_length": 167,
+    "input_length": 12,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": true,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.75
+    }
   }
 ]

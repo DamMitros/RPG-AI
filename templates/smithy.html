@@ -117,6 +117,140 @@
       color: #ffd700;
       border-color: #ffd700;
     }
+    
+    .craft-message {
+      background: rgba(34, 139, 34, 0.3);
+      border: 1px solid #228b22;
+      padding: 15px;
+      border-radius: 5px;
+      color: #90ee90;
+      text-align: center;
+      margin: 15px 0;
+      font-weight: bold;
+    }
+    
+    .quest-updates, .quest-actions {
+      background: linear-gradient(145deg, rgba(13, 69, 19, 0.7), rgba(34, 139, 34, 0.5));
+      border: 2px solid #228b22;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 25px 0;
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.4);
+    }
+    
+    .quest-updates h3, .quest-actions h3 {
+      color: #90ee90;
+      font-family: Georgia, serif;
+      margin-bottom: 15px;
+      text-align: center;
+      font-size: 1.3em;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+    
+    .quest-update {
+      background: rgba(0, 100, 0, 0.2);
+      border-left: 4px solid #32cd32;
+      padding: 12px;
+      margin: 15px 0;
+      border-radius: 5px;
+      color: #f5f5dc;
+      text-align: center;
+      font-style: italic;
+      font-size: 0.9em;
+    }
+    
+    .quest-button {
+      background: linear-gradient(145deg, #228b22, #32cd32, #228b22);
+      color: #ffffff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: Georgia, serif;
+      font-size: 0.9em;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
+      margin: 8px;
+      display: inline-block;
+    }
+    
+    .quest-button:hover:not(:disabled) {
+      background: linear-gradient(145deg, #32cd32, #90ee90, #32cd32);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    }
+    
+    .quest-button:disabled {
+      background: #666;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    
+    .recipe-card {
+      background: rgba(178, 34, 34, 0.6);
+      border: 2px solid #cd853f;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 15px;
+      color: #ffe4b5;
+    }
+    
+    .recipe-card h3 {
+      color: #ffd700;
+      margin-top: 0;
+      text-align: center;
+    }
+    
+    .recipe-requirements {
+      background: rgba(139, 69, 19, 0.4);
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+    
+    .recipe-requirements ul {
+      margin: 5px 0;
+      padding-left: 20px;
+    }
+    
+    .recipe-result {
+      background: rgba(34, 139, 34, 0.4);
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+      border-left: 4px solid #32cd32;
+    }
+    
+    .craft-button {
+      background: linear-gradient(145deg, #b8860b, #daa520, #b8860b);
+      color: #000;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: Georgia, serif;
+      font-size: 1em;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+    
+    .craft-button:hover:not(:disabled) {
+      background: linear-gradient(145deg, #daa520, #ffd700, #daa520);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    }
+    
+    .craft-button:disabled {
+      background: #666;
+      color: #ccc;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
   </style>
 </head>
 <body>
@@ -137,18 +271,110 @@
       <h2 style="color: #ffd700; margin-top: 0;">🔨 Master Grimbrand's Workshop</h2>
       <p><strong>Grimbrand the Smith:</strong> <em>"Welcome, traveler! My forge has been cold too often since the mine closed, but I still craft the finest blades in these mountains. What brings you to my workshop?"</em></p>
     </div>
+
+    <!-- Display Craft Messages -->
+    {% if craft_message %}
+      <div class="craft-message">{{ craft_message }}</div>
+    {% endif %}
+
+    <!-- Quest Updates -->
+    {% if quest_updates %}
+      <div class="quest-updates">
+        <h3>🏆 Quest Updates:</h3>
+        {% for update in quest_updates %}
+          <div class="quest-update">
+            <strong>{{ update.quest_title }}</strong><br>
+            {% if update.get('error') %}
+              ❌ {{ update.error }}
+            {% else %}
+              ✅ {{ update.action }} completed!
+              {% if update.quest_completed %}
+                <br>🎉 <strong>Quest Completed!</strong>
+                {% if update.rewards %}
+                  <br>💰 Received: {{ update.rewards.gold }} gold, {{ update.rewards.exp }} experience
+                {% endif %}
+              {% endif %}
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Available Quest Actions -->
+    {% if available_actions %}
+      <div class="quest-actions">
+        <h3>📋 Available Quest Actions:</h3>
+        {% for action in available_actions %}
+          <form method="POST" action="{{ url_for('smithy') }}" style="display: inline-block; margin: 10px;">
+            <input type="hidden" name="action" value="quest_action">
+            <input type="hidden" name="quest_action" value="{{ action.action }}">
+            <button type="submit" class="quest-button" {% if not action.can_perform %}disabled{% endif %}>
+              🎯 {{ action.description }} ({{ action.quest_title }})
+            </button>
+          </form>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Crafting Recipes -->
+    <div class="services-grid">
+      <h2 style="color: #ffd700; text-align: center; margin-bottom: 20px;">⚒️ Available Recipes</h2>
+      {% if craftable_recipes %}
+        {% for recipe_id, recipe_info in craftable_recipes.items() %}
+          <div class="recipe-card">
+            <h3>{{ recipe_info.recipe.name }}</h3>
+            <p>{{ recipe_info.recipe.description }}</p>
+            
+            <div class="recipe-requirements">
+              <strong>Materials needed:</strong>
+              <ul>
+                {% for material in recipe_info.recipe.materials %}
+                  <li>{{ material.quantity }}x {{ material.name }}</li>
+                {% endfor %}
+              </ul>
+              <strong>Gold cost:</strong> {{ recipe_info.recipe.gold_cost }} gold<br>
+              <strong>Crafting time:</strong> {{ recipe_info.recipe.crafting_time }}<br>
+              <strong>Level required:</strong> {{ recipe_info.recipe.level_required }}
+            </div>
+            
+            <div class="recipe-result">
+              <strong>Result:</strong> {{ recipe_info.recipe.result.name }}
+              {% if recipe_info.recipe.result.damage %}
+                (Damage: {{ recipe_info.recipe.result.damage }})
+              {% endif %}
+              {% if recipe_info.recipe.result.armor %}
+                (Armor: {{ recipe_info.recipe.result.armor }})
+              {% endif %}
+              {% if recipe_info.recipe.result.mining_bonus %}
+                (Mining Bonus: +{{ recipe_info.recipe.result.mining_bonus }})
+              {% endif %}
+            </div>
+            
+            <form method="POST" action="{{ url_for('smithy') }}" style="margin-top: 10px;">
+              <input type="hidden" name="action" value="craft">
+              <input type="hidden" name="recipe_id" value="{{ recipe_id }}">
+              <button type="submit" class="craft-button" {% if not recipe_info.can_craft %}disabled{% endif %}>
+                {% if recipe_info.can_craft %}🔨 Craft{% else %}{{ recipe_info.message }}{% endif %}
+              </button>
+            </form>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p style="text-align: center; color: #d3d3d3; font-style: italic;">No recipes available for your level.</p>
+      {% endif %}
+    </div>
     
     <div class="services-grid">
       <div class="service-card">
         <h3>⚔️ Weapon Smithing</h3>
         <p>Custom swords, axes, and daggers forged to your specifications</p>
-        <div class="coming-soon">Service coming soon...</div>
+        <div class="coming-soon">More recipes coming soon...</div>
       </div>
       
       <div class="service-card">
         <h3>🛡️ Armor Crafting</h3>
         <p>Protective gear from leather to full plate armor</p>
-        <div class="coming-soon">Service coming soon...</div>
+        <div class="coming-soon">More recipes coming soon...</div>
       </div>
       
       <div class="service-card">
@@ -160,7 +386,7 @@
       <div class="service-card">
         <h3>⛏️ Mining Tools</h3>
         <p>Pickaxes, shovels, and other tools for the brave miners</p>
-        <div class="coming-soon">Service coming soon...</div>
+        <div class="coming-soon">Available in recipes above!</div>
       </div>
     </div>
     

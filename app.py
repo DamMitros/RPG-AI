@@ -1,15 +1,17 @@
 from flask import *
 from game.player import Player
 from game.quest_system import QuestSystem
+from game.crafting_system import CraftingSystem
 from ai.dialog_engine import DialogEngine
-import uuid, json
+import uuid, json, random
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 player = Player(name="Demo")
 
 dialog_engine = DialogEngine()
-quest_system = QuestSystem(dialog_engine)  
+quest_system = QuestSystem(dialog_engine)
+crafting_system = CraftingSystem()  
 
 try:
   with open('merchant_inventory.json', 'r') as f:
@@ -39,6 +41,9 @@ def mainPage():
     session.pop('mine_session_id', None)
     session.pop('mine_history', None)
 
+  session.pop('inventory_message', None)
+  session.pop('forest_message', None)
+
   quest_updates = []
   available_actions = quest_system.get_available_actions_for_location("mainPage", player)
   
@@ -53,11 +58,36 @@ def mainPage():
 
 @app.route("/mainpage_action", methods=['POST'])
 def mainpage_action():
+  action = request.form.get('action')
   quest_action = request.form.get('quest_action')
+  quest_updates = []
+  
   if quest_action:
     updates, expired = quest_system.perform_action(quest_action, "mainPage", player)
+    quest_updates.extend(updates)
     return jsonify({'quest_updates': updates, 'expired': expired})
-  return jsonify({'error': 'No action specified'})
+  elif action in ['clear_bandits', 'gather_herbs']:
+    updates, expired = quest_system.perform_action(action, "mainPage", player)
+    quest_updates.extend(updates)
+    
+    if action == 'clear_bandits':
+      player.add_experience(20)
+      player.add_gold(10)
+      session['action_message'] = "You successfully cleared some bandits from the area!"
+    elif action == 'gather_herbs':
+      player.add_experience(10)
+      player.add_gold(5)
+      player.add_item({
+        "id": "mountain_herb",
+        "name": "Mountain Herb",
+        "description": "A rare herb found in mountainous regions",
+        "sell_value": 8
+      })
+      session['action_message'] = "You gathered some valuable mountain herbs!"
+    
+    return jsonify({'quest_updates': updates, 'expired': expired, 'message': session.get('action_message', '')})
+  
+  return jsonify({'error': 'No valid action specified'})
 
 @app.route("/tavern", methods=['GET', 'POST'])
 def pub():
@@ -85,7 +115,7 @@ def pub():
       message = request.form.get('message')
       if message:
         for available_action in available_actions:
-          if available_action['action'] in ['talk_to_bartek', 'gather_information']:
+          if available_action['action'] in ['talk_to_bartek', 'gather_information', 'deliver_item']:
             updates, expired = quest_system.perform_action(available_action['action'], "tavern", player)
             quest_updates.extend(updates)
 
@@ -167,6 +197,9 @@ def shop():
           })
           item_to_buy['quantity'] -= 1
           shop_message = f"You bought {item_to_buy['name']}."
+          
+          updates, expired = quest_system.perform_action("buy_materials", "tradesman", player)
+          quest_updates.extend(updates)
         else:
           shop_message = "You don't have enough gold."
       elif item_to_buy:
@@ -204,9 +237,48 @@ def shop():
                          quest_updates=quest_updates,
                          available_actions=available_actions)
 
-@app.route("/smithy") # trzeba to w końcu zaimlpementować
+@app.route("/smithy", methods=['GET', 'POST'])
 def smithy():
-  return render_template("smithy.html", player=player)
+  quest_updates = []
+  available_actions = quest_system.get_available_actions_for_location("smithy", player)
+  craft_message = session.pop('craft_message', None)
+  
+  if request.method == 'POST':
+    action = request.form.get('action')
+    
+    if action == 'quest_action':
+      quest_action = request.form.get('quest_action')
+      if quest_action:
+        updates, expired = quest_system.perform_action(quest_action, "smithy", player)
+        quest_updates.extend(updates)
+    elif action == 'craft':
+      recipe_id = request.form.get('recipe_id')
+      success, message = crafting_system.craft_item(recipe_id, player)
+      
+      if success:
+        updates, expired = quest_system.perform_action("craft_equipment", "smithy", player)
+        quest_updates.extend(updates)
+      
+      craft_message = message
+      session['craft_message'] = craft_message
+      return redirect(url_for('smithy'))
+
+  available_recipes = crafting_system.get_available_recipes(player.level)
+  craftable_recipes = {}
+  for recipe_id, recipe in available_recipes.items():
+    can_craft, message = crafting_system.can_craft(recipe_id, player)
+    craftable_recipes[recipe_id] = {
+      'recipe': recipe,
+      'can_craft': can_craft,
+      'message': message
+    }
+  
+  return render_template("smithy.html", 
+                        player=player, 
+                        craftable_recipes=craftable_recipes,
+                        craft_message=craft_message,
+                        quest_updates=quest_updates,
+                        available_actions=available_actions)
 
 @app.route("/pickboard", methods=['GET', 'POST'])
 def pickboard():
@@ -274,11 +346,20 @@ def mine_entrance():
       if quest_action:
         updates, expired = quest_system.perform_action(quest_action, "mine_entrance", player)
         quest_updates.extend(updates)
+        
+        if quest_action == 'mine_ore':
+          player.add_item({
+            "id": "silver_ore",
+            "name": "Silver Ore",
+            "description": "Valuable silver ore mined from the depths",
+            "sell_value": 25
+          })
+          player.add_experience(30)
     else:
       message = request.form.get('message')
       if message:
         for available_action in available_actions:
-          if available_action['action'] in ['investigate_mine', 'investigate_mine_sounds', 'search_area', 'rescue_person']:
+          if available_action['action'] in ['investigate_mine', 'investigate_mine_sounds', 'search_area', 'rescue_person', 'mine_ore']:
             updates, expired = quest_system.perform_action(available_action['action'], "mine_entrance", player)
             quest_updates.extend(updates)
         
@@ -300,6 +381,53 @@ def mine_entrance():
   return render_template("mine_entrance.html", player=player, history=history,
           quest_updates=quest_updates, available_actions=available_actions)
 
+@app.route('/inventory')
+def inventory():
+    inventory_items = getattr(player, 'inventory', [])
+    item_counts = {}
+    for item in inventory_items:
+        item_key = item['id'] if 'id' in item else item['name']
+        if item_key in item_counts:
+            item_counts[item_key]['quantity'] += 1
+        else:
+            item_counts[item_key] = {
+                'name': item['name'],
+                'description': item.get('description', ''),
+                'quantity': 1,
+                'sell_value': item.get('sell_value', 0),
+                'type': item.get('type', 'misc')
+            }
+    
+    return render_template('inventory.html', 
+                         player=player, 
+                         items=item_counts,
+                         message=session.get('inventory_message'))
+
+@app.route('/inventory', methods=['POST'])
+def inventory_action():
+    action = request.form.get('action')
+    item_id = request.form.get('item_id')
+    message = ""
+    
+    if action == 'use_item' and item_id:
+        item = next((item for item in player.inventory if item.get('id') == item_id or item['name'] == item_id), None)
+        if item:
+            if item.get('type') == 'consumable':
+                player.remove_item(item_id)
+                if 'health_restore' in item:
+                    player.health = min(player.max_health, player.health + item['health_restore'])
+                    message = f"Used {item['name']}. Health restored!"
+                elif 'mana_restore' in item:
+                    player.mana = min(player.max_mana, player.mana + item['mana_restore'])
+                    message = f"Used {item['name']}. Mana restored!"
+            else:
+                message = f"Cannot use {item['name']}."
+        else:
+            message = "Item not found."
+    
+    session['inventory_message'] = message
+    return redirect(url_for('inventory'))
+
 @app.route("/conversation_stats")
 def conversation_stats():
   stats = dialog_engine.get_conversation_stats()
@@ -314,6 +442,71 @@ def quality_report():
 def session_stats(session_id):
   stats = dialog_engine.get_conversation_stats(session_id)
   return jsonify(stats)
+
+@app.route('/forest')
+def forest():
+    quest_updates = []
+    available_actions = quest_system.get_available_actions_for_location("forest", player)
+    
+    return render_template('forest.html', 
+                         player=player, 
+                         available_actions=available_actions,
+                         quest_updates=quest_updates,
+                         message=session.get('forest_message'))
+
+@app.route('/forest', methods=['POST'])
+def forest_action():
+    action = request.form.get('action')
+    quest_updates = []
+    message = ""
+    
+    if action == 'quest_action':
+        quest_action = request.form.get('quest_action')
+        if quest_action:
+            updates, expired = quest_system.perform_action(quest_action, "forest", player)
+            quest_updates.extend(updates)
+    elif action == 'hunt':
+        success_chance = 0.7 + (player.level * 0.1)  
+        
+        if random.random() < success_chance:
+            exp_gain = random.randint(15, 25)
+            gold_gain = random.randint(10, 20)
+            
+            player.experience += exp_gain
+            player.gold += gold_gain
+            player.check_level_up()
+            player.add_item({
+                'id': 'wolf_pelt',
+                'name': 'Wolf Pelt',
+                'description': 'A fine pelt from a forest wolf. Can be sold or used for crafting.',
+                'type': 'materials',
+                'sell_value': 15
+            })
+            
+            message = f"Successful hunt! You gained {exp_gain} experience, {gold_gain} gold, and a wolf pelt."
+            updates, expired = quest_system.perform_action("hunt_wolf", "forest", player)
+            quest_updates.extend(updates)
+        else:
+            message = "The hunt was unsuccessful. The wolves evaded you this time."
+    elif action == 'explore':
+        find_chance = 0.6
+        
+        if random.random() < find_chance:
+            items = [
+                {'id': 'healing_herb', 'name': 'Healing Herb', 'description': 'A natural remedy that restores 20 health.', 'type': 'consumable', 'health_restore': 20},
+                {'id': 'silver_coin', 'name': 'Silver Coin', 'description': 'An old silver coin found in the forest.', 'type': 'misc', 'sell_value': 5},
+                {'id': 'mushroom', 'name': 'Forest Mushroom', 'description': 'An edible mushroom. Restores 10 health.', 'type': 'consumable', 'health_restore': 10}
+            ]
+            found_item = random.choice(items)
+            player.add_item(found_item)
+            message = f"You found a {found_item['name']} while exploring!"
+            updates, expired = quest_system.perform_action("explore_forest", "forest", player)
+            quest_updates.extend(updates)
+        else:
+            message = "You explored the forest but found nothing of interest."
+    
+    session['forest_message'] = message
+    return redirect(url_for('forest'))
 
 if __name__ == "__main__":
   app.run(debug=True)
