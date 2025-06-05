@@ -341,7 +341,7 @@
       <div class="quest-actions">
         <h3>📋 Available Quest Actions:</h3>
         {% for action in available_actions %}
-          <form method="POST" action="/tavern" style="display: inline-block; margin: 5px;">
+          <form method="POST" action="{{ url_for('location.tavern') }}" style="display: inline-block; margin: 5px;">
             <input type="hidden" name="action" value="quest_action">
             <input type="hidden" name="quest_action" value="{{ action.action }}">
             <button type="submit" class="quest-button">
@@ -353,7 +353,7 @@
     {% endif %}
 
     <div class="input-section">
-      <form method="POST" action="/tavern">
+      <form method="POST" action="{{ url_for('location.tavern') }}">
         <label for="message">What do you say to Bartek?</label>
         <input type="text" id="message" name="message" required autocomplete="off" placeholder="Ask about the village, order a drink, or seek information...">
         <button type="submit">Speak</button>
@@ -361,7 +361,7 @@
     </div>
 
     <div class="return-link">
-      <a href="{{ url_for('mainPage') }}">⬅️ Leave the tavern (return to village)</a>
+      <a href="{{ url_for('main.mainPage') }}">⬅️ Leave the tavern (return to village)</a>
     </div>
   </div>
 </body>

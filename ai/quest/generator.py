@@ -131,13 +131,6 @@ Title:"""
                 quest_id = f"ai_quest_{int(time.time())}_{random.randint(100, 999)}"
                 quest["id"] = quest_id
                 
-                if urgency == "urgent":
-                    quest["time_limit_hours"] = random.randint(12, 24)  
-                elif urgency == "standard":
-                    quest["time_limit_hours"] = random.randint(48, 72)  
-                else:  
-                    quest["time_limit_hours"] = random.randint(96, 168)  
-                
                 quest["steps"] = self.generate_quest_steps(quest_type, difficulty)
                 
                 self.generated_quests[quest_id] = quest
@@ -329,7 +322,6 @@ Title:"""
             "completed_by": [],
             "generated": True,
             "generated_at": time.time(),
-            "time_limit_hours": 48,  
             "steps": self.generate_quest_steps(quest_type, "medium")
         }
         

@@ -309,7 +309,7 @@
 				<div class="item">
 					<strong>{{ item.name }}</strong> - {{ item.price }} Gold ({{ item.quantity }} in stock)<br>
 					<em>{{ item.description }}</em>
-					<form method="POST" action="{{ url_for('shop') }}" style="display: inline; margin-left: 10px;">
+					<form method="POST" action="{{ url_for('merchant.tradesman') }}" style="display: inline; margin-left: 10px;">
 						<input type="hidden" name="action" value="buy">
 						<input type="hidden" name="item_id" value="{{ item.id }}">
 						<button type="submit" {% if player.gold < item.price %}disabled title="Not enough gold"{% endif %}>
@@ -331,7 +331,7 @@
 				<div class="item">
 					<strong>{{ item.name }}</strong> - Sell for {{ item.sell_value | default(1) }} Gold<br>
 					<em>{{ item.description }}</em>
-					<form method="POST" action="{{ url_for('shop') }}" style="display: inline; margin-left: 10px;">
+					<form method="POST" action="{{ url_for('merchant.tradesman') }}" style="display: inline; margin-left: 10px;">
 						<input type="hidden" name="action" value="sell">
 						<input type="hidden" name="item_id" value="{{ item.id }}">
 						<button type="submit">Sell</button>
@@ -386,7 +386,7 @@
 			  <div class="quest-actions">
 				<h3>📋 Available Quest Actions:</h3>
 				{% for action in available_actions %}
-				  <form method="POST" action="{{ url_for('shop') }}" style="display: inline-block; margin: 10px;">
+				  <form method="POST" action="{{ url_for('merchant.tradesman') }}" style="display: inline-block; margin: 10px;">
 					<input type="hidden" name="action" value="quest_action">
 					<input type="hidden" name="quest_action" value="{{ action.action }}">
 					<button type="submit" class="quest-button">
@@ -398,7 +398,7 @@
 			{% endif %}
 
 			<div class="conversation-input">
-				<form method="POST" action="{{ url_for('shop') }}">
+				<form method="POST" action="{{ url_for('merchant.tradesman') }}">
 					<input type="hidden" name="action" value="talk"> 
 					<label for="message">What do you say to Erik?</label>
 					<input type="text" id="message" name="message" required autocomplete="off" style="width: calc(100% - 120px);" placeholder="Ask about his goods, the city, or recent travels...">
@@ -408,7 +408,7 @@
 		</div>
 
 		<div class="return-link">
-			<a href="{{ url_for('mainPage') }}">⬅️ Leave Erik's cart (return to village)</a>
+			<a href="{{ url_for('main.mainPage') }}">⬅️ Leave Erik's cart (return to village)</a>
 		</div>
 	</div>
 </body>

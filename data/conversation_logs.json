@@ -2408,5 +2408,551 @@
       "character_specific": false,
       "overall_score": 0.75
     }
+  },
+  {
+    "timestamp": "2025-06-05T13:56:14.524756",
+    "session_id": "787a1438-edaf-4312-96b4-be6db7ef31a3",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Do you know anything about tomek?",
+    "bot_response": "smiling Toteks!",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "experience": 0,
+      "location": "tavern"
+    },
+    "response_length": 15,
+    "input_length": 33,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-05T13:56:45.364092",
+    "session_id": "787a1438-edaf-4312-96b4-be6db7ef31a3",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "So can you tell me?",
+    "bot_response": "Sure thing - he was an old friend of our family's in Poland before they emigrated to America during WWII and then came back.",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "experience": 0,
+      "location": "tavern"
+    },
+    "response_length": 124,
+    "input_length": 19,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-05T15:55:49.212981",
+    "session_id": "188b39fd-4296-4705-b92a-8143ee918f52",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "heeey queen",
+    "bot_response": "smiling Hello there!",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "experience": 0,
+      "location": "tavern"
+    },
+    "response_length": 20,
+    "input_length": 11,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-05T15:56:07.032107",
+    "session_id": "188b39fd-4296-4705-b92a-8143ee918f52",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Is there wi-fi?",
+    "bot_response": "Yes I have it right here in this corner of my room pointing to his table.",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "experience": 0,
+      "location": "tavern"
+    },
+    "response_length": 73,
+    "input_length": 15,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-05T22:32:37.972981",
+    "session_id": "_1749155542489",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Hi where am I?",
+    "bot_response": "smiling Hey there!",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 18,
+    "input_length": 14,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-05T22:32:52.461485",
+    "session_id": "_1749155542489",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Is there a wi-fi?",
+    "bot_response": "Yes it'll cost you an arm leg to use this place if they don t have any free ones around here..",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 94,
+    "input_length": 17,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-05T22:33:11.658700",
+    "session_id": "_1749155542489",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "What is the name of the town?",
+    "bot_response": "It s called Pillowville...",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 26,
+    "input_length": 29,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-05T22:33:33.290671",
+    "session_id": "_1749155542489",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "fuck you thats not true",
+    "bot_response": "I know what happened in that village last year!",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 47,
+    "input_length": 23,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-05T22:33:45.536381",
+    "session_id": "_1749155542489",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "go on",
+    "bot_response": "There was this guild there led my friend to believe he could get rich overnight if they would help him find some lost treasure somewhere deep inside an old cave system..",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 169,
+    "input_length": 5,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-05T22:34:06.356818",
+    "session_id": "_1749155542489",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "what was his name?",
+    "bot_response": "His Name wasn' t really important...",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 36,
+    "input_length": 18,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-05T22:34:20.164110",
+    "session_id": "_1749155542489",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "TELL ME",
+    "bot_response": "But I had seen it before in one of those adventure books or something like that....",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 83,
+    "input_length": 7,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-05T22:35:33.219645",
+    "session_id": "test_session",
+    "location": "unknown",
+    "character": "tavern_keeper",
+    "user_input": "Hello, innkeeper!",
+    "bot_response": "smiling Welcome to our tavern - I hope you enjoy your stay here in this cursed place called Silver Mine?",
+    "player_stats": {
+      "level": 1,
+      "gold": 100
+    },
+    "response_length": 104,
+    "input_length": 17,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-05T22:48:02.601650",
+    "session_id": "test_123",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Hello there!",
+    "bot_response": "smiling What brings you here?",
+    "player_stats": {
+      "level": 1,
+      "gold": 50,
+      "location": "tavern"
+    },
+    "response_length": 29,
+    "input_length": 12,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-05T22:48:58.432647",
+    "session_id": "test_456",
+    "location": "tavern",
+    "character": "tavern_regular",
+    "user_input": "Hi there, old timer!",
+    "bot_response": "smiling Its good of you that I remember your name; it has been so long since we last metshe takes out an envelope containing some coins.",
+    "player_stats": {
+      "level": 1,
+      "gold": 50,
+      "location": "tavern"
+    },
+    "response_length": 136,
+    "input_length": 20,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": true,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.75
+    }
+  },
+  {
+    "timestamp": "2025-06-05T22:50:42.200365",
+    "session_id": "_1749156621698",
+    "location": "tavern",
+    "character": "tavern_regular",
+    "user_input": "Hi there who are u?",
+    "bot_response": "I am an old lady living here for many years now on this small farm where we grow our own vegetables as well some grains like wheat which my husband grows too because he likes it better than potatoes that they sell everywhere else!",
+    "player_stats": {
+      "level": 1,
+      "gold": 90,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 230,
+    "input_length": 19,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": true,
+      "appropriate_length": false,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-05T22:51:09.101761",
+    "session_id": "_1749156621698",
+    "location": "tavern",
+    "character": "tavern_regular",
+    "user_input": "What do you mean?",
+    "bot_response": "Well...",
+    "player_stats": {
+      "level": 1,
+      "gold": 90,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 7,
+    "input_length": 17,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": false,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.25
+    }
+  },
+  {
+    "timestamp": "2025-06-05T22:51:38.991290",
+    "session_id": "_1749156681507",
+    "location": "tavern",
+    "character": "tavern_regular",
+    "user_input": "Hi how are you?",
+    "bot_response": "I am fine thankyou!",
+    "player_stats": {
+      "level": 1,
+      "gold": 90,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 19,
+    "input_length": 15,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-05T22:51:51.636297",
+    "session_id": "_1749156681507",
+    "location": "tavern",
+    "character": "tavern_regular",
+    "user_input": "What is your name?",
+    "bot_response": "My real one would be Mary Kowalska Mary or my nickname could also just call me Wi\u0161ko because it rhymed well when spelled backwards...or so they say : But mostly people know as \"the old.",
+    "player_stats": {
+      "level": 1,
+      "gold": 90,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 185,
+    "input_length": 18,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-05T22:52:16.269322",
+    "session_id": "_1749156681507",
+    "location": "tavern",
+    "character": "tavern_regular",
+    "user_input": "Did you knew Tomek?",
+    "bot_response": "Yes he was an interesting man who lived next door for years before his death last year; we used often chat over our morning coffee while watching him work on some of those machines that make them money here..He always had something new up there like this.",
+    "player_stats": {
+      "level": 1,
+      "gold": 90,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 255,
+    "input_length": 19,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": false,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.25
+    }
+  },
+  {
+    "timestamp": "2025-06-05T23:03:03.111121",
+    "session_id": "_1749157362964",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Heeellooo are you here?",
+    "bot_response": "Yes I am!",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 9,
+    "input_length": 23,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": false,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.25
+    }
+  },
+  {
+    "timestamp": "2025-06-05T23:03:20.510715",
+    "session_id": "_1749157362964",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Tell me about this establishment?",
+    "bot_response": "Well it's been around since forever; we have over two hundred patrons coming in every day to drink our famous ale or eat one of my delicious dishes made using local ingredients like mushrooms grown on topography above us.",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 221,
+    "input_length": 33,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": false,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.25
+    }
+  },
+  {
+    "timestamp": "2025-06-05T23:35:36.723870",
+    "session_id": "merchant_1749159328628",
+    "location": "shop",
+    "character": "merchant",
+    "user_input": "Hi erik how are u?",
+    "bot_response": "I am well thank you!",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "shop"
+    },
+    "response_length": 20,
+    "input_length": 18,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
   }
 ]

@@ -305,7 +305,7 @@
       <div class="quest-actions">
         <h3>📋 Available Quest Actions:</h3>
         {% for action in available_actions %}
-          <form method="POST" action="{{ url_for('smithy') }}" style="display: inline-block; margin: 10px;">
+          <form method="POST" action="{{ url_for('merchant.smithy') }}" style="display: inline-block; margin: 10px;">
             <input type="hidden" name="action" value="quest_action">
             <input type="hidden" name="quest_action" value="{{ action.action }}">
             <button type="submit" class="quest-button" {% if not action.can_perform %}disabled{% endif %}>
@@ -350,7 +350,7 @@
               {% endif %}
             </div>
             
-            <form method="POST" action="{{ url_for('smithy') }}" style="margin-top: 10px;">
+            <form method="POST" action="{{ url_for('merchant.smithy') }}" style="margin-top: 10px;">
               <input type="hidden" name="action" value="craft">
               <input type="hidden" name="recipe_id" value="{{ recipe_id }}">
               <button type="submit" class="craft-button" {% if not recipe_info.can_craft %}disabled{% endif %}>
@@ -398,7 +398,7 @@
     </div>
 
     <div class="return-link">
-      <a href="{{ url_for('mainPage') }}">⬅️ Leave the forge (return to village)</a>
+      <a href="{{ url_for('main.mainPage') }}">⬅️ Leave the forge (return to village)</a>
     </div>
   </div>
 </body>

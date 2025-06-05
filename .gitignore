@@ -1,3 +1,11 @@
 notes.txt
 brudnopis.md
 *pycache*
+venv
+
+template
+inventory_routes.py
+location_routes.py
+main_routes.py
+merchant_routes.py
+quest_routes.py

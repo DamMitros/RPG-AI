@@ -1,11 +1,23 @@
-from ai.quest_generator import QuestGenerator
+from ai.quest.generator import QuestGenerator
 import time, random
+import yaml, os
 
 class QuestSystem:
     def __init__(self, dialog_engine=None):
         self.quest_generator = QuestGenerator(dialog_engine)
         self.generated_quests_cache = {}
-        self.action_locations = {
+        self.last_quest_generation = 0
+        self.quests = self._load_static_quests()
+        self.action_locations = self._init_action_locations()
+        
+    def _load_static_quests(self):
+        config_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'config', 'quests.yaml')
+        with open(config_path, 'r') as f:
+            data = yaml.safe_load(f)
+        return {q['id']: q for q in data.get('quests', [])}
+
+    def _init_action_locations(self):
+        return {
             "talk_to_bartek": "tavern",
             "investigate_mine": "mine_entrance", 
             "investigate_mine_sounds": "mine_entrance",
@@ -19,124 +31,6 @@ class QuestSystem:
             "mine_ore": "mine_entrance",
             "deliver_item": "any"
         }
-        
-        self.quests = {
-            "missing_miner": {
-                "id": "missing_miner",
-                "title": "MISSING PERSON - REWARD OFFERED",
-                "description": "Tomek the Miner has been missing for three days. Last seen heading toward the old silver mine entrance. Young man, brown hair, wearing mining clothes. His family is desperate for news.",
-                "contact": "Bartek at the Tawny Lion Inn",
-                "reward_gold": 50,
-                "reward_exp": 100,
-                "type": "urgent",
-                "requirements": [],
-                "completion_requirements": ["talk_to_bartek", "investigate_mine"],
-                "completed_by": [],
-                "time_limit_hours": 48,  
-                "steps": [
-                    {"action": "talk_to_bartek", "location": "tavern", "description": "Talk to Bartek about missing Tomek", "completed": False},
-                    {"action": "investigate_mine", "location": "mine_entrance", "description": "Search the mine entrance for clues", "completed": False}
-                ]
-            },
-            "mine_sounds": {
-                "id": "mine_sounds",
-                "title": "STRANGE SOUNDS FROM THE MINE",
-                "description": "Villagers report hearing unnatural sounds echoing from the abandoned silver mine at night. Brave souls wanted to investigate. Extreme caution advised.",
-                "contact": "Village elders",
-                "reward_gold": 75,
-                "reward_exp": 150,
-                "type": "urgent",
-                "requirements": ["level >= 2"],
-                "completion_requirements": ["investigate_mine_sounds"],
-                "completed_by": [],
-                "time_limit_hours": 72,  
-                "required_items": ["torch", "potion_health_small"],  
-                "consumes_items": ["torch"],  
-                "steps": [
-                    {"action": "buy_materials", "location": "tradesman", "description": "Buy a torch and healing potion from Erik", "completed": False, "required_items": ["torch", "potion_health_small"]},
-                    {"action": "investigate_mine_sounds", "location": "mine_entrance", "description": "Investigate the strange sounds at the mine", "completed": False, "consumes_items": ["torch"]}
-                ]
-            },
-            "bandit_trouble": {
-                "id": "bandit_trouble",
-                "title": "Bandit Troubles on Mountain Paths",
-                "description": "Traders report increased bandit activity on the mountain trails leading to Stonehaven. Escort missions and bandit clearing operations needed. Proper weapon recommended.",
-                "contact": "Village guard",
-                "reward_gold": 40,
-                "reward_exp": 80,
-                "type": "combat",
-                "requirements": [],
-                "completion_requirements": ["craft_equipment", "clear_bandits"],
-                "completed_by": [],
-                "time_limit_hours": 48,  
-                "required_items": ["iron_ingot", "leather_wrap"],
-                "steps": [
-                    {"action": "buy_materials", "location": "tradesman", "description": "Buy materials for weapon crafting", "completed": False, "required_items": ["iron_ingot", "leather_wrap"]},
-                    {"action": "craft_equipment", "location": "smithy", "description": "Craft a weapon at Grimbrand's forge", "completed": False, "consumes_items": ["iron_ingot", "leather_wrap"]},
-                    {"action": "clear_bandits", "location": "mainPage", "description": "Patrol the village and clear bandit threats", "completed": False}
-                ]
-            },
-            "herb_gathering": {
-                "id": "herb_gathering",
-                "title": "Herb Gathering for the Village Healer",
-                "description": "The village healer needs rare mountain herbs. Knowledge of herbalism helpful but not required. Dangerous areas - come prepared with proper tools.",
-                "contact": "Village healer",
-                "reward_gold": 25,
-                "reward_exp": 40,
-                "type": "gathering",
-                "requirements": [],
-                "completion_requirements": ["craft_equipment", "gather_herbs"],
-                "completed_by": [],
-                "time_limit_hours": 120,  
-                "required_items": ["iron_ingot", "oak_handle"],
-                "steps": [
-                    {"action": "buy_materials", "location": "tradesman", "description": "Buy materials for gathering tools", "completed": False, "required_items": ["iron_ingot", "oak_handle"]},
-                    {"action": "craft_equipment", "location": "smithy", "description": "Craft a mining pickaxe for gathering", "completed": False, "consumes_items": ["iron_ingot", "oak_handle"]},
-                    {"action": "gather_herbs", "location": "mainPage", "description": "Search for rare herbs around the village", "completed": False}
-                ]
-            },
-            "investigate_erik": {
-                "id": "investigate_erik",
-                "title": "Investigate Erik's New Merchandise",
-                "description": "Some villagers are concerned about the strange items Erik brought back from his last city trip. Discrete investigation requested.",
-                "contact": "Village council",
-                "reward_gold": 25,
-                "reward_exp": 50,
-                "type": "investigation",
-                "requirements": [],
-                "completion_requirements": ["talk_to_erik", "investigate_items"],
-                "completed_by": [],
-                "time_limit_hours": 96,  
-                "steps": [
-                    {"action": "talk_to_erik", "location": "tradesman", "description": "Talk to Erik about his new merchandise", "completed": False},
-                    {"action": "investigate_items", "location": "tradesman", "description": "Examine Erik's suspicious items", "completed": False}
-                ]
-            },
-            "mining_expedition": {
-                "id": "mining_expedition",
-                "title": "MINING EXPEDITION - EXPERIENCED MINERS WANTED",
-                "description": "The old silver mine may still have deposits deeper in the tunnels. Need brave souls with proper mining equipment to explore the dangerous depths. Considerable reward for valuable findings.",
-                "contact": "Former mine foreman",
-                "reward_gold": 100,
-                "reward_exp": 200,
-                "type": "gathering",
-                "requirements": ["level >= 3"],
-                "completion_requirements": ["craft_equipment", "mine_ore", "deliver_item"],
-                "completed_by": [],
-                "time_limit_hours": 96,
-                "required_items": ["iron_ingot", "oak_handle", "torch"],
-                "consumes_items": ["torch"],
-                "steps": [
-                    {"action": "buy_materials", "location": "tradesman", "description": "Buy materials for mining equipment", "completed": False, "required_items": ["iron_ingot", "oak_handle", "torch"]},
-                    {"action": "craft_equipment", "location": "smithy", "description": "Craft a reinforced mining pickaxe", "completed": False, "consumes_items": ["iron_ingot", "oak_handle"]},
-                    {"action": "mine_ore", "location": "mine_entrance", "description": "Mine for valuable ores in the depths", "completed": False, "consumes_items": ["torch"]},
-                    {"action": "deliver_item", "location": "tavern", "description": "Report findings to the foreman at the tavern", "completed": False}
-                ]
-            }
-        }
-
-        self.generated_quests_cache = {}
-        self.last_quest_generation = 0
         
     def refresh_generated_quests(self, player_level=1, force=False):
         current_time = time.time()
@@ -182,8 +76,6 @@ class QuestSystem:
     def accept_quest(self, quest_id, player):
         if not hasattr(player, 'active_quests'):
             player.active_quests = []
-        if not hasattr(player, 'quest_start_times'):
-            player.quest_start_times = {}
         if not hasattr(player, 'quest_progress'):
             player.quest_progress = {}
 
@@ -198,7 +90,6 @@ class QuestSystem:
         
         if quest_found and quest_id not in player.active_quests:
             player.active_quests.append(quest_id)
-            player.quest_start_times[quest_id] = time.time()
             
             if 'steps' in quest:
                 player.quest_progress[quest_id] = {
@@ -215,47 +106,10 @@ class QuestSystem:
             return True
         return False
     
-    def check_quest_time_limits(self, player):
-        if not hasattr(player, 'active_quests') or not hasattr(player, 'quest_start_times'):
-            return []
-        
-        current_time = time.time()
-        expired_quests = []
-        
-        for quest_id in player.active_quests[:]:  
-            if quest_id in player.quest_start_times:
-                quest = self.get_quest_by_id(quest_id)
-                if quest and 'time_limit_hours' in quest:
-                    time_limit_seconds = quest['time_limit_hours'] * 3600
-                    elapsed_time = current_time - player.quest_start_times[quest_id]
-                    
-                    if elapsed_time > time_limit_seconds:
-                        expired_quests.append(quest)
-                        player.active_quests.remove(quest_id)
-                        player.quest_start_times.pop(quest_id, None)
-                        player.quest_progress.pop(quest_id, None)
-        
-        return expired_quests
-    
-    def get_quest_time_remaining(self, quest_id, player):
-        if not hasattr(player, 'quest_start_times') or quest_id not in player.quest_start_times:
-            return None
-        
-        quest = self.get_quest_by_id(quest_id)
-        if not quest or 'time_limit_hours' not in quest:
-            return None
-        
-        current_time = time.time()
-        elapsed_time = current_time - player.quest_start_times[quest_id]
-        remaining_seconds = (quest['time_limit_hours'] * 3600) - elapsed_time
-        
-        return max(0, remaining_seconds / 3600)
-    
     def perform_action(self, action, location, player, additional_data=None):
         if not hasattr(player, 'active_quests') or not hasattr(player, 'quest_progress'):
             return [], []
 
-        expired = self.check_quest_time_limits(player)
         quest_updates = []
         
         for quest_id in player.active_quests:
@@ -364,7 +218,7 @@ class QuestSystem:
                                 'error': f"Missing required items: {', '.join(missing_items)}"
                             })
         
-        return quest_updates, expired
+        return quest_updates
     
     def check_quest_completion(self, quest_id, player):
         quest = self.get_quest_by_id(quest_id)
@@ -459,8 +313,6 @@ class QuestSystem:
         
         if hasattr(player, 'active_quests') and quest_id in player.active_quests:
             player.active_quests.remove(quest_id)
-        if hasattr(player, 'quest_start_times'):
-            player.quest_start_times.pop(quest_id, None)
         if hasattr(player, 'quest_progress'):
             player.quest_progress.pop(quest_id, None)
 
@@ -513,7 +365,6 @@ class QuestSystem:
             'reward_gold': quest.get('reward_gold', 0),
             'reward_exp': quest.get('reward_exp', 0),
             'contact': quest.get('contact', 'Unknown'),
-            'time_remaining_hours': self.get_quest_time_remaining(quest_id, player),
             'is_active': quest_id in getattr(player, 'active_quests', [])
         }
         
@@ -531,15 +382,12 @@ class QuestSystem:
 
         player.active_quests.remove(quest_id)
 
-        if hasattr(player, 'quest_start_times'):
-            player.quest_start_times.pop(quest_id, None)
         if hasattr(player, 'quest_progress'):
             player.quest_progress.pop(quest_id, None)
         
         return True
     
     def get_quest_status_summary(self, player):
-        expired = self.check_quest_time_limits(player)
         active_quests = self.get_player_active_quests(player)
         urgent_quests = [q for q in active_quests if q.get('type') == 'urgent']
         combat_quests = [q for q in active_quests if q.get('type') == 'combat']
@@ -548,8 +396,6 @@ class QuestSystem:
             'total_active': len(active_quests),
             'urgent_count': len(urgent_quests),
             'combat_count': len(combat_quests),
-            'expired_count': len(expired),
-            'expired_quests': expired,
             'active_quests': active_quests
         }
     

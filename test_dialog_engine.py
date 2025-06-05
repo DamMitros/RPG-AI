@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import sys, time
-from ai.dialog_engine import DialogEngine
-from ai.conversation_tracker import conversation_tracker
+from ai.dialog.engine import DialogEngine
+from ai.dialog.tracker import conversation_tracker
 
 def test_fantasy_immersion():
     print("TEST 1: Fantasy Immersion Test")

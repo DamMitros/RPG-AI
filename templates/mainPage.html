@@ -305,7 +305,7 @@
       <div class="quest-actions">
         <h3>📋 Available Quest Actions in Village:</h3>
         {% for action in available_actions %}
-          <form method="POST" action="/" style="display: inline-block; margin: 10px;">
+          <form method="POST" action="{{ url_for('main.mainPage') }}" style="display: inline-block; margin: 10px;">
             <input type="hidden" name="quest_action" value="{{ action.action }}">
             <button type="submit" class="quest-button">
               🎯 {{ action.description }} ({{ action.quest_title }})
@@ -316,37 +316,37 @@
     {% endif %}
     
     <div class="locations-grid">
-      <a href="{{ url_for('pub') }}" class="location-card">
+      <a href="{{ url_for('location.tavern') }}" class="location-card">
         <span class="location-icon">🍺</span>
         <div class="location-name">Tawny Lion Inn</div>
         <div class="location-desc">The village tavern buzzes with gossip and ale</div>
       </a>
       
-      <a href="{{ url_for('shop') }}" class="location-card">
+      <a href="{{ url_for('merchant.tradesman') }}" class="location-card">
         <span class="location-icon">🛒</span>
         <div class="location-name">Erik's Wares</div>
         <div class="location-desc">Strange goods from distant lands</div>
       </a>
       
-      <a href="{{ url_for('smithy') }}" class="location-card">
+      <a href="{{ url_for('merchant.smithy') }}" class="location-card">
         <span class="location-icon">⚒️</span>
         <div class="location-name">Grimbrand's Forge</div>
         <div class="location-desc">Weapons and armor crafted with skill</div>
       </a>
       
-      <a href="{{ url_for('pickboard') }}" class="location-card">
+      <a href="{{ url_for('quest.pickboard') }}" class="location-card">
         <span class="location-icon">📜</span>
         <div class="location-name">Notice Board</div>
         <div class="location-desc">Quests and urgent messages</div>
       </a>
       
-      <a href="{{ url_for('inventory') }}" class="location-card">
+      <a href="{{ url_for('inventory.view_inventory') }}" class="location-card">
         <span class="location-icon">🎒</span>
         <div class="location-name">Inventory</div>
         <div class="location-desc">Your belongings and equipment</div>
       </a>
       
-      <a href="{{ url_for('forest') }}" class="location-card">
+      <a href="{{ url_for('location.forest') }}" class="location-card">
         <span class="location-icon">🌲</span>
         <div class="location-name">Darkwood Forest</div>
         <div class="location-desc">Hunt wolves and explore for treasures</div>
@@ -355,7 +355,7 @@
     
     <div class="hidden-path">
       <div class="mine-hint">You notice a narrow path leading into the mountains...</div>
-      <a href="{{ url_for('mine_entrance') }}" class="mine-link">⛰️ Follow the old mining trail</a>
+      <a href="{{ url_for('location.mine_entrance') }}" class="mine-link">⛰️ Follow the old mining trail</a>
     </div>
   </div>
 </body>

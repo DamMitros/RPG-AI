@@ -1,6 +1,6 @@
 import torch, time, re, yaml, random
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from ai.conversation_tracker import conversation_tracker
+from ai.dialog.tracker import ConversationTracker
 
 class DialogEngine:
     def __init__(self):
@@ -8,7 +8,8 @@ class DialogEngine:
         self.model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         print(f"Using device: {self.device}")
-
+        
+        self.conversation_tracker = ConversationTracker()
         # self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
         self.tokenizer = AutoTokenizer.from_pretrained(
             self.model_name,
@@ -34,7 +35,7 @@ class DialogEngine:
 
     def load_config(self):
         try:
-            config_files = ["ai/config_enhanced.yaml", "ai/config.yaml"]
+            config_files = ["ai/config/config_enhanced.yaml", "ai/config/config.yaml"]
             config = {}
             
             for config_file in config_files:
@@ -175,7 +176,7 @@ Player: {user_input}
                 'npc': response
             })
 
-            conversation_tracker.log_interaction(
+            self.conversation_tracker.log_interaction(
                 user_input=user_input,
                 bot_response=response,
                 character=character,
@@ -188,7 +189,7 @@ Player: {user_input}
 
         except Exception as e:
             error_response = f"(Model error: {str(e)})"
-            conversation_tracker.log_interaction(
+            self.conversation_tracker.log_interaction(
                 user_input=user_input,
                 bot_response=error_response,
                 character=character,
@@ -199,7 +200,28 @@ Player: {user_input}
             return error_response
 
     def get_conversation_stats(self, session_id=None):
-        return conversation_tracker.get_conversation_stats(session_id)
+        return self.conversation_tracker.get_conversation_stats(session_id)
     
     def get_quality_report(self, session_id=None):
-        return conversation_tracker.generate_quality_report(session_id)
+        return self.conversation_tracker.generate_quality_report(session_id)
+    
+    def process_message(self, message, session_id="default", context=None):
+        """
+        Process message for API compatibility
+        """
+        character = context.get('character', 'tavern_keeper') if context else 'tavern_keeper'
+        player_stats = context.get('player_stats') if context else None
+        
+        response_text = self.get_npc_response(
+            user_input=message,
+            character=character,
+            session_id=session_id,
+            player_stats=player_stats
+        )
+        
+        return {
+            'response': response_text,
+            'character': character,
+            'session_id': session_id,
+            'options': []  
+        }
