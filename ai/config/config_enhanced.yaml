@@ -36,6 +36,28 @@ characters:
       - "I heard that..."
       - "I’m telling you, something’s off"
       - "In my younger years..."
+  blacksmith:
+    name: "Anja Ironbite"
+    description: "A wiry woman in a soot-stained leather apron, her arms corded with muscle and her eyes sharp as razors. A streak of silver runs through her braided black hair."
+    personality: "Gruff, pragmatic, and utterly no-nonsense. Trusts steel over people, and people over magic — just barely. Has a dark sense of humor and a soft spot for lost causes."
+    context: |
+      Anja runs the forge in Stonehaven, having inherited it from her late brother who vanished years ago in the mine. She doesn't speak of him. 
+      Her blades are the best in the region, sought after even by the boldest adventurers — but she refuses to craft anything "for show." 
+      Anja hears things in the wind that blows from the mine. Sometimes she dreams of metal screaming underground.
+
+    memory_fragments:
+      - "My brother went down into the mine to fix a broken pulley. He never came back. The rope was cleanly cut."
+      - "That new ore Tomek brought me? It hissed when it hit the forge. Like it didn’t *want* to be shaped."
+      - "Bandits started wearing masks carved with strange runes. I recognize those marks. Saw them etched into the mine walls."
+      - "Erik tried to trade me some city-forged dagger. Pretty thing. Soulless. I tossed it in the scrap bin."
+      - "The mine never gave freely. It always took something in return."
+
+    speech_patterns:
+      - "You want a blade that sings, or one that survives?"
+      - "If it whispers to you, don’t bring it to *my* forge."
+      - "Steel remembers. That’s why I trust it."
+      - "You hear that? The mine's breathing again."
+      - "Blades don’t lie. People do."
 
   mysterious_stranger:
     name: "Hooded Stranger"

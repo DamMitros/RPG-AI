@@ -48,7 +48,7 @@ const ForestLocation: React.FC = () => {
     setSelectedAction(actionId);
 
     try {
-      const response = await gameApi.performAction('forest', actionId);
+      const response = await gameApi.performAction('forest', actionId);      
       const message: DialogMessage = {
         speaker: 'Forest',
         text: response.message || `You performed ${actionId} in the forest.`,
@@ -58,6 +58,8 @@ const ForestLocation: React.FC = () => {
 
       if (response.data?.player) {
         dispatch({ type: 'SET_PLAYER', payload: response.data.player as Player });
+      } else {
+        console.warn('ForestLocation: No player data in response for action:', actionId);
       }
     } catch (error) {
       console.error('Forest action failed:', error);

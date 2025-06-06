@@ -28,6 +28,12 @@ export interface InventoryItem {
   value?: number;
   rarity?: string;
   stats?: Partial<PlayerStats>;
+  damage?: number;
+  armor?: number;
+  mining_bonus?: number;
+  sell_value?: number;
+  condition?: number;
+  upgrade_level?: number;
 }
 
 export interface EquippedItems {
@@ -108,6 +114,32 @@ export interface NPC {
   name: string;
   type: 'merchant' | 'questgiver' | 'guard' | 'innkeeper';
   inventory?: InventoryItem[];
+}
+
+export interface CraftingMaterial {
+  id: string;
+  name: string;
+  quantity: number;
+}
+
+export interface CraftingRecipe {
+  id: string;
+  name: string;
+  description: string;
+  type: string;
+  cost: number;
+  level_required: number;
+  crafting_time: string;
+  materials: CraftingMaterial[];
+  result: InventoryItem;
+  can_craft: boolean;
+  craft_message: string;
+}
+
+export interface SmithyRecipesResponse {
+  success: boolean;
+  recipes: CraftingRecipe[];
+  message?: string;
 }
 
 export interface GameState {

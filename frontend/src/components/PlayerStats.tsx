@@ -7,6 +7,16 @@ export default function PlayerStats() {
   const { state } = useGame();
   const { player } = state;
 
+  if (!player) {
+    console.error('PlayerStats: player is undefined');
+    return <div>Loading player data...</div>;
+  }
+
+  if (!player.stats) {
+    console.error('PlayerStats: player.stats is undefined', player);
+    return <div>Loading player stats...</div>;
+  }
+
   const healthPercentage = (player.health / player.maxHealth) * 100;
   const manaPercentage = (player.mana / player.maxMana) * 100;
 
@@ -46,10 +56,10 @@ export default function PlayerStats() {
         </div>
 
         {[
-          { label: 'STR', value: player.stats.strength, icon: Sword, color: 'text-red-400' },
-          { label: 'DEX', value: player.stats.dexterity, icon: Zap, color: 'text-green-400' },
-          { label: 'INT', value: player.stats.intelligence, icon: Shield, color: 'text-blue-400' },
-          { label: 'VIT', value: player.stats.vitality, icon: Heart, color: 'text-purple-400' },
+          { label: 'STR', value: player?.stats?.strength || 0, icon: Sword, color: 'text-red-400' },
+          { label: 'DEX', value: player?.stats?.dexterity || 0, icon: Zap, color: 'text-green-400' },
+          { label: 'INT', value: player?.stats?.intelligence || 0, icon: Shield, color: 'text-blue-400' },
+          { label: 'VIT', value: player?.stats?.vitality || 0, icon: Heart, color: 'text-purple-400' },
         ].map(({ label, value, icon: IconComponent, color }, idx) => (
           <div key={idx} className="flex flex-col items-center min-w-[38px] select-none">
             <IconComponent className={`${color} w-4 h-4 drop-shadow-sm`} />

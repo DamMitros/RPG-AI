@@ -4,9 +4,17 @@ import { Player, Quest, InventoryItem, DialogMessage } from '@/types/game';
 export const gameApi = {
   async getPlayer(): Promise<Player> {
     console.log('API: Fetching player data from /api/player...');
-    const response = await api.get('/api/player');
-    console.log('API: Player data received:', response.data);
-    return response.data as Player;
+    try {
+      const response = await api.get('/api/player');
+      console.log('API: Raw response:', response);
+      console.log('API: Response data:', response.data);
+      console.log('API: Response data type:', typeof response.data);
+      console.log('API: Response data stats:', (response.data as Player)?.stats);
+      return response.data as Player;
+    } catch (error) {
+      console.error('API: Error fetching player:', error);
+      throw error;
+    }
   },
 
   async updatePlayer(player: Partial<Player>): Promise<Player> {
@@ -91,6 +99,13 @@ export const gameApi = {
       quantity
     });
     console.log('🌐 API: Sell response:', response.data);
+    return response.data;
+  },
+
+  async getSmithyRecipes() {
+    console.log('API: Fetching smithy recipes from /api/smithy/recipes...');
+    const response = await api.get('/api/smithy/recipes');
+    console.log('API: Smithy recipes received:', response.data);
     return response.data;
   },
 

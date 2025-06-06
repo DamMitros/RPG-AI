@@ -45,7 +45,8 @@ type GameAction =
 function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
     case 'SET_PLAYER':
-      return { ...state, player: action.payload };
+      const newState = { ...state, player: action.payload };
+      return newState;
     
     case 'SET_LOCATION':
       return { ...state, currentLocation: action.payload };
@@ -123,7 +124,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       const playerData = await gameApi.getPlayer();
       dispatch({ type: 'SET_PLAYER', payload: playerData });
     } catch (error) {
-      console.error('Failed to refresh player data:', error);
+      console.error('🎮 GameContext: Failed to refresh player data:', error);
     }
   };
 

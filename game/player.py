@@ -63,6 +63,26 @@ class Player:
   
   def add_gold(self, amount):
     self.gold += amount
+  
+  def to_dict(self):
+    return {
+      'name': self.name,
+      'level': self.level,
+      'health': self.health,
+      'maxHealth': self.max_health,
+      'mana': self.mana,
+      'maxMana': self.max_mana,
+      'experience': self.experience,
+      'gold': self.gold,
+      'inventory': self.inventory,
+      'equippedItems': {},  # TODO: implement equipment system
+      'stats': {
+        'strength': self.strength,
+        'dexterity': self.agility,  
+        'intelligence': self.intelligence,
+        'vitality': self.charisma, 
+      }
+    }
 
   def __repr__(self):
     return f"Player({self.name}, Level: {self.level}, Gold: {self.gold})"
