@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useGame } from '@/contexts/GameContext';
 import { gameApi } from '@/services/gameApi';
-import { DialogMessage } from '@/types/game';
+import { DialogMessage, QuestAction } from '@/types/game';
 import { Send, MessageCircle, X } from 'lucide-react';
 
 interface DialogInterfaceProps {
@@ -11,9 +11,10 @@ interface DialogInterfaceProps {
   characterName: string;
   isOpen: boolean;
   onClose: () => void;
+  questActions?: QuestAction[]; 
 }
 
-export default function DialogInterface({ character, characterName, isOpen, onClose }: DialogInterfaceProps) {
+export default function DialogInterface({ character, characterName, isOpen, onClose, questActions = [] }: DialogInterfaceProps) {
   const { state, dispatch } = useGame();
   const [messages, setMessages] = useState<DialogMessage[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -77,7 +78,8 @@ export default function DialogInterface({ character, characterName, isOpen, onCl
           gold: state.player.gold,
           health: state.player.health,
           location: state.currentLocation
-        }
+        },
+        available_quest_actions: questActions 
       };
 
       const response = await gameApi.sendMessage(sessionId, inputValue, context);
@@ -158,6 +160,22 @@ export default function DialogInterface({ character, characterName, isOpen, onCl
           
           <div ref={messagesEndRef} />
         </div>
+
+        {questActions.length > 0 && (
+          <div className="px-4 py-2 bg-blue-900/50 border-t border-blue-700/30">
+            <div className="text-xs text-blue-300 mb-1">🎯 Available Quest Objectives:</div>
+            <div className="text-xs text-blue-200 space-y-1">
+              {questActions.map((action, index) => (
+                <div key={`hint-${action.quest_id}-${index}`} className="truncate">
+                  • {action.description}
+                </div>
+              ))}
+            </div>
+            <div className="text-xs text-blue-400 mt-1 italic">
+              Ask the character about these objectives to progress your quests!
+            </div>
+          </div>
+        )}
 
         <div className="p-4 border-t border-amber-700/50">
           <div className="flex space-x-3">

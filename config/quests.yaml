@@ -8,15 +8,15 @@ quests:
     type: "urgent"
     requirements: []
     completion_requirements:
-      - "talk_to_bartek"
-      - "investigate_mine"
+      - "talk_innkeeper"
+      - "investigate_mine_sounds"
     completed_by: []
     steps:
-      - action: "talk_to_bartek"
+      - action: "talk_innkeeper"
         location: "tavern"
         description: "Talk to Bartek about missing Tomek"
         completed: false
-      - action: "investigate_mine"
+      - action: "investigate_mine_sounds"
         location: "mine_entrance"
         description: "Search the mine entrance for clues"
         completed: false

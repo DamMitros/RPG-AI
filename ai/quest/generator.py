@@ -211,7 +211,8 @@ Title:"""
                 "completion_requirements": completion_requirements,
                 "completed_by": [],
                 "generated": True,
-                "generated_at": time.time()
+                "generated_at": time.time(),
+                "steps": self.generate_quest_steps(quest_type, difficulty)
             }
             
             return quest
@@ -222,44 +223,49 @@ Title:"""
     
     def get_completion_requirements(self, quest_type):
         requirements_map = {
-            "investigation": ["investigate_area", "talk_to_witness", "find_clues"],
-            "delivery": ["pick_up_item", "deliver_item"],
-            "combat": ["defeat_enemies", "clear_area"],
-            "gathering": ["collect_items", "return_items"],
-            "rescue": ["find_person", "escort_safely"]
+            "investigation": ["observe_your_surroundings", "talk_to_townspeople", "examine_nearby_building"],
+            "delivery": ["talk_merchant", "talk_innkeeper"],  
+            "combat": ["follow_a_suspicious_trail", "observe_your_surroundings"],
+            "gathering": ["talk_to_townspeople", "gather_materials"], 
+            "rescue": ["talk_innkeeper", "talk_regular", "follow_a_suspicious_trail"]  
         }
         
-        base_requirements = requirements_map.get(quest_type, ["complete_objective"])
-        return base_requirements[:2]  
+        base_requirements = requirements_map.get(quest_type, ["observe_your_surroundings", "talk_to_townspeople"])
+        return base_requirements[:2]
     
     def generate_quest_steps(self, quest_type, difficulty):
         steps_templates = {
             "investigation": [
-                {"action": "talk_to_bartek", "location": "tavern", "description": "Gather information from locals at the tavern"},
-                {"action": "investigate_area", "location": "mainPage", "description": "Search the area for clues"},
-                {"action": "talk_to_erik", "location": "tradesman", "description": "Question the tradesman about unusual activities"}
+                {"action": "observe_your_surroundings", "location": "mainPage", "description": "Observe your surroundings for clues"},
+                {"action": "talk_to_townspeople", "location": "mainPage", "description": "Talk to townspeople to gather information"},
+                {"action": "talk_innkeeper", "location": "tavern", "description": "Question the tavern keeper about recent events"},
+                {"action": "examine_nearby_building", "location": "mainPage", "description": "Examine nearby buildings for evidence"}
             ],
             "delivery": [
-                {"action": "pick_up_package", "location": "tradesman", "description": "Collect the package from the merchant"},
-                {"action": "deliver_package", "location": "tavern", "description": "Deliver the package to its destination"}
+                {"action": "talk_erik", "location": "shop", "description": "Collect the package from Erik the merchant"},
+                {"action": "talk_innkeeper", "location": "tavern", "description": "Deliver the package to the tavern keeper"}
             ],
             "combat": [
-                {"action": "patrol_area", "location": "mainPage", "description": "Patrol the village perimeter"},
-                {"action": "clear_threats", "location": "mainPage", "description": "Eliminate any hostile creatures encountered"}
+                {"action": "follow_a_suspicious_trail", "location": "mainPage", "description": "Follow suspicious tracks to find threats"},
+                {"action": "explore_deeper", "location": "forest", "description": "Explore the forest depths to locate enemies"},
+                {"action": "hunt_creatures", "location": "forest", "description": "Hunt and eliminate hostile creatures"}
             ],
             "gathering": [
-                {"action": "search_materials", "location": "mainPage", "description": "Search for required materials in the wilderness"},
-                {"action": "return_materials", "location": "tradesman", "description": "Return collected materials to the requester"}
+                {"action": "talk_to_townspeople", "location": "mainPage", "description": "Ask locals where to find required materials"},
+                {"action": "gather_materials", "location": "forest", "description": "Gather materials in the forest"},
+                {"action": "talk_erik", "location": "shop", "description": "Return collected materials to Erik"}
             ],
             "rescue": [
-                {"action": "gather_information", "location": "tavern", "description": "Ask around for information about the missing person"},
-                {"action": "search_area", "location": "mine_entrance", "description": "Search the most likely location"},
-                {"action": "rescue_person", "location": "mine_entrance", "description": "Find and rescue the missing person"}
+                {"action": "talk_innkeeper", "location": "tavern", "description": "Ask the tavern keeper for information about the missing person"},
+                {"action": "talk_regular", "location": "tavern", "description": "Question tavern patrons for leads"},
+                {"action": "follow_a_suspicious_trail", "location": "mainPage", "description": "Follow tracks leading out of town"},
+                {"action": "shallow_mining", "location": "mine", "description": "Search the mine entrance for clues"},
+                {"action": "deep_mining", "location": "mine", "description": "Search deeper in the mine to find the missing person"}
             ]
         }
         
         base_steps = steps_templates.get(quest_type, [
-            {"action": "complete_objective", "location": "mainPage", "description": "Complete the quest objective"}
+            {"action": "observe_your_surroundings", "location": "mainPage", "description": "Complete the quest objective"}
         ])
 
         if difficulty == "easy":

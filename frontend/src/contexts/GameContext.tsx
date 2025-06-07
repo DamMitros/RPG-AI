@@ -35,6 +35,9 @@ type GameAction =
   | { type: 'SET_LOCATION'; payload: string }
   | { type: 'ADD_QUEST'; payload: Quest }
   | { type: 'COMPLETE_QUEST'; payload: string }
+  | { type: 'ABANDON_QUEST'; payload: string }
+  | { type: 'UPDATE_QUEST_PROGRESS'; payload: { questId: string; progress: Record<string, unknown> } }
+  | { type: 'SET_ACTIVE_QUESTS'; payload: Quest[] }
   | { type: 'ADD_DIALOG_MESSAGE'; payload: DialogMessage }
   | { type: 'CLEAR_DIALOG' }
   | { type: 'SET_LOADING'; payload: boolean }
@@ -65,6 +68,28 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         ...state,
         activeQuests: state.activeQuests.filter(q => q.id !== action.payload),
         completedQuests: [...state.completedQuests, { ...questToComplete, status: 'completed' }],
+      };
+    
+    case 'ABANDON_QUEST':
+      return {
+        ...state,
+        activeQuests: state.activeQuests.filter(q => q.id !== action.payload),
+      };
+    
+    case 'UPDATE_QUEST_PROGRESS':
+      return {
+        ...state,
+        activeQuests: state.activeQuests.map(quest => 
+          quest.id === action.payload.questId 
+            ? { ...quest, ...action.payload.progress }
+            : quest
+        ),
+      };
+    
+    case 'SET_ACTIVE_QUESTS':
+      return {
+        ...state,
+        activeQuests: action.payload,
       };
     
     case 'ADD_DIALOG_MESSAGE':

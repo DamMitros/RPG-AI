@@ -1,18 +1,21 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGame } from '@/contexts/GameContext';
+import { useQuests } from '@/hooks/useQuests';
 import { gameApi } from '@/services/gameApi';
 import { Beer, Users, MessageCircle, Coins } from 'lucide-react';
-import { DialogMessage } from '@/types/game';
+import { DialogMessage, QuestAction } from '@/types/game';
 import DialogInterface from '@/components/DialogInterface';
 
 const TavernLocation: React.FC = () => {
   const { state, dispatch } = useGame();
+  const { getQuestActionsForLocation, performQuestAction } = useQuests();
   const [dialogMessages, setDialogMessages] = useState<DialogMessage[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentCharacter, setCurrentCharacter] = useState('');
   const [currentCharacterName, setCurrentCharacterName] = useState('');
+  const [questActions, setQuestActions] = useState<QuestAction[]>([]);
 
   const tavernActions = [
     {
@@ -35,6 +38,19 @@ const TavernLocation: React.FC = () => {
       description: 'Chat with local tavern regulars',
     },
   ];
+
+  useEffect(() => {
+    const loadQuestActions = async () => {
+      try {
+        const actions = await getQuestActionsForLocation('tavern');
+        setQuestActions(actions);
+      } catch (error) {
+        console.error('Failed to load quest actions for tavern:', error);
+      }
+    };
+
+    loadQuestActions();
+  }, [getQuestActionsForLocation]);
 
   const handleAction = async (actionId: string) => {
     dispatch({ type: 'SET_LOADING', payload: true });
@@ -81,6 +97,20 @@ const TavernLocation: React.FC = () => {
         setCurrentCharacter('tavern_regular');
         setCurrentCharacterName('Tavern Regular');
         setIsDialogOpen(true);
+      }
+
+      try {
+        const questResponse = await performQuestAction(actionId, 'tavern');
+        
+        if (questResponse.success && questResponse.message) {
+          const questMessage: DialogMessage = {
+            speaker: 'Quest Progress',
+            text: questResponse.message,
+          };
+          setDialogMessages(prev => [...prev, questMessage]);
+        }
+      } catch {
+        console.log('No quest action triggered for:', actionId);
       }
     } catch (error) {
       console.error('Action failed:', error);
@@ -170,6 +200,7 @@ const TavernLocation: React.FC = () => {
         character={currentCharacter}
         characterName={currentCharacterName}
         isOpen={isDialogOpen && currentCharacter !== ''}
+        questActions={questActions} 
         onClose={() => {
           setIsDialogOpen(false);
           setCurrentCharacter('');

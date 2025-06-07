@@ -2,13 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { useGame } from '@/contexts/GameContext';
+import { useQuests } from '@/hooks/useQuests';
 import { gameApi } from '@/services/gameApi';
 import { CheckCircle, Coins, Award, X, RefreshCw } from 'lucide-react';
-import { Quest, Player } from '@/types/game';
+import { Quest } from '@/types/game';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const QuestLocation: React.FC = () => {
-  const { state, dispatch } = useGame();
+  const { state } = useGame();
+  const { acceptQuest: acceptQuestHook, refreshQuests: refreshQuestsHook } = useQuests();
   const [selectedQuest, setSelectedQuest] = useState<Quest | null>(null);
   const [availableQuests, setAvailableQuests] = useState<Quest[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -33,35 +35,20 @@ const QuestLocation: React.FC = () => {
       return;
     }
 
-    dispatch({ type: 'SET_LOADING', payload: true });
-
     try {
-      const response = await gameApi.performAction('quest', 'accept', {
-        questId: quest.id,
-        questTitle: quest.title
-      });
-
-      const acceptedQuest = { ...quest, status: 'active' as const };
-      dispatch({ type: 'ADD_QUEST', payload: acceptedQuest });
+      await acceptQuestHook(quest.id);
       setAvailableQuests((prev: Quest[]) => prev.filter((q: Quest) => q.id !== quest.id));
-
-      if (response.data?.player) {
-        dispatch({ type: 'SET_PLAYER', payload: response.data.player as Player });
-      }
-
       setSelectedQuest(null);
     } catch (error) {
       console.error('Failed to accept quest:', error);
-    } finally {
-      dispatch({ type: 'SET_LOADING', payload: false });
     }
   };
 
   const refreshQuests = async () => {
     setIsLoading(true);
     try {
-      const response = await gameApi.getAvailableQuests();
-      setAvailableQuests(response.quests);
+      const refreshedQuests = await refreshQuestsHook();
+      setAvailableQuests(refreshedQuests);
     } catch (error) {
       console.error('Failed to refresh quests:', error);
     } finally {
@@ -171,7 +158,7 @@ const QuestLocation: React.FC = () => {
               {state.activeQuests.length > 0 ? (
                 <div className="space-y-6">
                   {state.activeQuests.map((quest: Quest, index: number) => (
-                    <motion.div key={quest.id} initial={{ opacity: 0, y: 20 }}
+                    <motion.div key={`quest-${quest.id}-${index}`} initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }} className="bg-gradient-to-br from-yellow-100 to-amber-100 border-3 border-amber-700 rounded-xl p-6 shadow-lg relative"
                       style={{ transform: `rotate(${index % 2 === 0 ? '0.5deg' : '-0.5deg'})`,
                         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(139, 69, 19, 0.1)'}}>

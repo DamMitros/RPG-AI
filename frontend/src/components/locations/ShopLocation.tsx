@@ -2,21 +2,24 @@
 
 import React, { useState, useEffect } from 'react';
 import { useGame } from '@/contexts/GameContext';
+import { useQuests } from '@/hooks/useQuests';
 import { gameApi } from '@/services/gameApi';
 import { Coins, Package, MessageCircle, User, AlertTriangle, ArrowLeft } from 'lucide-react';
-import { InventoryItem } from '@/types/game';
+import { InventoryItem, QuestAction } from '@/types/game';
 import DialogInterface from '@/components/DialogInterface';
 
 type ShopMode = 'menu' | 'buy' | 'sell' | 'talk';
 
 const ShopLocation: React.FC = () => {
   const { state, dispatch } = useGame();
+  const { getQuestActionsForLocation } = useQuests();
   const [shopItems, setShopItems] = useState<InventoryItem[]>([]);
   const [playerInventory, setPlayerInventory] = useState<InventoryItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [shopMessage, setShopMessage] = useState<string>('');
   const [currentMode, setCurrentMode] = useState<ShopMode>('menu');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [questActions, setQuestActions] = useState<QuestAction[]>([]);
 
   useEffect(() => {
     const loadShopData = async () => {
@@ -39,6 +42,20 @@ const ShopLocation: React.FC = () => {
 
     loadShopData();
   }, [dispatch]);
+
+  useEffect(() => {
+    const loadQuestActions = async () => {
+      try {
+        const actions = await getQuestActionsForLocation('shop');
+        setQuestActions(actions);
+      } catch (error) {
+        console.error('Failed to load quest actions:', error);
+        setQuestActions([]);
+      }
+    };
+
+    loadQuestActions();
+  }, [getQuestActionsForLocation, isDialogOpen]); 
 
   const shopActions = [
     {
@@ -105,11 +122,11 @@ const ShopLocation: React.FC = () => {
     }
   };
 
-  const handleSellItem = async (item: InventoryItem) => {
+  const handleSellItem = async (item: InventoryItem, itemIndex: number) => {
     dispatch({ type: 'SET_LOADING', payload: true });
 
     try {
-      const result = await gameApi.sellItem(item.id, 1) as { success: boolean; message?: string };
+      const result = await gameApi.sellItem(itemIndex.toString(), 1) as { success: boolean; message?: string };
       
       if (result.success) {
         const updatedPlayer = await gameApi.getPlayer();
@@ -181,11 +198,11 @@ const ShopLocation: React.FC = () => {
           </button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {itemsToRender.length > 0 ? itemsToRender.map((item) => {
+          {itemsToRender.length > 0 ? itemsToRender.map((item, index) => {
             const canAfford = item.value ? state.player.gold >= item.value : false;
           
           return (
-            <div key={item.id} className={`p-4 rounded-lg border-2 transition-all duration-300 ${canAfford ? 'bg-gradient-to-br from-blue-900/80 via-blue-800/70 to-purple-900/80 border-blue-600 hover:border-blue-400 text-blue-200' : 'bg-gradient-to-br from-gray-800/60 via-gray-700/50 to-gray-800/60 border-gray-600 opacity-50 text-gray-400'}`}>
+            <div key={`buy-${item.id}-${index}`} className={`p-4 rounded-lg border-2 transition-all duration-300 ${canAfford ? 'bg-gradient-to-br from-blue-900/80 via-blue-800/70 to-purple-900/80 border-blue-600 hover:border-blue-400 text-blue-200' : 'bg-gradient-to-br from-gray-800/60 via-gray-700/50 to-gray-800/60 border-gray-600 opacity-50 text-gray-400'}`}>
               <div className="flex flex-col space-y-2">
                 <h4 className={`font-bold text-lg ${canAfford ? 'text-blue-200' : 'text-gray-400'}`}>{item.name}</h4>
                 <p className={`text-sm ${canAfford ? 'text-blue-300' : 'text-gray-500'}`}>{item.description}</p>
@@ -225,11 +242,11 @@ const ShopLocation: React.FC = () => {
           </button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {inventoryToRender.length > 0 ? inventoryToRender.map((item) => {
+          {inventoryToRender.length > 0 ? inventoryToRender.map((item, index) => {
             const sellValue = Math.floor((item.value || 0) / 2);
           
           return (
-            <div key={item.id} className="p-4 rounded-lg border-2 bg-gradient-to-br from-purple-900/80 via-purple-800/70 to-indigo-900/80 border-purple-600 text-purple-200">
+            <div key={`sell-${item.id}-${index}`} className="p-4 rounded-lg border-2 bg-gradient-to-br from-purple-900/80 via-purple-800/70 to-indigo-900/80 border-purple-600 text-purple-200">
               <div className="flex flex-col space-y-2">
                 <h4 className="font-bold text-lg text-purple-200">{item.name}</h4>
                 <p className="text-sm text-purple-300">{item.description}</p>
@@ -240,7 +257,7 @@ const ShopLocation: React.FC = () => {
                   </div>
                   <span className="text-xs text-purple-300">Qty: {item.quantity}</span>
                 </div>
-                <button onClick={() => handleSellItem(item)} disabled={state.isLoading} className="px-3 py-2 rounded font-bold bg-gradient-to-r from-orange-700 to-orange-600 hover:from-orange-600 hover:to-orange-500 text-orange-100 transition-all duration-300 disabled:bg-gray-600 disabled:text-gray-400">
+                <button onClick={() => handleSellItem(item, index)} disabled={state.isLoading} className="px-3 py-2 rounded font-bold bg-gradient-to-r from-orange-700 to-orange-600 hover:from-orange-600 hover:to-orange-500 text-orange-100 transition-all duration-300 disabled:bg-gray-600 disabled:text-gray-400">
                   Sell for {sellValue} gold
                 </button>
               </div>
@@ -321,6 +338,7 @@ const ShopLocation: React.FC = () => {
           characterName="Erik"
           isOpen={isDialogOpen}
           onClose={closeDialog}
+          questActions={questActions}
         />
       )}
     </>

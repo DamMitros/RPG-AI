@@ -2,19 +2,22 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useGame } from '@/contexts/GameContext';
+import { useQuests } from '@/hooks/useQuests';
 import { gameApi } from '@/services/gameApi';
 import { Hammer, Sword, Shield, Wrench, Coins, Flame, MessageCircle } from 'lucide-react';
-import { InventoryItem, Player, CraftingRecipe, SmithyRecipesResponse } from '@/types/game';
+import { InventoryItem, Player, CraftingRecipe, SmithyRecipesResponse, QuestAction } from '@/types/game';
 import DialogInterface from '@/components/DialogInterface';
 
 const SmithyLocation: React.FC = () => {
   const { state, dispatch } = useGame();
+  const { getQuestActionsForLocation } = useQuests();
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogMessage, setDialogMessage] = useState('');
   const [isBlacksmithDialogOpen, setIsBlacksmithDialogOpen] = useState(false);
   const [recipes, setRecipes] = useState<CraftingRecipe[]>([]);
   const [isLoadingRecipes, setIsLoadingRecipes] = useState(false);
+  const [questActions, setQuestActions] = useState<QuestAction[]>([]);
   const loadRecipes = useCallback(async () => {
     if (isLoadingRecipes || recipes.length > 0) return; 
     
@@ -41,6 +44,19 @@ const SmithyLocation: React.FC = () => {
       loadRecipes();
     }
   }, [selectedService, loadRecipes]);
+
+  useEffect(() => {
+    const loadQuestActions = async () => {
+      try {
+        const actions = await getQuestActionsForLocation('smithy');
+        setQuestActions(actions);
+      } catch (error) {
+        console.error('Failed to load quest actions for smithy:', error);
+      }
+    };
+
+    loadQuestActions();
+  }, [getQuestActionsForLocation]);
 
   const smithyServices = [
     {
@@ -238,9 +254,9 @@ const SmithyLocation: React.FC = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {getPlayerEquipment().map((item) => (
+            {getPlayerEquipment().map((item, index) => (
               <button
-                key={`${item.id}-${item.name}`}
+                key={`equipment-${selectedService}-${item.id}-${index}`}
                 onClick={() => handleRepairUpgrade(item, selectedService as 'repair' | 'upgrade')}
                 className="p-4 rounded-lg border-2 border-red-600/50 bg-gradient-to-b from-red-800/20 to-orange-800/20 hover:border-red-400 hover:shadow-lg transition-all duration-200">
                 <div className="flex flex-col items-center text-center space-y-2">
@@ -379,6 +395,7 @@ const SmithyLocation: React.FC = () => {
         characterName="Anja Ironbite"
         isOpen={isBlacksmithDialogOpen}
         onClose={() => setIsBlacksmithDialogOpen(false)}
+        questActions={questActions}
       />
     </div>
   );

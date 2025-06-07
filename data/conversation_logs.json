@@ -4337,5 +4337,480 @@
       "character_specific": false,
       "overall_score": 0.5
     }
+  },
+  {
+    "timestamp": "2025-06-07T11:47:59.776815",
+    "session_id": "_1749289657112",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Cze\u015b\u0107 Bartu\u015b polej mi piwa",
+    "bot_response": "Jestem ciekawy i sztyletni!",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 27,
+    "input_length": 26,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-07T11:49:42.256371",
+    "session_id": "_1749289657112",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Czyli jak?",
+    "bot_response": "Zaczynam si\u0119 od tego co widz\u0119 na niebie jasne s\u0142oneczko w nocy oraz zimn\u0105 krew dobr\u0105 dla mnie Prawdziwie bardzo przyjemna jest to.",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 130,
+    "input_length": 10,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-07T11:50:03.765647",
+    "session_id": "_1749289657112",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Aha rozumiem, nalej mi piwo",
+    "bot_response": "Tak wi\u0119c chocia\u017cby wybierz\u0119 pieni\u0105dz ze swojego skarbu lub jezd\u017acie przez d\u0142ugi czas po drogach podr\u00f3\u017cy Wszystkie mo\u017cemy znacz\u0105co.",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 130,
+    "input_length": 27,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-07T11:52:13.310743",
+    "session_id": "_1749289877895",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Tell me what happend to Tomek? Do you know anything?",
+    "bot_response": "smiling I'm afraid not much has happened yet...",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 47,
+    "input_length": 52,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": true,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.75
+    }
+  },
+  {
+    "timestamp": "2025-06-07T11:52:32.195873",
+    "session_id": "_1749289877895",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "What do you mean? I heard he died?",
+    "bot_response": "Well that was some time ago now..",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 33,
+    "input_length": 34,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-07T12:05:20.486404",
+    "session_id": "_1749290698947",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Hi do you know anything about missing Tomek?",
+    "bot_response": "Yes I have heard rumors that he went to explore an old cave system in this area recently...",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 91,
+    "input_length": 44,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-07T12:06:09.024283",
+    "session_id": "_1749290698947",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Sooo, know anything:?",
+    "bot_response": "Nope!",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 5,
+    "input_length": 21,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": false,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.25
+    }
+  },
+  {
+    "timestamp": "2025-06-07T12:06:24.220857",
+    "session_id": "_1749290698947",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Shame on you",
+    "bot_response": "smiling But don' t worry it happens every year or so; people get lost exploring these caves....and then disappear without trace ...pauses...I hope your friend makes his way back soon .",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 184,
+    "input_length": 12,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-07T13:04:32.389475",
+    "session_id": "_1749294262245",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Heey",
+    "bot_response": "smiling Hey there!",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 18,
+    "input_length": 4,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-07T13:53:13.576300",
+    "session_id": "_1749297182539",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Hii",
+    "bot_response": "smiling Good evening there!",
+    "player_stats": {
+      "level": 2,
+      "gold": 60,
+      "health": 120,
+      "location": "tavern"
+    },
+    "response_length": 27,
+    "input_length": 3,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-07T15:30:51.505793",
+    "session_id": "_1749303035990",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Hi, bartu\u015b how are you?",
+    "bot_response": "I am fine thanks!",
+    "player_stats": {
+      "level": 1,
+      "gold": 130,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 17,
+    "input_length": 23,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-07T15:31:55.763265",
+    "session_id": "_1749303035990",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Tell me about missing Tomek.",
+    "bot_response": "He was my best friend since childhood he left without saying goodbye or leaving any clues as to where we could find him..",
+    "player_stats": {
+      "level": 1,
+      "gold": 130,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 121,
+    "input_length": 28,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-07T15:32:33.982759",
+    "session_id": "_1749303139916",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Hi bartu\u015b how are u?",
+    "bot_response": "Hey there!",
+    "player_stats": {
+      "level": 1,
+      "gold": 130,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 10,
+    "input_length": 20,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-07T15:32:49.397465",
+    "session_id": "_1749303139916",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Tell about Tomek",
+    "bot_response": "He was an adventurer in his youth that left behind many stories of battles fought against dragons or bandits to come back as this man you see before me now...",
+    "player_stats": {
+      "level": 1,
+      "gold": 130,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 158,
+    "input_length": 16,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": true,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.75
+    }
+  },
+  {
+    "timestamp": "2025-06-07T15:47:01.734541",
+    "session_id": "blacksmith_1749304010385",
+    "location": "smithy",
+    "character": "blacksmith",
+    "user_input": "adwdaw",
+    "bot_response": "I've heard that rumor about you being able to create weapons outta scrap metal?",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "smithy"
+    },
+    "response_length": 79,
+    "input_length": 6,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-07T16:02:13.053491",
+    "session_id": "_1749304919952",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Tell me about Tomek",
+    "bot_response": "smiling Oh yes!",
+    "player_stats": {
+      "level": 4,
+      "gold": 627,
+      "health": 160,
+      "location": "tavern"
+    },
+    "response_length": 15,
+    "input_length": 19,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-07T16:14:41.123978",
+    "session_id": "_1749305665062",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Tell me about Tomek",
+    "bot_response": "smiling Oh yes!",
+    "player_stats": {
+      "level": 1,
+      "gold": 130,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 15,
+    "input_length": 19,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-07T16:37:43.396701",
+    "session_id": "merchant_1749307049041",
+    "location": "shop",
+    "character": "merchant",
+    "user_input": "Do you have special package?",
+    "bot_response": "Yes I do!",
+    "player_stats": {
+      "level": 2,
+      "gold": 160,
+      "health": 120,
+      "location": "shop"
+    },
+    "response_length": 9,
+    "input_length": 28,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": false,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.25
+    }
+  },
+  {
+    "timestamp": "2025-06-07T17:16:27.917229",
+    "session_id": "_1749309354769",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Tell me if you know anything about Tomek?",
+    "bot_response": "smiling Of course!",
+    "player_stats": {
+      "level": 4,
+      "gold": 510,
+      "health": 69,
+      "location": "tavern"
+    },
+    "response_length": 18,
+    "input_length": 41,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
   }
 ]

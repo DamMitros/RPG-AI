@@ -18,17 +18,63 @@ class QuestSystem:
 
     def _init_action_locations(self):
         return {
-            "talk_to_bartek": "tavern",
+            # Tavern actions
+            "talk_innkeeper": "tavern",
+            "rest": "tavern",
+            "talk_to_local": "tavern",
+            "talk_regular": "tavern",
+            
+            # Shop (tradesman) actions  
+            "talk_merchant": "shop",  
+            "talk_erik": "shop",  
+            "buy_materials": "shop",
+            "buy_item": "shop",
+            "sell_item": "shop",
+            "browse_wares": "shop",
+            "investigate_items": "shop",
+            
+            # Main Page actions
+            "observe_your_surroundings": "mainPage",
+            "observe_surroundings": "mainPage",
+            "talk_to_townspeople": "mainPage",
+            "follow_a_suspicious_trail": "mainPage",
+            "follow_suspicious_trail": "mainPage",
+            "examine_nearby_building": "mainPage",
+            "examine_buildings": "mainPage",
+            "clear_bandits": "mainPage",
+            "gather_herbs": "mainPage",
+            "explore_village": "mainPage",
+            
+            # Forest actions
+            "explore_deeper": "forest",
+            "hunt_creatures": "forest",
+            "gather_materials": "forest",
+            "search_treasure": "forest",
+            "hunt": "forest",
+            "explore": "forest",
+            "gather": "forest",
+            "search_for_treasure": "forest",
+            
+            # Mine actions
             "investigate_mine": "mine_entrance", 
             "investigate_mine_sounds": "mine_entrance",
-            "clear_bandits": "mainPage",  
-            "gather_herbs": "mainPage",   
-            "talk_to_erik": "tradesman",
-            "investigate_items": "tradesman",
-            "craft_equipment": "smithy",
-            "buy_materials": "tradesman",
-            "use_item": "any",
             "mine_ore": "mine_entrance",
+            "shallow_mining": "mine_entrance",
+            "deep_mining": "mine_entrance",
+            "gem_hunting": "mine_entrance",
+            "abandoned_exploration": "mine_entrance",
+            "explore_mine": "mine_entrance",
+            
+            # Smithy actions
+            "craft_equipment": "smithy",
+            "talk_blacksmith": "smithy",
+            "repair_equipment": "smithy",
+            "upgrade_equipment": "smithy",
+            "craft_weapon": "smithy",
+            "craft_armor": "smithy",
+            
+            # Universal actions
+            "use_item": "any",
             "deliver_item": "any"
         }
         
@@ -296,13 +342,27 @@ class QuestSystem:
     def get_requirement_description(self, requirement):
         descriptions = {
             'talk_to_erik': 'Talk to Erik at the shop',
+            'talk_erik': 'Talk to Erik at the shop', 
+            'talk_merchant': 'Talk to the merchant at the shop',
             'buy_materials': 'Purchase required materials',
             'craft_iron_sword': 'Craft an iron sword',
             'craft_steel_armor': 'Craft steel armor',
             'visit_mine': 'Visit the mine',
             'mine_ore': 'Mine some ore',
+            'investigate_mine_sounds': 'Investigate strange sounds at the mine',
             'explore_forest': 'Explore the forest',
-            'hunt_wolf': 'Hunt a wolf'
+            'hunt_wolf': 'Hunt a wolf',
+            'observe_your_surroundings': 'Observe your surroundings carefully',
+            'observe_surroundings': 'Observe your surroundings carefully',
+            'talk_to_townspeople': 'Talk to the local townspeople',
+            'follow_a_suspicious_trail': 'Follow a suspicious trail',
+            'follow_suspicious_trail': 'Follow a suspicious trail',
+            'examine_nearby_building': 'Examine nearby buildings for clues',
+            'examine_buildings': 'Examine nearby buildings for clues',
+            'rest': 'Rest at the tavern',
+            'talk_to_local': 'Talk to a local patron',
+            'talk_innkeeper': 'Talk to the innkeeper',
+            'talk_regular': 'Talk to a regular customer'
         }
         return descriptions.get(requirement, requirement.replace('_', ' ').title())
 
@@ -365,14 +425,20 @@ class QuestSystem:
             'reward_gold': quest.get('reward_gold', 0),
             'reward_exp': quest.get('reward_exp', 0),
             'contact': quest.get('contact', 'Unknown'),
-            'is_active': quest_id in getattr(player, 'active_quests', [])
+            'is_active': quest_id in getattr(player, 'active_quests', []),
+            'steps': quest.get('steps', [])
         }
+
+        if hasattr(player, 'quest_progress') and quest_id in player.quest_progress:
+            progress = player.quest_progress[quest_id]
+            quest_detail['current_step'] = progress.get('current_step', 0)
+            
+            if 'steps' in progress:
+                quest_detail['steps'] = progress['steps']
         
         progress_display = self.get_quest_progress_display(quest_id, player)
         if progress_display:
             quest_detail['progress'] = progress_display
-        
-        return quest_detail
         
         return quest_detail
     
@@ -449,14 +515,78 @@ class QuestSystem:
         return available_actions
     
     def _can_perform_action_at_location(self, action, location):
-        location_actions = {
-            'mainPage': ['explore_village', 'rest'],
-            'tavern': ['talk_to_barkeep', 'gather_info', 'recruit_help'],
-            'tradesman': ['talk_to_erik', 'buy_materials', 'negotiate'],
-            'smithy': ['craft_iron_sword', 'craft_steel_armor', 'craft_tools', 'repair_equipment'],
-            'mine_entrance': ['visit_mine', 'mine_ore', 'explore_tunnels'],
-            'forest': ['hunt_wolf', 'explore_forest', 'gather_herbs'],
-            'inventory': ['use_item', 'equip_item']
+        action_location = self.action_locations.get(action)
+        
+        if action_location == "any":
+            return True
+
+        location_mapping = {
+            'mainPage': 'mainPage',
+            'tavern': 'tavern', 
+            'shop': 'shop',
+            'smithy': 'smithy',
+            'forest': 'forest',
+            'mine': 'mine_entrance',  
+            'mine_entrance': 'mine_entrance'
         }
         
-        return action in location_actions.get(location, [])
+        mapped_location = location_mapping.get(location, location)
+        
+        return action_location == mapped_location
+    
+    def get_quest_actions_for_location(self, player, location):
+        available_actions = []
+        
+        if not hasattr(player, 'active_quests'):
+            return available_actions
+        
+        for quest_id in player.active_quests:
+            quest = self.get_quest_by_id(quest_id)
+            if not quest:
+                continue
+
+            if 'steps' in quest and hasattr(player, 'quest_progress') and quest_id in player.quest_progress:
+                progress = player.quest_progress[quest_id]
+                current_step_index = progress.get('current_step', 0)
+                steps = progress.get('steps', [])
+                
+                if current_step_index < len(steps):
+                    current_step = steps[current_step_index]
+                    step_location = current_step.get('location', '')
+                    
+                    if step_location == location and not current_step.get('completed', False):
+                        action_info = {
+                            'id': f"{quest_id}_{current_step.get('action', '')}",
+                            'action': current_step.get('action', ''),
+                            'description': current_step.get('description', ''),
+                            'quest_id': quest_id,
+                            'quest_title': quest['title'],
+                            'step_index': current_step_index,
+                            'type': 'quest_step',
+                            'location': location,
+                            'available': True
+                        }
+                        available_actions.append(action_info)
+
+            elif 'completion_requirements' in quest:
+                quest_location = quest.get('location', '')
+                if quest_location == location:
+                    progress = player.quest_progress.get(quest_id, {})
+                    requirements_met = progress.get('requirements_met', [])
+                    
+                    for requirement in quest['completion_requirements']:
+                        if requirement not in requirements_met:
+                            if self._can_perform_action_at_location(requirement, location):
+                                action_info = {
+                                    'id': f"{quest_id}_{requirement}",
+                                    'action': requirement,
+                                    'description': self.get_requirement_description(requirement),
+                                    'quest_id': quest_id,
+                                    'quest_title': quest['title'],
+                                    'type': 'quest_requirement',
+                                    'location': location,
+                                    'available': True
+                                }
+                                available_actions.append(action_info)
+        
+        return available_actions

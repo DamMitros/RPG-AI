@@ -1,5 +1,5 @@
 import api from '@/lib/api';
-import { Player, Quest, InventoryItem, DialogMessage } from '@/types/game';
+import { Player, Quest, InventoryItem, DialogMessage, QuestAction } from '@/types/game';
 
 export const gameApi = {
   async getPlayer(): Promise<Player> {
@@ -45,9 +45,48 @@ export const gameApi = {
     return response.data as { quests: Quest[] };
   },
 
-  async acceptQuest(questId: string): Promise<Quest> {
-    const response = await api.post(`/quest/${questId}/accept`);
+  async getActiveQuests(): Promise<Quest[]> {
+    const response = await api.get('/api/quests/active');
+    return (response.data as { quests: Quest[] }).quests;
+  },
+
+  async generateQuest(questType?: string) {
+    const response = await api.post('/api/quests/generate', { quest_type: questType });
     return response.data as Quest;
+  },
+
+  async refreshQuests() {
+    const response = await api.post('/api/quests/refresh');
+    return response.data as { quests: Quest[] };
+  },
+
+  async acceptQuest(questId: string): Promise<Quest> {
+    const response = await api.post(`/api/quests/${questId}/accept`);
+    return response.data as Quest;
+  },
+
+  async abandonQuest(questId: string): Promise<boolean> {
+    const response = await api.post(`/api/quests/${questId}/abandon`);
+    return response.data as boolean;
+  },
+
+  async getQuestProgress(questId: string) {
+    const response = await api.get(`/api/quests/${questId}/progress`);
+    return response.data;
+  },
+
+  async getQuestActionsForLocation(location: string) {
+    const response = await api.get(`/api/quests/actions/${location}`);
+    return response.data as { actions: QuestAction[] };
+  },
+
+  async performQuestAction(action: string, location: string, questId?: string) {
+    const response = await api.post('/api/quests/action', {
+      action,
+      location,
+      quest_id: questId
+    });
+    return response.data as { success: boolean; message: string; quest_completed?: boolean; rewards?: Record<string, unknown>; player?: Player };
   },
 
   async completeQuest(questId: string): Promise<Quest> {

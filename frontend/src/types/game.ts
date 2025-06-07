@@ -62,6 +62,17 @@ export interface Quest {
   time_limit_hours?: number;
   status?: 'available' | 'active' | 'completed' | 'failed';
   reward?: QuestReward;
+  required_items?: string[];
+  consumes_items?: string[];
+}
+
+export interface QuestAction {
+  action: string;
+  description: string;
+  quest_id: string;
+  quest_title: string;
+  step_index?: number;
+  location?: string;
 }
 
 export interface QuestStep {
