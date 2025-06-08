@@ -1,0 +1,67 @@
+2025-06-08 09:53:21,690 - INFO - Uruchamianie treningu skupionego na: ['medieval_consistency', 'character_authenticity']
+2025-06-08 09:53:21,690 - INFO - Przeprowadzanie skupionej optymalizacji...
+2025-06-08 09:53:21,690 - INFO - Testowanie parametrów: {'temperature': 0.5, 'top_k': 20, 'top_p': 0.8, 'repetition_penalty': 1.5, 'max_new_tokens': 50}
+2025-06-08 09:53:21,691 - INFO - Applying params: {'temperature': 0.5, 'top_k': 20, 'top_p': 0.8, 'repetition_penalty': 1.5, 'max_new_tokens': 50}
+2025-06-08 09:53:30,601 - INFO - Scenariusz medieval_atmosphere_test: 0.395
+2025-06-08 09:53:31,491 - INFO - Scenariusz modern_tech_rejection_test: 0.605
+2025-06-08 09:53:43,150 - INFO - Scenariusz character_consistency_test: 0.395
+2025-06-08 09:53:56,043 - INFO - Scenariusz local_lore_test: 0.400
+2025-06-08 09:53:56,043 - INFO - Restoring original params: {'temperature': 0.7, 'top_k': 25, 'top_p': 0.85, 'repetition_penalty': 1.2, 'max_new_tokens': 80}
+2025-06-08 09:53:56,044 - INFO - Testowanie parametrów: {'temperature': 0.5, 'top_k': 20, 'top_p': 0.8, 'repetition_penalty': 1.8, 'max_new_tokens': 50}
+2025-06-08 09:53:56,044 - INFO - Applying params: {'temperature': 0.5, 'top_k': 20, 'top_p': 0.8, 'repetition_penalty': 1.8, 'max_new_tokens': 50}
+2025-06-08 09:54:04,335 - INFO - Scenariusz medieval_atmosphere_test: 0.395
+2025-06-08 09:54:05,228 - INFO - Scenariusz modern_tech_rejection_test: 0.605
+2025-06-08 09:54:14,898 - INFO - Scenariusz character_consistency_test: 0.395
+2025-06-08 09:54:27,187 - INFO - Scenariusz local_lore_test: 0.400
+2025-06-08 09:54:27,187 - INFO - Restoring original params: {'temperature': 0.7, 'top_k': 25, 'top_p': 0.85, 'repetition_penalty': 1.2, 'max_new_tokens': 80}
+2025-06-08 09:54:27,187 - INFO - Testowanie parametrów: {'temperature': 0.5, 'top_k': 30, 'top_p': 0.8, 'repetition_penalty': 1.5, 'max_new_tokens': 50}
+2025-06-08 09:54:27,188 - INFO - Applying params: {'temperature': 0.5, 'top_k': 30, 'top_p': 0.8, 'repetition_penalty': 1.5, 'max_new_tokens': 50}
+2025-06-08 09:54:36,056 - INFO - Scenariusz medieval_atmosphere_test: 0.395
+2025-06-08 09:54:36,941 - INFO - Scenariusz modern_tech_rejection_test: 0.605
+2025-06-08 09:54:49,221 - INFO - Scenariusz character_consistency_test: 0.395
+2025-06-08 09:54:59,921 - INFO - Scenariusz local_lore_test: 0.400
+2025-06-08 09:54:59,921 - INFO - Restoring original params: {'temperature': 0.7, 'top_k': 25, 'top_p': 0.85, 'repetition_penalty': 1.2, 'max_new_tokens': 80}
+2025-06-08 09:54:59,922 - INFO - Testowanie parametrów: {'temperature': 0.5, 'top_k': 30, 'top_p': 0.8, 'repetition_penalty': 1.8, 'max_new_tokens': 50}
+2025-06-08 09:54:59,922 - INFO - Applying params: {'temperature': 0.5, 'top_k': 30, 'top_p': 0.8, 'repetition_penalty': 1.8, 'max_new_tokens': 50}
+2025-06-08 09:55:07,423 - INFO - Scenariusz medieval_atmosphere_test: 0.395
+2025-06-08 09:55:08,311 - INFO - Scenariusz modern_tech_rejection_test: 0.605
+2025-06-08 09:55:18,343 - INFO - Scenariusz character_consistency_test: 0.395
+2025-06-08 09:55:29,721 - INFO - Scenariusz local_lore_test: 0.400
+2025-06-08 09:55:29,721 - INFO - Restoring original params: {'temperature': 0.7, 'top_k': 25, 'top_p': 0.85, 'repetition_penalty': 1.2, 'max_new_tokens': 80}
+2025-06-08 09:55:29,721 - INFO - Testowanie parametrów: {'temperature': 0.7, 'top_k': 20, 'top_p': 0.8, 'repetition_penalty': 1.5, 'max_new_tokens': 50}
+2025-06-08 09:55:29,721 - INFO - Applying params: {'temperature': 0.7, 'top_k': 20, 'top_p': 0.8, 'repetition_penalty': 1.5, 'max_new_tokens': 50}
+2025-06-08 09:55:39,130 - INFO - Scenariusz medieval_atmosphere_test: 0.395
+2025-06-08 09:55:40,050 - INFO - Scenariusz modern_tech_rejection_test: 0.605
+2025-06-08 09:55:52,160 - INFO - Scenariusz character_consistency_test: 0.395
+2025-06-08 09:56:03,151 - INFO - Scenariusz local_lore_test: 0.400
+2025-06-08 09:56:03,151 - INFO - Restoring original params: {'temperature': 0.7, 'top_k': 25, 'top_p': 0.85, 'repetition_penalty': 1.2, 'max_new_tokens': 80}
+2025-06-08 09:56:03,152 - INFO - Testowanie parametrów: {'temperature': 0.7, 'top_k': 20, 'top_p': 0.8, 'repetition_penalty': 1.8, 'max_new_tokens': 50}
+2025-06-08 09:56:03,152 - INFO - Applying params: {'temperature': 0.7, 'top_k': 20, 'top_p': 0.8, 'repetition_penalty': 1.8, 'max_new_tokens': 50}
+2025-06-08 09:56:12,292 - INFO - Scenariusz medieval_atmosphere_test: 0.395
+2025-06-08 09:56:13,197 - INFO - Scenariusz modern_tech_rejection_test: 0.605
+2025-06-08 09:56:22,866 - INFO - Scenariusz character_consistency_test: 0.395
+2025-06-08 09:56:34,124 - INFO - Scenariusz local_lore_test: 0.400
+2025-06-08 09:56:34,124 - INFO - Restoring original params: {'temperature': 0.7, 'top_k': 25, 'top_p': 0.85, 'repetition_penalty': 1.2, 'max_new_tokens': 80}
+2025-06-08 09:56:34,125 - INFO - Testowanie parametrów: {'temperature': 0.7, 'top_k': 30, 'top_p': 0.8, 'repetition_penalty': 1.5, 'max_new_tokens': 50}
+2025-06-08 09:56:34,125 - INFO - Applying params: {'temperature': 0.7, 'top_k': 30, 'top_p': 0.8, 'repetition_penalty': 1.5, 'max_new_tokens': 50}
+2025-06-08 09:56:42,473 - INFO - Scenariusz medieval_atmosphere_test: 0.395
+2025-06-08 09:56:43,401 - INFO - Scenariusz modern_tech_rejection_test: 0.605
+2025-06-08 09:56:57,609 - INFO - Scenariusz character_consistency_test: 0.395
+2025-06-08 09:57:08,866 - INFO - Scenariusz local_lore_test: 0.400
+2025-06-08 09:57:08,866 - INFO - Restoring original params: {'temperature': 0.7, 'top_k': 25, 'top_p': 0.85, 'repetition_penalty': 1.2, 'max_new_tokens': 80}
+2025-06-08 09:57:08,869 - INFO - Testowanie parametrów: {'temperature': 0.7, 'top_k': 30, 'top_p': 0.8, 'repetition_penalty': 1.8, 'max_new_tokens': 50}
+2025-06-08 09:57:08,869 - INFO - Applying params: {'temperature': 0.7, 'top_k': 30, 'top_p': 0.8, 'repetition_penalty': 1.8, 'max_new_tokens': 50}
+2025-06-08 09:57:17,516 - INFO - Scenariusz medieval_atmosphere_test: 0.395
+2025-06-08 09:57:18,594 - INFO - Scenariusz modern_tech_rejection_test: 0.605
+2025-06-08 09:57:30,908 - INFO - Scenariusz character_consistency_test: 0.395
+2025-06-08 09:57:44,150 - INFO - Scenariusz local_lore_test: 0.400
+2025-06-08 09:57:44,150 - INFO - Restoring original params: {'temperature': 0.7, 'top_k': 25, 'top_p': 0.85, 'repetition_penalty': 1.2, 'max_new_tokens': 80}
+2025-06-08 09:57:44,152 - INFO - Raport zapisany do: training_report_training_20250608_095313.json
+2025-06-08 15:08:19,417 - INFO - Testowanie parametrów: {'temperature': 0.6, 'top_k': 20, 'top_p': 0.8, 'repetition_penalty': 1.8, 'max_new_tokens': 50}
+2025-06-08 15:08:19,418 - INFO - Applying params: {'temperature': 0.6, 'top_k': 20, 'top_p': 0.8, 'repetition_penalty': 1.8, 'max_new_tokens': 50}
+2025-06-08 15:08:29,248 - INFO - Scenariusz medieval_atmosphere_test: 0.350
+2025-06-08 15:08:30,243 - INFO - Scenariusz modern_tech_rejection_test: 0.605
+2025-06-08 15:08:46,173 - INFO - Scenariusz character_consistency_test: 0.350
+2025-06-08 15:08:58,874 - INFO - Scenariusz local_lore_test: 0.350
+2025-06-08 15:08:58,876 - INFO - Restoring original params: {'temperature': 0.7, 'top_k': 25, 'top_p': 0.85, 'repetition_penalty': 1.2, 'max_new_tokens': 80}
+2025-06-08 15:08:58,879 - INFO - Raport zapisany do: training_report_training_20250608_150430.json

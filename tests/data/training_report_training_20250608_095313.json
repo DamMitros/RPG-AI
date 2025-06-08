@@ -1,0 +1,76 @@
+{
+  "training_session": "training_20250608_095313",
+  "timestamp": "2025-06-08T09:57:44.151158",
+  "summary": {
+    "total_tests": 8,
+    "best_score": 0.44875,
+    "worst_score": 0.44875,
+    "average_score": 0.44875,
+    "best_params": null
+  },
+  "scenario_analysis": {
+    "medieval_atmosphere_test": {
+      "average_score": 0.3950000000000001,
+      "best_score": 0.425,
+      "worst_score": 0.35000000000000003,
+      "sample_count": 40
+    },
+    "modern_tech_rejection_test": {
+      "average_score": 0.6050000000000003,
+      "best_score": 0.605,
+      "worst_score": 0.605,
+      "sample_count": 40
+    },
+    "character_consistency_test": {
+      "average_score": 0.3949999999999997,
+      "best_score": 0.395,
+      "worst_score": 0.395,
+      "sample_count": 40
+    },
+    "local_lore_test": {
+      "average_score": 0.4000000000000002,
+      "best_score": 0.39999999999999997,
+      "worst_score": 0.39999999999999997,
+      "sample_count": 40
+    }
+  },
+  "parameter_impact": {
+    "temperature": {
+      "value_averages": {
+        "0.5": 0.44875,
+        "0.7": 0.44875
+      },
+      "best_value": 0.5
+    },
+    "top_k": {
+      "value_averages": {
+        "20": 0.44875,
+        "30": 0.44875
+      },
+      "best_value": 20
+    },
+    "top_p": {
+      "value_averages": {
+        "0.8": 0.44875
+      },
+      "best_value": 0.8
+    },
+    "repetition_penalty": {
+      "value_averages": {
+        "1.5": 0.44875,
+        "1.8": 0.44875
+      },
+      "best_value": 1.5
+    },
+    "max_new_tokens": {
+      "value_averages": {
+        "50": 0.44875
+      },
+      "best_value": 50
+    }
+  },
+  "recommendations": [
+    "Wyniki poniżej 60% - rozważ rozszerzenie bazy wiedzy o świecie gry",
+    "Regularne testowanie na nowych scenariuszach pomoże utrzymać jakość"
+  ]
+}

@@ -1,0 +1,10 @@
+best_parameters:
+  max_new_tokens: 100
+  repetition_penalty: 2.0
+  temperature: 0.9
+  top_k: 20
+  top_p: 0.95
+best_score: 0.45199999999999996
+notes: Automatycznie wygenerowane przez system treningu
+timestamp: '2025-06-08T04:30:02.393498'
+training_session: training_20250607_173944

@@ -76,7 +76,7 @@ def test_conversation_tracking():
         print(f"Response: {response}")
     
     stats = engine.get_conversation_stats(session_id)
-    print(f"\n📈 Conversation Statistics:")
+    print(f"\nConversation Statistics:")
     print(f"Total interactions: {stats.get('total_interactions', 0)}")
     print(f"Average response time: {stats.get('avg_response_time', 0):.2f}s")
     print(f"Character consistency: {stats.get('character_consistency', 0):.2f}")
@@ -110,7 +110,7 @@ def test_character_consistency():
         responses.append(response)
         time.sleep(0.5)
     
-    print(f"\n🔍 Consistency Analysis:")
+    print(f"\nConsistency Analysis:")
     print(f"Total responses: {len(responses)}")
     
     common_words = ["tavern", "ale", "patron", "drink", "gold"]
@@ -142,7 +142,7 @@ def test_error_handling():
     print(f"Response: {response[:100]}...")
 
 def generate_quality_report():
-    print("\n📋 FINAL QUALITY REPORT")
+    print("\nFINAL QUALITY REPORT")
     print("=" * 50)
     
     engine = DialogEngine()

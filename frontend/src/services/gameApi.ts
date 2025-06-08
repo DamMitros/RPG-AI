@@ -181,6 +181,20 @@ export const gameApi = {
     return response.data as Record<string, unknown>;
   },
 
+  async useInventoryItem(itemIndex: number) {
+    const response = await api.post('/api/inventory/use', {
+      itemId: itemIndex.toString()
+    });
+    return response.data as { success: boolean; message: string; data?: { player: Player } };
+  },
+
+  async unequipItem(slot: string) {
+    const response = await api.post('/api/inventory/unequip', {
+      equipment_slot: slot
+    });
+    return response.data as { success: boolean; message: string; data?: { player: Player } };
+  },
+
   async refreshPlayerData(): Promise<Player> {
     return this.getPlayer();
   }

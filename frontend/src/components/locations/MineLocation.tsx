@@ -5,12 +5,14 @@ import { useGame } from '@/contexts/GameContext';
 import { gameApi } from '@/services/gameApi';
 import { Mountain, Pickaxe, Gem, Coins, AlertTriangle, Zap } from 'lucide-react';
 import { DialogMessage, Player } from '@/types/game';
+import DialogInterface from '@/components/DialogInterface';
 
 const MineLocation: React.FC = () => {
   const { state, dispatch } = useGame();
   const [selectedAction, setSelectedAction] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogMessages, setDialogMessages] = useState<DialogMessage[]>([]);
+  const [isStrangerDialogOpen, setIsStrangerDialogOpen] = useState(false);
 
   const mineActions = [
     {
@@ -96,6 +98,29 @@ const MineLocation: React.FC = () => {
     setDialogMessages([]);
   };
 
+  const handleMysteriousStranger = async () => {
+    try {
+      const response = await gameApi.performAction('mine', 'talk_mysterious_stranger');
+      
+      if (response.success && response.data?.character === 'mysterious_stranger') {
+        setIsStrangerDialogOpen(true);
+      } else {
+        const message: DialogMessage = {
+          speaker: 'Mining',
+          text: response.message || 'You sense a presence in the darkness...',
+        };
+        setDialogMessages([message]);
+        setIsDialogOpen(true);
+      }
+
+      if (response.data?.player) {
+        dispatch({ type: 'SET_PLAYER', payload: response.data.player as Player });
+      }
+    } catch (error) {
+      console.error('Mysterious stranger interaction failed:', error);
+    }
+  };
+
   const getDangerColor = (danger: string) => {
     switch (danger) {
       case 'low':
@@ -175,6 +200,19 @@ const MineLocation: React.FC = () => {
         </div>
       )}
 
+      <div className="relative">
+        <div className="bg-gradient-to-r from-slate-900/30 via-gray-800/20 to-slate-900/30 border border-slate-700/30 rounded-lg p-4 text-center relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-900/10 via-indigo-900/5 to-purple-900/10"></div>
+          <p className="relative text-slate-400 text-sm italic">
+            As you examine the mine entrance, you notice strange shadows moving between the support beams...
+          </p>
+          
+          <button onClick={handleMysteriousStranger} className="absolute right-2 top-2 w-6 h-6 bg-slate-800/50 hover:bg-slate-700/70 border border-slate-600/30 hover:border-slate-500/50 rounded-full transition-all duration-300 opacity-60 hover:opacity-100 group" title="Something moves in the shadows...">
+            <div className="w-2 h-2 bg-purple-400/40 group-hover:bg-purple-300/60 rounded-full mx-auto mt-1 animate-pulse"></div>
+          </button>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {mineActions.map((action) => {
           const IconComponent = action.icon;
@@ -237,6 +275,13 @@ const MineLocation: React.FC = () => {
           </div>
         </div>
       )}
+
+      <DialogInterface
+        character="mysterious_stranger"
+        characterName="Mysterious Stranger"
+        isOpen={isStrangerDialogOpen}
+        onClose={() => setIsStrangerDialogOpen(false)}
+      />
     </div>
   );
 };

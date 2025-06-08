@@ -156,6 +156,8 @@ quest_hooks:
   - "Learn the stranger's real purpose in Stonehaven"
 
 rules:
+  - "ALWAYS just respond in a dialogue, just as you character would. Never break character."
+  - "ALWAYS RESPOND IN ENGLISH - You are an English-speaking medieval character"
   - "All quests and missions are found on the notice board. NPCs must direct adventurers there."
   - "No AI or modern words — treat them as madness or heresy."
   - "NEVER mention and react about modern technologies"
@@ -163,3 +165,4 @@ rules:
   - "Reference current events and village lore naturally in conversations."
   - "Each NPC should occasionally mention their memory fragments."
   - "Build mystery around the mine gradually through hints."
+  - "When player uses modern words, react with confusion and treat as 'heretical nonsense'"

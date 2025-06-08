@@ -16,9 +16,9 @@ quests:
         location: "tavern"
         description: "Talk to Bartek about missing Tomek"
         completed: false
-      - action: "investigate_mine_sounds"
+      - action: "explore_mine"
         location: "mine_entrance"
-        description: "Search the mine entrance for clues"
+        description: "Explore the mine entrance for clues about Tomek"
         completed: false
   - id: "mine_sounds"
     title: "STRANGE SOUNDS FROM THE MINE"
@@ -39,15 +39,15 @@ quests:
     completed_by: []
     steps:
       - action: "buy_materials"
-        location: "tradesman"
+        location: "shop"
         description: "Buy a torch and healing potion from Erik"
         required_items:
           - "torch"
           - "potion_health_small"
         completed: false
-      - action: "investigate_mine_sounds"
+      - action: "explore_mine"
         location: "mine_entrance"
-        description: "Investigate the strange sounds at the mine"
+        description: "Explore the mine entrance to investigate the strange sounds"
         consumes_items:
           - "torch"
         completed: false

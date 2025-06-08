@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useGame } from '@/contexts/GameContext';
 import { gameApi } from '@/services/gameApi';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Package, Sword, Shield, Sparkles, Trash2 } from 'lucide-react';
+import { Package, Sword, Shield, Sparkles, Trash2, Play } from 'lucide-react';
 import { InventoryItem, Player } from '@/types/game';
 
 export default function InventoryLocation() {
@@ -43,19 +43,25 @@ export default function InventoryLocation() {
   const handleUseItem = async (item: InventoryItem) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
-
-      const response = await gameApi.performAction('inventory', 'use', {
-        itemId: item.id,
-        itemName: item.name,
-      });
+      const itemIndex = player.inventory.findIndex(invItem => 
+        invItem.id === item.id && invItem.name === item.name
+      );
+      
+      if (itemIndex === -1) {
+        console.error('Item not found in inventory');
+        return;
+      }
+      
+      const response = await gameApi.useInventoryItem(itemIndex);
 
       if (response.data?.player) {
         dispatch({ type: 'SET_PLAYER', payload: response.data.player as Player });
+        setSelectedItem(null); 
       }
 
       console.log('Used the item like a boss:', response.message);
     } catch (error) {
-      console.error('Couldn’t use the item. Chill, we’ll fix it:', error);
+      console.error('Couldn\'t use the item. Chill, we\'ll fix it:', error);
     } finally {
       dispatch({ type: 'SET_LOADING', payload: false });
     }
@@ -77,6 +83,24 @@ export default function InventoryLocation() {
       console.log('Dropped that trash like a pro:', response.message);
     } catch (error) {
       console.error('Dropping failed. Rage quit? Nah, just debugging:', error);
+    } finally {
+      dispatch({ type: 'SET_LOADING', payload: false });
+    }
+  };
+
+  const handleUnequipItem = async (slot: string) => {
+    try {
+      dispatch({ type: 'SET_LOADING', payload: true });
+
+      const response = await gameApi.unequipItem(slot);
+
+      if (response.data?.player) {
+        dispatch({ type: 'SET_PLAYER', payload: response.data.player as Player });
+      }
+
+      console.log('Unequipped item:', response.message);
+    } catch (error) {
+      console.error('Failed to unequip item:', error);
     } finally {
       dispatch({ type: 'SET_LOADING', payload: false });
     }
@@ -125,11 +149,11 @@ export default function InventoryLocation() {
 
       <div className="bg-gradient-to-br from-amber-900/90 via-amber-800/80 to-amber-900/90 border-2 border-amber-700 rounded-lg shadow-[0_0_20px_rgba(218,165,32,0.8)] backdrop-blur-md p-6">
         <h3 className="text-xl font-bold mb-4 text-amber-300 drop-shadow-lg tracking-wider text-center">Currently Equipped</h3>
-        <div className="grid grid-cols-3 gap-4">
-          {['weapon', 'armor', 'accessory'].map((slot) => {
+        <div className="grid grid-cols-4 gap-4">
+          {['weapon', 'armor', 'helmet', 'boots', 'gloves', 'ring', 'tool'].map((slot) => {
             const equipped = player.equippedItems[slot as keyof typeof player.equippedItems];
             const Icon = getItemIcon(slot);
-            const placeholderText = slot === 'weapon' ? 'Weapon' : slot === 'armor' ? 'Armor' : 'Accessory';
+            const placeholderText = slot.charAt(0).toUpperCase() + slot.slice(1);
 
             return (
               <div key={slot} className="text-center">
@@ -140,9 +164,14 @@ export default function InventoryLocation() {
                     <div className="text-amber-500 text-xs font-semibold">{placeholderText}</div>
                   )}
                 </div>
-                <div className="text-xs font-semibold text-amber-200 truncate">
+                <div className="text-xs font-semibold text-amber-200 truncate mb-2">
                   {equipped?.name || `No ${placeholderText.toLowerCase()}`}
                 </div>
+                {equipped && (
+                  <button onClick={() => handleUnequipItem(slot)} disabled={state.isLoading} className="bg-gradient-to-r from-red-800 via-red-700 to-red-800 border border-red-600 rounded px-2 py-1 text-xs text-red-200 font-semibold hover:from-red-700 hover:via-red-600 hover:to-red-700 hover:shadow-[0_0_10px_rgba(239,68,68,0.5)] transition-all duration-300 disabled:opacity-50">
+                    Unequip
+                  </button>
+                )}
               </div>
             );
           })}
@@ -219,7 +248,10 @@ export default function InventoryLocation() {
               </div>
 
               <div className="flex gap-4 mt-8">
-                <button onClick={() => handleUseItem(selectedItem)} className="bg-gradient-to-r from-green-800 via-green-700 to-green-800 border-2 border-green-600 rounded-lg px-6 py-3 text-green-200 font-semibold hover:bg-gradient-to-r hover:from-green-700 hover:via-green-600 hover:to-green-700 hover:shadow-[0_0_15px_rgba(34,197,94,0.6)] transition-all duration-300 flex-1">Use</button>
+                <button onClick={() => handleUseItem(selectedItem)} className="bg-gradient-to-r from-green-800 via-green-700 to-green-800 border-2 border-green-600 rounded-lg px-6 py-3 text-green-200 font-semibold hover:bg-gradient-to-r hover:from-green-700 hover:via-green-600 hover:to-green-700 hover:shadow-[0_0_15px_rgba(34,197,94,0.6)] transition-all duration-300 flex-1 flex items-center justify-center gap-2">
+                  <Play className="w-4 h-4" />
+                  Use
+                </button>
                 <button onClick={() => handleDropItem(selectedItem)} className="bg-gradient-to-r from-red-800 via-red-700 to-red-800 border-2 border-red-600 rounded-lg px-4 py-3 text-red-200 font-semibold hover:bg-gradient-to-r hover:from-red-700 hover:via-red-600 hover:to-red-700 hover:shadow-[0_0_15px_rgba(239,68,68,0.6)] transition-all duration-300 flex items-center justify-center">
                   <Trash2 className="w-5 h-5" />
                 </button>

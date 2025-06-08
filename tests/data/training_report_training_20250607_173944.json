@@ -1,0 +1,95 @@
+{
+  "training_session": "training_20250607_173944",
+  "timestamp": "2025-06-08T04:30:02.379040",
+  "summary": {
+    "total_tests": 1024,
+    "best_score": 0.45199999999999996,
+    "worst_score": 0.44225,
+    "average_score": 0.4487443847656305,
+    "best_params": {
+      "temperature": 0.9,
+      "top_k": 20,
+      "top_p": 0.95,
+      "repetition_penalty": 2.0,
+      "max_new_tokens": 100
+    }
+  },
+  "scenario_analysis": {
+    "medieval_atmosphere_test": {
+      "average_score": 0.39496484374996615,
+      "best_score": 0.425,
+      "worst_score": 0.29500000000000004,
+      "sample_count": 5120
+    },
+    "modern_tech_rejection_test": {
+      "average_score": 0.6050000000000162,
+      "best_score": 0.605,
+      "worst_score": 0.605,
+      "sample_count": 5120
+    },
+    "character_consistency_test": {
+      "average_score": 0.39501269531248473,
+      "best_score": 0.46,
+      "worst_score": 0.395,
+      "sample_count": 5120
+    },
+    "local_lore_test": {
+      "average_score": 0.4000000000000374,
+      "best_score": 0.39999999999999997,
+      "worst_score": 0.39999999999999997,
+      "sample_count": 5120
+    }
+  },
+  "parameter_impact": {
+    "temperature": {
+      "value_averages": {
+        "0.3": 0.448745117187501,
+        "0.5": 0.448750000000001,
+        "0.7": 0.448745117187501,
+        "0.9": 0.448737304687501
+      },
+      "best_value": 0.5
+    },
+    "top_k": {
+      "value_averages": {
+        "10": 0.44872460937500097,
+        "20": 0.44876269531250096,
+        "30": 0.448740234375001,
+        "50": 0.448750000000001
+      },
+      "best_value": 20
+    },
+    "top_p": {
+      "value_averages": {
+        "0.6": 0.448750000000001,
+        "0.8": 0.44872460937500097,
+        "0.9": 0.448740234375001,
+        "0.95": 0.44876269531250096
+      },
+      "best_value": 0.95
+    },
+    "repetition_penalty": {
+      "value_averages": {
+        "1.2": 0.448750000000001,
+        "1.5": 0.448750000000001,
+        "1.8": 0.448719726562501,
+        "2.0": 0.44875781250000096
+      },
+      "best_value": 2.0
+    },
+    "max_new_tokens": {
+      "value_averages": {
+        "30": 0.448750000000001,
+        "50": 0.448750000000001,
+        "80": 0.448750000000001,
+        "100": 0.44872753906250096
+      },
+      "best_value": 30
+    }
+  },
+  "recommendations": [
+    "Wyniki poniżej 60% - rozważ rozszerzenie bazy wiedzy o świecie gry",
+    "Wysoka temperatura może powodować niespójne odpowiedzi",
+    "Regularne testowanie na nowych scenariuszach pomoże utrzymać jakość"
+  ]
+}

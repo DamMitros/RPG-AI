@@ -2,7 +2,11 @@
     {
       "id": "potion_health_small",
       "name": "Small Health Potion",
+      "type": "potion",
       "description": "Restores a small amount of health.",
+      "effects": {
+        "health": 25
+      },
       "price": 15,
       "sell_value": 5,
       "quantity": 10
@@ -10,6 +14,7 @@
     {
       "id": "torch",
       "name": "Torch",
+      "type": "tool",
       "description": "Provides light in dark places.",
       "price": 5,
       "sell_value": 1,
@@ -18,7 +23,12 @@
     {
       "id": "bread",
       "name": "Loaf of Bread",
+      "type": "consumable",
       "description": "Simple sustenance.",
+      "effects": {
+        "health": 5,
+        "stamina": 10
+      },
       "price": 3,
       "sell_value": 1,
       "quantity": 15
@@ -26,14 +36,28 @@
     {
       "id": "dagger_rusty",
       "name": "Rusty Dagger",
+      "type": "weapon",
       "description": "A basic, worn dagger.",
+      "damage": 3,
       "price": 10,
       "sell_value": 3,
+      "quantity": 5
+    },
+    {
+      "id": "ring_simple",
+      "name": "Simple Ring",
+      "type": "ring",
+      "description": "A basic ring that provides minor bonuses.",
+      "strength": 1,
+      "intelligence": 1,
+      "price": 25,
+      "sell_value": 8,
       "quantity": 3
     },
     {
       "id": "iron_ingot",
       "name": "Iron Ingot",
+      "type": "material",
       "description": "Raw iron ready for forging.",
       "price": 8,
       "sell_value": 3,
@@ -42,6 +66,7 @@
     {
       "id": "steel_ingot",
       "name": "Steel Ingot",
+      "type": "material",
       "description": "High-quality steel ingot.",
       "price": 12,
       "sell_value": 5,
@@ -58,6 +83,7 @@
     {
       "id": "oak_handle",
       "name": "Oak Handle",
+      "type": "material",
       "description": "Sturdy oak wood handle.",
       "price": 5,
       "sell_value": 2,
@@ -66,6 +92,7 @@
     {
       "id": "thick_leather",
       "name": "Thick Leather",
+      "type": "material",
       "description": "Heavy leather hide for armor.",
       "price": 6,
       "sell_value": 2,
@@ -74,6 +101,7 @@
     {
       "id": "iron_studs",
       "name": "Iron Studs",
+      "type": "material",
       "description": "Small iron studs for armor.",
       "price": 4,
       "sell_value": 1,
@@ -82,6 +110,7 @@
     {
       "id": "chain_links",
       "name": "Chain Links",
+      "type": "material",
       "description": "Pre-made iron chain links.",
       "price": 7,
       "sell_value": 3,

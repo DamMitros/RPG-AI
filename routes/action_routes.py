@@ -3,6 +3,7 @@ import random
 from .forest_routes import handle_forest_action
 from .mine_routes import handle_mine_action
 from .smithy_routes import handle_smithy_action
+from .inventory_routes import handle_inventory_action
 
 action_bp = Blueprint('action', __name__)
 
@@ -21,6 +22,8 @@ def perform_action():
         return handle_mine_action(player, action, data)
     elif location == 'smithy':
         return handle_smithy_action(player, action, data)
+    elif location == 'inventory':
+        return handle_inventory_action(player, action, data)
     
     try:
         if action == 'observe_your_surroundings':
@@ -209,3 +212,171 @@ def perform_action():
             'message': f'Error performing action: {str(e)}',
             'data': {}
         })
+
+def handle_inventory_action(player, action, data):
+    """Handle inventory-related actions"""
+    try:
+        if action == 'use':
+            # Get item ID from data
+            item_id = data.get('itemId', '') or data.get('item_id', '')
+            
+            try:
+                item_index = int(item_id)
+                if 0 <= item_index < len(player.inventory):
+                    item = player.inventory[item_index]
+                    
+                    # Handle different item types
+                    if item.get('type') in ['potion', 'consumable']:
+                        return handle_consumable_use(player, item, item_index)
+                    elif item.get('type') in ['weapon', 'armor', 'helmet', 'boots', 'gloves', 'ring', 'tool']:
+                        return handle_equipment_use(player, item, item_index)
+                    else:
+                        return {
+                            'success': False,
+                            'message': f'{item["name"]} cannot be used.',
+                            'data': {}
+                        }
+                else:
+                    return {
+                        'success': False,
+                        'message': 'Item not found in inventory.',
+                        'data': {}
+                    }
+            except (ValueError, IndexError):
+                return {
+                    'success': False,
+                    'message': 'Invalid item ID.',
+                    'data': {}
+                }
+                
+        elif action == 'unequip':
+            slot = data.get('slot', '')
+            
+            if not hasattr(player, 'equipment') or slot not in player.equipment:
+                return {
+                    'success': False,
+                    'message': 'No equipment system or invalid slot.',
+                    'data': {}
+                }
+            
+            if not player.equipment[slot]:
+                return {
+                    'success': False,
+                    'message': f'No item equipped in {slot} slot.',
+                    'data': {}
+                }
+            
+            # Move equipped item back to inventory
+            item = player.equipment[slot]
+            player.inventory.append(item)
+            player.equipment[slot] = None
+            
+            # Update stats
+            player.update_stats_based_on_equipment()
+            
+            return {
+                'success': True,
+                'message': f'Unequipped {item["name"]}!',
+                'data': {'player': player.to_dict()}
+            }
+        else:
+            return {
+                'success': False,
+                'message': f'Unknown inventory action: {action}',
+                'data': {}
+            }
+            
+    except Exception as e:
+        return {
+            'success': False,
+            'message': f'Error in inventory action: {str(e)}',
+            'data': {}
+        }
+
+def handle_consumable_use(player, item, item_index):
+    """Handle consumable items like potions and food"""
+    effects = item.get('effects', {})
+    messages = []
+    
+    # Health restoration
+    if 'health' in effects:
+        health_restore = effects['health']
+        old_health = player.health
+        player.health = min(player.max_health, player.health + health_restore)
+        actual_restore = player.health - old_health
+        if actual_restore > 0:
+            messages.append(f'restored {actual_restore} health')
+    
+    # Mana restoration
+    if 'mana' in effects:
+        mana_restore = effects['mana']
+        old_mana = player.mana
+        player.mana = min(player.max_mana, player.mana + mana_restore)
+        actual_restore = player.mana - old_mana
+        if actual_restore > 0:
+            messages.append(f'restored {actual_restore} mana')
+    
+    # Stamina restoration
+    if 'stamina' in effects:
+        stamina_restore = effects['stamina']
+        old_stamina = getattr(player, 'stamina', 100)
+        max_stamina = getattr(player, 'max_stamina', 100)
+        new_stamina = min(max_stamina, old_stamina + stamina_restore)
+        player.stamina = new_stamina
+        actual_restore = new_stamina - old_stamina
+        if actual_restore > 0:
+            messages.append(f'restored {actual_restore} stamina')
+    
+    # Experience gain
+    if 'experience' in effects:
+        exp_gain = effects['experience']
+        player.add_experience(exp_gain)
+        messages.append(f'gained {exp_gain} experience')
+    
+    # Reduce quantity or remove item
+    if item.get('quantity', 1) > 1:
+        item['quantity'] -= 1
+    else:
+        player.inventory.pop(item_index)
+    
+    message = f'Used {item["name"]}'
+    if messages:
+        message += ' and ' + ', '.join(messages) + '!'
+    else:
+        message += '!'
+    
+    return {
+        'success': True,
+        'message': message,
+        'data': {'player': player.to_dict()}
+    }
+
+def handle_equipment_use(player, item, item_index):
+    """Handle equipment items - equipping/unequipping"""
+    item_type = item.get('type')
+    
+    # Initialize equipment if not exists
+    if not hasattr(player, 'equipment'):
+        player.equipment = {
+            'weapon': None, 'armor': None, 'helmet': None,
+            'boots': None, 'gloves': None, 'ring': None, 'tool': None
+        }
+    
+    # Check if slot is occupied
+    current_equipped = player.equipment.get(item_type)
+    if current_equipped:
+        # Move current item back to inventory
+        player.inventory.append(current_equipped)
+    
+    # Equip new item
+    player.equipment[item_type] = item
+    player.inventory.pop(item_index)
+    
+    # Update stats based on equipment
+    player.update_stats_based_on_equipment()
+    
+    return {
+        'success': True,
+        'message': f'Equipped {item["name"]}!',
+        'data': {'player': player.to_dict()}
+    }

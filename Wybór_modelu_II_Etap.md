@@ -2,7 +2,7 @@
 
 ## Dodatkowe Testy Kandydatów i Ostateczna Decyzja
 
-Po wstępnych testach podstawowych modeli przeprowadzono dodatkowe eksperymenty z nowszymi kandydatami, koncentrując się na balansie między jakością a wydajnością.
+Po wstępnych testach podstawowych modeli przeprowadzono dodatkowe eksperymenty z nowszymi kandydatami, koncentrując się na balansie między jakością a wydajnością. Problem wydajności stał się zbyt uciążliwy, nie możliwy do obejścia przy `Phi-1.5`. Wypróbowane zostaną dodatkowe modele mając na celu znaczną poprawe wydajności.
 
 ### 7. **Rozszerzone Testy Modeli:**
 
@@ -15,7 +15,7 @@ NPC: Ah! The barren land is not that far from here; you're in an ancient ruin to
 
 **Obserwacje:**
 - **Wydajność:** Znacznie lepsza niż `phi-2`, porównywalny czas odpowiedzi do `Phi-1.5`
-- **Jakość:** Zaskakująco dobre utrzymywanie kontekstu fantasy i atmosfery
+- **Jakość:** Zaskakująco dobre utrzymywanie kontekstu fantasy i atmosfery ( w porównaniu z wcześniejszymi testami tego modelu)
 - **Charakteryzacja:** Model wykazuje potencjał do dobrego wcielania się w role, ale wymaga dokładnej charakteryzacji przez prompt engineering
 - **Stabilność:** Konsekwentne odpowiedzi, mniejsza tendencja do "gubienia wątku"
 
@@ -36,7 +36,7 @@ NPC: Greetings! You find yourself at the Tawny Lion, a lively yet humble inn sit
 
 ### 8. **Ostateczna Decyzja: TinyLlama-1.1B-Chat-v1.0**
 
-Po dogłębnej analizie wszystkich kandydatów podjęto decyzję o wyborze modelu `TinyLlama/TinyLlama-1.1B-Chat-v1.0` jako podstawy silnika dialogowego z następujących powodów:
+Po analizie wszystkich kandydatów podjęto decyzję o wyborze modelu `TinyLlama/TinyLlama-1.1B-Chat-v1.0` jako podstawy silnika dialogowego z następujących powodów:
 
 **Uzasadnienie wyboru:**
 - **Optymalna wydajność:** Szybkie czasy odpowiedzi przy zachowaniu dobrej jakości
