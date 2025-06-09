@@ -92,25 +92,36 @@ class DialogEngine:
       with torch.no_grad():
         output = self.model.generate(
           **inputs,
-          max_new_tokens=60,      # długość odpowiedzi
-          temperature=0.8,       # balans kreatywności
-          top_k=30,             # unikanie repetycji
-          top_p=0.9,            # dynamiczny sampling
-          repetition_penalty=1.8, # zapobieganie powtórzeniom
+          max_new_tokens=80,      # ograniczenie długości odpowiedzi
+          temperature=0.7,        # kreatywność/losowość odpowiedzi
+          top_k=40,              # top-k najbardziej prawdopodobnych tokenów
+          top_p=0.85,            # suma prawdopodobieństw tokenów
+          repetition_penalty=1.2, # kara za powtarzanie się
           do_sample=True,
-          no_repeat_ngram_size=4,
+          no_repeat_ngram_size=3,
           pad_token_id=self.tokenizer.eos_token_id,
           eos_token_id=self.tokenizer.eos_token_id,
           use_cache=True,
-          early_stopping=True
+          early_stopping=False 
         )
 
       full_text = self.tokenizer.decode(output[0], skip_special_tokens=True)
       
       print(f"[DEBUG] Generated full text: {full_text}")
 
-      character_name = self.characters[character]['name']
-      response = extract_character_response(full_text, character_name, character)
+      input_text = self.tokenizer.decode(inputs.input_ids[0], skip_special_tokens=True)
+      if full_text.startswith(input_text):
+        generated_only = full_text[len(input_text):].strip()
+        print(f"[DEBUG] Generated content only: '{generated_only}'")
+        if generated_only.strip():
+          character_name = self.characters[character]['name']
+          response = extract_character_response(generated_only, character_name, character)
+        else:
+          character_name = self.characters[character]['name']
+          response = extract_character_response(full_text, character_name, character)
+      else:
+        character_name = self.characters[character]['name']
+        response = extract_character_response(full_text, character_name, character)
       history_key = f"{session_id}_{character}"
       recent_responses = [turn['npc'] for turn in self.conversation_history.get(history_key, [])[-5:]]
       
