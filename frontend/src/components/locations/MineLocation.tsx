@@ -6,14 +6,15 @@ import { gameApi } from '@/services/gameApi';
 import { Mountain, Pickaxe, Gem, Coins, AlertTriangle, Zap } from 'lucide-react';
 import { DialogMessage, Player } from '@/types/game';
 import DialogInterface from '@/components/DialogInterface';
+import { useQuests } from '@/hooks/useQuests';
 
 const MineLocation: React.FC = () => {
   const { state, dispatch } = useGame();
+  const { performQuestAction } = useQuests();
   const [selectedAction, setSelectedAction] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogMessages, setDialogMessages] = useState<DialogMessage[]>([]);
   const [isStrangerDialogOpen, setIsStrangerDialogOpen] = useState(false);
-
   const mineActions = [
     {
       id: 'shallow_mining',
@@ -67,16 +68,30 @@ const MineLocation: React.FC = () => {
     setSelectedAction(actionId);
 
     try {
+      const questResponse = await performQuestAction(actionId, 'mine');
+      let questMessage = '';
+      
+      if (questResponse.success && questResponse.message && !questResponse.message.includes('No quest progress')) {
+        questMessage = questResponse.message;
+      }
+      
       const response = await gameApi.performAction('mine', actionId);
+      let finalMessage = response.message || `You completed ${actionId} in the mines.`;
+
+      if (questMessage) {
+        finalMessage = `${questMessage}\n\n${finalMessage}`;
+      }
       
       const message: DialogMessage = {
         speaker: 'Mining Result',
-        text: response.message || `You completed ${actionId} in the mines.`,
+        text: finalMessage,
       };
       setDialogMessages([message]);
       setIsDialogOpen(true);
 
-      if (response.data?.player) {
+      if (questResponse.player) {
+        dispatch({ type: 'SET_PLAYER', payload: questResponse.player as Player });
+      } else if (response.data?.player) {
         dispatch({ type: 'SET_PLAYER', payload: response.data.player as Player });
       }
     } catch (error) {
@@ -100,20 +115,47 @@ const MineLocation: React.FC = () => {
 
   const handleMysteriousStranger = async () => {
     try {
-      const response = await gameApi.performAction('mine', 'talk_mysterious_stranger');
+      const questResponse = await performQuestAction('talk_mysterious_stranger', 'mine');
+      let questMessage = '';
       
+      if (questResponse.success && questResponse.message && !questResponse.message.includes('No quest progress')) {
+        questMessage = questResponse.message;
+      }
+      
+      const response = await gameApi.performAction('mine', 'talk_mysterious_stranger');
+
       if (response.success && response.data?.character === 'mysterious_stranger') {
-        setIsStrangerDialogOpen(true);
+        if (questMessage) {
+          const message: DialogMessage = {
+            speaker: 'Quest Progress',
+            text: questMessage,
+          };
+          setDialogMessages([message]);
+          setIsDialogOpen(true);
+          setTimeout(() => {
+            setIsDialogOpen(false);
+            setIsStrangerDialogOpen(true);
+          }, 2000);
+        } else {
+          setIsStrangerDialogOpen(true);
+        }
       } else {
+        let finalMessage = response.message || 'You sense a presence in the darkness...';
+        if (questMessage) {
+          finalMessage = `${questMessage}\n\n${finalMessage}`;
+        }
+        
         const message: DialogMessage = {
           speaker: 'Mining',
-          text: response.message || 'You sense a presence in the darkness...',
+          text: finalMessage,
         };
         setDialogMessages([message]);
         setIsDialogOpen(true);
       }
 
-      if (response.data?.player) {
+      if (questResponse.player) {
+        dispatch({ type: 'SET_PLAYER', payload: questResponse.player as Player });
+      } else if (response.data?.player) {
         dispatch({ type: 'SET_PLAYER', payload: response.data.player as Player });
       }
     } catch (error) {

@@ -17,7 +17,7 @@ def create_app():
   quest_system = QuestSystem(dialog_engine)
   crafting_system = CraftingSystem()
   player = Player(name="Demo")
-    
+
   try:
     with open('merchant_inventory.json', 'r') as f:
       merchant_inventory_data = json.load(f)

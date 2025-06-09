@@ -1,0 +1,86 @@
+quest_templates:
+  investigation:
+    title: "INVESTIGATE VILLAGE MYSTERIES"
+    description: "Strange occurrences have been reported around the village. Investigate and report your findings."
+    contact: "Village Elder"
+    reward_gold: 30
+    reward_exp: 60
+    type: "investigation"
+    difficulty: "easy"
+    requirements:
+      - "level >= 1"
+    completion_requirements:
+      - "observe_your_surroundings"
+      - "talk_to_townspeople"
+    steps:
+      - action: "observe_your_surroundings"
+        location: "mainPage"
+        description: "Look around for anything unusual"
+        completed: false
+      - action: "talk_to_townspeople"
+        location: "mainPage"
+        description: "Ask locals about recent events"
+        completed: false
+
+  delivery:
+    title: "URGENT PACKAGE DELIVERY"
+    description: "A package needs to be delivered to the tavern keeper. Handle with care."
+    contact: "Erik the Merchant"
+    reward_gold: 25
+    reward_exp: 50
+    type: "delivery"
+    difficulty: "easy"
+    requirements:
+      - "level >= 1"
+    completion_requirements:
+      - "talk"
+      - "talk_innkeeper"
+    steps:
+      - action: "talk"
+        location: "shop"
+        description: "Collect the package from Erik"
+        completed: false
+      - action: "talk_innkeeper"
+        location: "tavern"
+        description: "Deliver to the innkeeper"
+        completed: false
+
+  forest_exploration:
+    title: "EXPLORE THE WHISPERING WOODS"
+    description: "The old woods are said to hide many secrets. Venture into its depths and see what you can find."
+    contact: "A mysterious note found on a tree"
+    reward_gold: 40
+    reward_exp: 75
+    type: "exploration"
+    difficulty: "easy"
+    requirements:
+      - "level >= 1"
+    steps:
+      - action: "explore_forest"
+        location: "forest"
+        description: "Head deeper into the Whispering Woods."
+        completed: false
+      - action: "search_treasure"
+        location: "forest"
+        description: "Look for any hidden caches or items of interest."
+        completed: false
+
+  mine_expedition:
+    title: "PROSPECT THE ABANDONED MINE"
+    description: "The old mine might still hold some valuable ores or perhaps something more sinister. Investigate the shallow tunnels."
+    contact: "An old prospector's map"
+    reward_gold: 45
+    reward_exp: 80
+    type: "exploration"
+    difficulty: "easy"
+    requirements:
+      - "level >= 1"
+    steps:
+      - action: "shallow_mining"
+        location: "mine"
+        description: "Explore the upper levels of the abandoned mine."
+        completed: false
+      - action: "gem_hunting"
+        location: "mine"
+        description: "Keep an eye out for any sparkling gems."
+        completed: false

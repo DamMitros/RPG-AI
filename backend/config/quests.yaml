@@ -1,0 +1,121 @@
+quests:
+  - id: "missing_miner"
+    title: "MISSING PERSON - REWARD OFFERED"
+    description: "Tomek the Miner has been missing for three days. Last seen heading toward the old silver mine entrance. Young man, brown hair, wearing mining clothes. His family is desperate for news."
+    contact: "Bartek at the Tawny Lion Inn"
+    reward_gold: 50
+    reward_exp: 100
+    type: "urgent"
+    requirements: []
+    completion_requirements:
+      - "talk_innkeeper"
+      - "investigate_mine_sounds"
+    completed_by: []
+    steps:
+      - action: "talk_innkeeper"
+        location: "tavern"
+        description: "Talk to Bartek about missing Tomek"
+        completed: false
+      - action: "abandoned_exploration"
+        location: "mine"
+        description: "Explore abandoned shafts for clues about Tomek"
+        completed: false
+  # - id: "mine_sounds"
+  #   title: "STRANGE SOUNDS FROM THE MINE"
+  #   description: "Villagers report hearing unnatural sounds echoing from the abandoned silver mine at night. Brave souls wanted to investigate. Extreme caution advised."
+  #   contact: "Village elders"
+  #   reward_gold: 75
+  #   reward_exp: 150
+  #   type: "urgent"
+  #   requirements:
+  #     - "level >= 2"
+  #   required_items:
+  #     - "torch"
+  #     - "potion_health_small"
+  #   consumes_items:
+  #     - "torch"
+  #   completion_requirements:
+  #     - "investigate_mine_sounds"
+  #   completed_by: []
+  #   steps:
+  #     - action: "buy_materials"
+  #       location: "shop"
+  #       description: "Buy a torch and healing potion from Erik"
+  #       required_items:
+  #         - "torch"
+  #         - "potion_health_small"
+  #       completed: false
+  #     - action: "explore_mine"
+  #       location: "mine"
+  #       description: "Explore the mine to investigate the strange sounds"
+  #       consumes_items:
+  #         - "torch"
+  #       completed: false
+  - id: "forest_exploration"
+    title: "Forest Expedition"
+    description: "The village elder has requested assistance in exploring the nearby forest. Various tasks need to be completed to ensure the safety and prosperity of the village."
+    contact: "Village Elder"
+    reward_gold: 100
+    reward_exp: 200
+    type: "exploration"
+    requirements: []
+    completion_requirements:
+      - "explore_forest"
+      - "hunt_creatures"
+      - "gather_materials"
+      - "search_treasure"
+    completed_by: []
+    steps:
+      - action: "explore_forest"
+        location: "forest"
+        description: "Explore the forest"
+        completed: false
+      - action: "hunt_creatures"
+        location: "forest"
+        description: "Hunt creatures in the forest"
+        completed: false
+      - action: "gather_materials"
+        location: "forest"
+        description: "Gather materials from the forest"
+        completed: false
+      - action: "search_treasure"
+        location: "forest"
+        description: "Search for treasure in the forest"
+        completed: false
+  - id: "comprehensive_mine_expedition"
+    title: "THE GREAT MINE EXPEDITION"
+    description: "The mining guild has commissioned a comprehensive survey of the entire mine complex. This dangerous undertaking requires exploring every level, from the safe upper tunnels to the mysterious abandoned depths. Strange reports from miners speak of unusual gems, forgotten treasures, and shadowy figures in the deepest shafts. Only the most skilled adventurers should attempt this quest."
+    contact: "Master Miner Gareth at the Mining Guild"
+    reward_gold: 200
+    reward_exp: 400
+    type: "exploration"
+    requirements:
+      - "level >= 5"
+    completion_requirements:
+      - "shallow_mining"
+      - "deep_mining"
+      - "gem_hunting"
+      - "abandoned_exploration"
+      - "talk_mysterious_stranger"
+    completed_by: []
+    steps:
+      - action: "shallow_mining"
+        location: "mine"
+        description: "Begin the expedition by surveying the upper mine levels"
+        completed: false
+      - action: "deep_mining"
+        location: "mine"
+        description: "Descend to the dangerous deep tunnels for rare materials"
+        completed: false
+      - action: "gem_hunting"
+        location: "mine"
+        description: "Search the mineral veins for precious gems and crystals"
+        completed: false
+      - action: "abandoned_exploration"
+        location: "mine"
+        description: "Investigate the long-abandoned sections for forgotten treasures"
+        completed: false
+      - action: "talk_mysterious_stranger"
+        location: "mine"
+        description: "Confront the mysterious figure seen in the deepest shadows"
+        completed: false

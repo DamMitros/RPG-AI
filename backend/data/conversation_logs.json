@@ -1,0 +1,577 @@
+[
+  {
+    "timestamp": "2025-06-09T00:43:39.015076",
+    "session_id": "_1749422606765",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Hiii, do you know anything about Tomek?",
+    "bot_response": "Never met him before!",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 21,
+    "input_length": 39,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-09T00:43:58.659017",
+    "session_id": "mysterious_stranger_1749422626638",
+    "location": "mine_entrance",
+    "character": "mysterious_stranger",
+    "user_input": "hii",
+    "bot_response": "...Strangely enough.....",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "mine_entrance"
+    },
+    "response_length": 24,
+    "input_length": 3,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": true,
+      "overall_score": 0.75
+    }
+  },
+  {
+    "timestamp": "2025-06-09T10:48:59.893960",
+    "session_id": "merchant_1749458924739",
+    "location": "shop",
+    "character": "merchant",
+    "user_input": "Hi i heard you have a package for me:3?",
+    "bot_response": "\u201cYeah right matey\u2026\u201d He holds out one hand towards them while gesturing wildly around him indicating various objects scattered on tables outside the doorway leading into this quaint little inn called \u2018The Foolish Bard.",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "shop"
+    },
+    "response_length": 217,
+    "input_length": 39,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": true,
+      "appropriate_length": false,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-09T10:49:13.212828",
+    "session_id": "merchant_1749458924739",
+    "location": "shop",
+    "character": "merchant",
+    "user_input": "Okay give it to me",
+    "bot_response": "Good day! I'm Erik, merchant of fine goods. How may I serve ye?",
+    "player_stats": {
+      "level": 1,
+      "gold": 100,
+      "health": 100,
+      "location": "shop"
+    },
+    "response_length": 63,
+    "input_length": 18,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": true,
+      "overall_score": 0.75
+    }
+  },
+  {
+    "timestamp": "2025-06-09T13:18:22.730847",
+    "session_id": "_1749467883679",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Hi bestie pour me a beer and tell me where are we?",
+    "bot_response": "\u201cAh yes...",
+    "player_stats": {
+      "level": 10,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 10,
+    "input_length": 50,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-09T13:18:32.099921",
+    "session_id": "_1749467883679",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "So where are we?",
+    "bot_response": "You are Bartek Mug, A bearded, stocky innkeeper who\u2019s run the Tawny Lion for 20 years.",
+    "player_stats": {
+      "level": 10,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 86,
+    "input_length": 16,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-09T13:27:28.845624",
+    "session_id": "_1749468435913",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Tell me about TOmek",
+    "bot_response": "Tell me about TOmek.",
+    "player_stats": {
+      "level": 10,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 20,
+    "input_length": 19,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-09T14:37:29.743405",
+    "session_id": "_1749472643762",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "awdawdaw",
+    "bot_response": ". \u201cHis name waas Krisztian?\u201d asks Janko Pribina.",
+    "player_stats": {
+      "level": 10,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 48,
+    "input_length": 8,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-09T14:39:39.398488",
+    "session_id": "mysterious_stranger_1749472764294",
+    "location": "mine_entrance",
+    "character": "mysterious_stranger",
+    "user_input": "Tell me who are you?",
+    "bot_response": "...I am an enigmatic stranger...",
+    "player_stats": {
+      "level": 10,
+      "gold": 150,
+      "health": 100,
+      "location": "mine_entrance"
+    },
+    "response_length": 32,
+    "input_length": 20,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": true,
+      "overall_score": 0.75
+    }
+  },
+  {
+    "timestamp": "2025-06-09T14:47:37.515603",
+    "session_id": "mysterious_stranger_1749473248360",
+    "location": "mine_entrance",
+    "character": "mysterious_stranger",
+    "user_input": "Hi honey",
+    "bot_response": "It is good meeting new people...",
+    "player_stats": {
+      "level": 10,
+      "gold": 350,
+      "health": 100,
+      "location": "mine_entrance"
+    },
+    "response_length": 32,
+    "input_length": 8,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": true,
+      "overall_score": 0.75
+    }
+  },
+  {
+    "timestamp": "2025-06-09T14:54:44.366026",
+    "session_id": "merchant_1749473675350",
+    "location": "shop",
+    "character": "merchant",
+    "user_input": "Give me package",
+    "bot_response": "Yes sir yes my lordie do let him know if there is anything else we can help arrange.",
+    "player_stats": {
+      "level": 10,
+      "gold": 623,
+      "health": 93,
+      "location": "shop"
+    },
+    "response_length": 84,
+    "input_length": 15,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-09T15:25:09.119752",
+    "session_id": "_1749475499002",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Tell me about Bartek",
+    "bot_response": "Visitors look around nervously before settling down on one side table while drinking their pints.",
+    "player_stats": {
+      "level": 10,
+      "gold": 100,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 97,
+    "input_length": 20,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-09T15:26:41.687143",
+    "session_id": "mysterious_stranger_1749475587112",
+    "location": "mine_entrance",
+    "character": "mysterious_stranger",
+    "user_input": "Hi bestie",
+    "bot_response": "...and who might be looking for company?.....",
+    "player_stats": {
+      "level": 10,
+      "gold": 556,
+      "health": 100,
+      "location": "mine_entrance"
+    },
+    "response_length": 45,
+    "input_length": 9,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": true,
+      "overall_score": 0.75
+    }
+  },
+  {
+    "timestamp": "2025-06-09T15:27:42.823389",
+    "session_id": "merchant_1749475653458",
+    "location": "shop",
+    "character": "merchant",
+    "user_input": "Hi how are yu",
+    "bot_response": "\u201cYeah good evening there\u201d He stands up slowly then walks towards visitor who is curious if she could see inside their carriage which has been left outside waiting all this time before him while walking around stone hollow street corner.",
+    "player_stats": {
+      "level": 10,
+      "gold": 721,
+      "health": 100,
+      "location": "shop"
+    },
+    "response_length": 236,
+    "input_length": 13,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": true,
+      "appropriate_length": false,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-09T15:54:18.684734",
+    "session_id": "_1749477243830",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Tell me about missing Tomek",
+    "bot_response": "Tell me about missing Tomek.",
+    "player_stats": {
+      "level": 10,
+      "gold": 170,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 28,
+    "input_length": 27,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-09T15:54:33.441031",
+    "session_id": "_1749477243830",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "Tell me",
+    "bot_response": "You are Bartek Mug, A bearded, stocky innkeeper who\u2019s run the Tawny Lion for 20 years.",
+    "player_stats": {
+      "level": 10,
+      "gold": 170,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 86,
+    "input_length": 7,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-09T15:56:21.972296",
+    "session_id": "mysterious_stranger_1749477366976",
+    "location": "mine_entrance",
+    "character": "mysterious_stranger",
+    "user_input": "Hiii ",
+    "bot_response": "Well then stranger there is much going around this place but not enough people seem interested into what goes behind its doors so we will have our little talk under here before heading back out for another adventure...",
+    "player_stats": {
+      "level": 10,
+      "gold": 601,
+      "health": 100,
+      "location": "mine_entrance"
+    },
+    "response_length": 218,
+    "input_length": 5,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": false,
+      "has_punctuation": true,
+      "character_specific": true,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-09T15:56:41.106811",
+    "session_id": "merchant_1749477392065",
+    "location": "shop",
+    "character": "merchant",
+    "user_input": "Tell me where is the package",
+    "bot_response": "And then stumbles out into conversation while trying not too fall down on stage left.",
+    "player_stats": {
+      "level": 10,
+      "gold": 601,
+      "health": 100,
+      "location": "shop"
+    },
+    "response_length": 85,
+    "input_length": 28,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-09T15:56:52.281155",
+    "session_id": "merchant_1749477392065",
+    "location": "shop",
+    "character": "merchant",
+    "user_input": "Hi",
+    "bot_response": "Lately his eyes have an unsettling glow.",
+    "player_stats": {
+      "level": 10,
+      "gold": 601,
+      "health": 100,
+      "location": "shop"
+    },
+    "response_length": 40,
+    "input_length": 2,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-09T16:31:43.672409",
+    "session_id": "merchant_1749479484359",
+    "location": "shop",
+    "character": "merchant",
+    "user_input": "I heard you have a package for me",
+    "bot_response": "\u201cWe only carry goodies.\u201d He adds quickly without glancing away too much while speaking soft voice.",
+    "player_stats": {
+      "level": 10,
+      "gold": 285,
+      "health": 100,
+      "location": "shop"
+    },
+    "response_length": 98,
+    "input_length": 33,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-09T16:57:28.593141",
+    "session_id": "merchant_1749481028197",
+    "location": "shop",
+    "character": "merchant",
+    "user_input": "Hii do you have a package for me?",
+    "bot_response": "Yes sirrah.., How may we know when this comes by again my dear Sir.\" A friendly smile on their face while keeping business confidential.",
+    "player_stats": {
+      "level": 10,
+      "gold": 100,
+      "health": 100,
+      "location": "shop"
+    },
+    "response_length": 136,
+    "input_length": 33,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": true,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.75
+    }
+  },
+  {
+    "timestamp": "2025-06-09T16:58:04.985830",
+    "session_id": "_1749481065760",
+    "location": "tavern",
+    "character": "tavern_keeper",
+    "user_input": "I have a package for u",
+    "bot_response": "Hey stranger...",
+    "player_stats": {
+      "level": 10,
+      "gold": 165,
+      "health": 100,
+      "location": "tavern"
+    },
+    "response_length": 15,
+    "input_length": 22,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": false,
+      "overall_score": 0.5
+    }
+  },
+  {
+    "timestamp": "2025-06-09T20:46:27.661581",
+    "session_id": "mysterious_stranger_1749494763767",
+    "location": "mine_entrance",
+    "character": "mysterious_stranger",
+    "user_input": "Tell me what are you doing here",
+    "bot_response": "Shadowy beings come forth...",
+    "player_stats": {
+      "level": 10,
+      "gold": 601,
+      "health": 61,
+      "location": "mine_entrance"
+    },
+    "response_length": 28,
+    "input_length": 31,
+    "has_error": false,
+    "error_message": null,
+    "quality_metrics": {
+      "has_modern_words": false,
+      "appropriate_length": true,
+      "has_punctuation": true,
+      "character_specific": true,
+      "overall_score": 0.75
+    }
+  }
+]

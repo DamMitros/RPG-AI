@@ -58,8 +58,6 @@ class QuestProgress:
       'buy_materials': 'Purchase required materials',
       'craft_iron_sword': 'Craft an iron sword',
       'mine_ore': 'Mine some ore',
-      'explore_forest': 'Explore the forest',
-      'hunt_wolf': 'Hunt a wolf',
       'observe_your_surroundings': 'Observe your surroundings carefully',
       'observe_surroundings': 'Observe your surroundings carefully',
       'talk_to_townspeople': 'Talk to the local townspeople',
@@ -70,7 +68,7 @@ class QuestProgress:
       'talk_to_local': 'Talk to a local patron',
       'talk_innkeeper': 'Talk to the innkeeper',
       'talk_regular': 'Talk to a regular customer',
-     'explore_mine': 'Explore the mine',
+      'explore_mine': 'Explore the mine',
       'talk_stranger': 'Talk to a mysterious stranger',
       'help_stranger': 'Help a stranger in need',
       'investigate_rumors': 'Investigate local rumors',
@@ -80,6 +78,17 @@ class QuestProgress:
       'scout_location': 'Scout the location carefully',
       'investigate_disturbance': 'Investigate reported disturbances',
       'search_for_clues': 'Search for important clues',
-      'follow_leads': 'Follow promising leads'
+      'follow_leads': 'Follow promising leads',
+      # Forest actions
+      'explore_forest': 'Explore the forest',
+      'hunt_creatures': 'Hunt creatures in the forest',
+      'gather_materials': 'Gather materials from the forest',
+      'search_treasure': 'Search for treasure in the forest',
+      # Mine actions
+      'shallow_mining': 'Mine the shallow tunnels',
+      'deep_mining': 'Engage in deep mining',
+      'gem_hunting': 'Search for precious gems',
+      'abandoned_exploration': 'Explore the abandoned mine shaft',
+      'talk_mysterious_stranger': 'Talk to the mysterious stranger in the mine',
     }
     return descriptions.get(requirement, requirement.replace('_', ' ').title())

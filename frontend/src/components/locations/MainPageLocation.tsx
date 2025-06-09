@@ -186,7 +186,8 @@ export default function MainPageLocation() {
             </div>
           )}
 
-          {state.dialogHistory.length > 0 && (
+          {/* [debugging] */}
+          {/* {state.dialogHistory.length > 0 && (
             <div className="border-t-4 border-amber-700 pt-6">
               <h2 className="text-2xl font-bold mb-4 text-center text-yellow-300" style={{ fontFamily: "'Cinzel Decorative', serif", textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)' }}>
                 📜 Recent Notices
@@ -208,7 +209,7 @@ export default function MainPageLocation() {
                 ))}
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>

@@ -168,19 +168,8 @@ class QuestActions:
     if action_location == "any":
       return True
 
-    location_mapping = {
-      'mainPage': 'mainPage',
-      'tavern': 'tavern', 
-      'shop': 'shop',
-      'smithy': 'smithy',
-      'forest': 'forest',
-      'mine': 'mine_entrance',  
-      'mine_entrance': 'mine_entrance'
-    }
     
-    mapped_location = location_mapping.get(location, location)
-    
-    return action_location == mapped_location
+    return action_location == location
   
   def get_quest_actions_for_location(self, player, location):
     available_actions = []

@@ -12,7 +12,7 @@ type ShopMode = 'menu' | 'buy' | 'sell' | 'talk';
 
 const ShopLocation: React.FC = () => {
   const { state, dispatch } = useGame();
-  const { getQuestActionsForLocation } = useQuests();
+  const { getQuestActionsForLocation, performQuestAction } = useQuests();
   const [shopItems, setShopItems] = useState<InventoryItem[]>([]);
   const [playerInventory, setPlayerInventory] = useState<InventoryItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -147,6 +147,35 @@ const ShopLocation: React.FC = () => {
 
   const closeDialog = () => {
     setIsDialogOpen(false);
+  };
+
+  const handleQuestAction = async (action: QuestAction) => {
+    if (state.isLoading) return;
+
+    dispatch({ type: 'SET_LOADING', payload: true });
+
+    try {
+      const response = await performQuestAction(action.action, action.location || 'shop', action.quest_id);
+      
+      if (response.success && response.message) {
+        setShopMessage(response.message);
+
+        if (response.quest_completed || response.player) {
+          const updatedPlayer = response.player || await gameApi.getPlayer();
+          dispatch({ type: 'SET_PLAYER', payload: updatedPlayer });
+        }
+
+        setTimeout(async () => {
+          const newActions = await getQuestActionsForLocation('shop');
+          setQuestActions(newActions);
+        }, 1000);
+      }
+    } catch (error) {
+      console.error('Failed to perform quest action:', error);
+      setShopMessage('Failed to complete quest objective.');
+    } finally {
+      dispatch({ type: 'SET_LOADING', payload: false });
+    }
   };
 
   const resetToMenu = () => {
@@ -318,6 +347,25 @@ const ShopLocation: React.FC = () => {
         {shopMessage && (
           <div className="bg-gradient-to-r from-green-900/80 via-emerald-900/70 to-green-900/80 border-2 border-green-600 rounded-lg shadow-[0_0_15px_rgba(34,197,94,0.6)] backdrop-blur-sm p-6">
             <div className="text-green-300 font-medium text-center">{shopMessage}</div>
+          </div>
+        )}
+
+        {questActions.length > 0 && (
+          <div className="bg-gradient-to-r from-blue-900/80 via-purple-900/70 to-blue-900/80 border-2 border-blue-600 rounded-lg shadow-[0_0_15px_rgba(59,130,246,0.6)] backdrop-blur-sm p-6">
+            <h3 className="text-xl font-bold text-blue-300 mb-4 text-center">Available Quest Objectives</h3>
+            <div className="space-y-3">
+              {questActions.map((action, index) => (
+                <button
+                  key={`quest-action-${action.quest_id}-${index}`}
+                  onClick={() => handleQuestAction(action)}
+                  disabled={state.isLoading}
+                  className="w-full text-left p-4 bg-blue-800/60 hover:bg-blue-700/80 border border-blue-600 rounded-lg text-blue-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <div className="font-semibold text-blue-200">{action.description}</div>
+                  <div className="text-blue-300 text-sm mt-1">Quest: {action.quest_title}</div>
+                </button>
+              ))}
+            </div>
           </div>
         )}
         {renderCurrentMode()}

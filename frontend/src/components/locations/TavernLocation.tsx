@@ -100,15 +100,16 @@ const TavernLocation: React.FC = () => {
       }
 
       try {
-        const questResponse = await performQuestAction(actionId, 'tavern');
-        
-        if (questResponse.success && questResponse.message) {
-          const questMessage: DialogMessage = {
-            speaker: 'Quest Progress',
-            text: questResponse.message,
-          };
-          setDialogMessages(prev => [...prev, questMessage]);
-        }
+        await performQuestAction(actionId, 'tavern');
+
+        // const questResponse = await performQuestAction(actionId, 'tavern');
+        // if (questResponse.success && questResponse.message) {
+        //   const questMessage: DialogMessage = {
+        //     speaker: 'Quest Progress',
+        //     text: questResponse.message,
+        //   };
+        //   setDialogMessages(prev => [...prev, questMessage]);
+        // }
       } catch {
         console.log('No quest action triggered for:', actionId);
       }
@@ -117,6 +118,45 @@ const TavernLocation: React.FC = () => {
       const errorMessage: DialogMessage = {
         speaker: 'System',
         text: 'Something went wrong. Please try again.',
+      };
+      setDialogMessages([errorMessage]);
+      setIsDialogOpen(true);
+    } finally {
+      dispatch({ type: 'SET_LOADING', payload: false });
+    }
+  };
+
+  const handleQuestAction = async (action: QuestAction) => {
+    if (state.isLoading) return;
+
+    dispatch({ type: 'SET_LOADING', payload: true });
+
+    try {
+      const response = await performQuestAction(action.action, action.location || 'tavern', action.quest_id);
+      
+      if (response.success && response.message) {
+        const questMessage: DialogMessage = {
+          speaker: 'Quest Progress',
+          text: response.message,
+        };
+        setDialogMessages([questMessage]);
+        setIsDialogOpen(true);
+
+        if (response.quest_completed || response.player) {
+          const updatedPlayer = response.player || await gameApi.getPlayer();
+          dispatch({ type: 'SET_PLAYER', payload: updatedPlayer });
+        }
+
+        setTimeout(async () => {
+          const actions = await getQuestActionsForLocation('tavern');
+          setQuestActions(actions);
+        }, 1000);
+      }
+    } catch (error) {
+      console.error('Failed to perform quest action:', error);
+      const errorMessage: DialogMessage = {
+        speaker: 'System',
+        text: 'Failed to complete quest objective.',
       };
       setDialogMessages([errorMessage]);
       setIsDialogOpen(true);
@@ -151,6 +191,25 @@ const TavernLocation: React.FC = () => {
           over tankards of ale.
         </p>
       </div>
+
+      {questActions.length > 0 && (
+        <div className="bg-gradient-to-br from-blue-900/80 via-blue-800/70 to-blue-900/80 border-2 border-blue-600 rounded-lg shadow-[0_0_15px_rgba(59,130,246,0.6)] backdrop-blur-sm p-6">
+          <h3 className="text-xl font-bold text-blue-300 mb-4 text-center tracking-wider drop-shadow">Available Quest Objectives</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {questActions.map((action, index) => (
+              <button
+                key={`quest-${action.quest_id}-${index}`}
+                onClick={() => handleQuestAction(action)}
+                disabled={state.isLoading}
+                className="p-4 bg-blue-800/60 hover:bg-blue-700/80 border border-blue-600 rounded-lg text-left transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <div className="text-blue-200 font-semibold text-sm mb-2">{action.description}</div>
+                <div className="text-blue-300 text-xs">Quest: {action.quest_title}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {tavernActions.map((action) => {

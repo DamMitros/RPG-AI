@@ -210,37 +210,48 @@ const SmithyLocation: React.FC = () => {
       </div>
 
       {!selectedService && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {smithyServices.map((service) => {
-            const IconComponent = service.icon;
-            const canAfford = service.baseCost === 0 || state.player.gold >= service.baseCost;
-            
-            return (
-              <button key={service.id} onClick={() => handleServiceSelect(service.id)}
-                disabled={state.isLoading || !canAfford} className={`p-6 rounded-lg border-2 transition-all duration-300 ${canAfford ? 'bg-gradient-to-br from-red-900/80 via-orange-900/70 to-red-900/80 border-red-600 hover:border-orange-500 hover:shadow-[0_0_20px_rgba(249,115,22,0.8)] text-orange-200' : 'bg-gradient-to-br from-gray-800/60 via-gray-700/50 to-gray-800/60 border-gray-600 opacity-50 cursor-not-allowed text-gray-400'}`}>
-                <div className="flex flex-col items-center text-center space-y-3">
-                  <IconComponent className={`w-10 h-10 drop-shadow ${canAfford ? 'text-orange-400' : 'text-gray-500'}`} />
-                  <h3 className={`font-bold text-lg tracking-wide ${canAfford ? 'text-orange-200' : 'text-gray-400'}`}>
-                    {service.name}
-                  </h3>
-                  <p className={`text-sm leading-relaxed ${canAfford ? 'text-orange-300' : 'text-gray-500'}`}>
-                    {service.description}
-                  </p>
-                  {service.baseCost > 0 && (
-                    <div className="flex items-center space-x-2">
-                      <Coins className="w-5 h-5 text-yellow-400 drop-shadow" />
-                      <span className="text-yellow-400 font-bold">from {service.baseCost}</span>
-                    </div>
-                  )}
-                  {service.baseCost === 0 && (
-                    <div className="flex items-center space-x-2">
-                      <span className="text-green-400 font-bold">Free</span>
-                    </div>
-                  )}
-                </div>
-              </button>
-            );
-          })}
+        <div className="space-y-6">
+          <button onClick={() => handleServiceSelect('talk_blacksmith')} disabled={state.isLoading} className="w-full p-4 bg-gradient-to-r from-red-900/80 via-orange-900/70 to-red-900/80 border-2 border-red-600 hover:border-orange-500 hover:shadow-[0_0_20px_rgba(249,115,22,0.8)] rounded-lg transition-all duration-300">
+            <div className="flex items-center justify-center space-x-3">
+              <MessageCircle className="w-8 h-8 text-orange-400 drop-shadow" />
+              <h3 className="font-bold text-xl tracking-wide text-orange-200">Talk to Blacksmith</h3>
+              <MessageCircle className="w-8 h-8 text-orange-400 drop-shadow" />
+            </div>
+            <p className="text-orange-300 text-sm mt-2">Speak with Anja, the village blacksmith</p>
+          </button>
+
+          <div className="grid grid-cols-2 gap-6">
+            {smithyServices.filter(service => service.id !== 'talk_blacksmith').map((service) => {
+              const IconComponent = service.icon;
+              const canAfford = service.baseCost === 0 || state.player.gold >= service.baseCost;
+              
+              return (
+                <button key={service.id} onClick={() => handleServiceSelect(service.id)}
+                  disabled={state.isLoading || !canAfford} className={`p-6 rounded-lg border-2 transition-all duration-300 ${canAfford ? 'bg-gradient-to-br from-red-900/80 via-orange-900/70 to-red-900/80 border-red-600 hover:border-orange-500 hover:shadow-[0_0_20px_rgba(249,115,22,0.8)] text-orange-200' : 'bg-gradient-to-br from-gray-800/60 via-gray-700/50 to-gray-800/60 border-gray-600 opacity-50 cursor-not-allowed text-gray-400'}`}>
+                  <div className="flex flex-col items-center text-center space-y-3">
+                    <IconComponent className={`w-10 h-10 drop-shadow ${canAfford ? 'text-orange-400' : 'text-gray-500'}`} />
+                    <h3 className={`font-bold text-lg tracking-wide ${canAfford ? 'text-orange-200' : 'text-gray-400'}`}>
+                      {service.name}
+                    </h3>
+                    <p className={`text-sm leading-relaxed ${canAfford ? 'text-orange-300' : 'text-gray-500'}`}>
+                      {service.description}
+                    </p>
+                    {service.baseCost > 0 && (
+                      <div className="flex items-center space-x-2">
+                        <Coins className="w-5 h-5 text-yellow-400 drop-shadow" />
+                        <span className="text-yellow-400 font-bold">from {service.baseCost}</span>
+                      </div>
+                    )}
+                    {service.baseCost === 0 && (
+                      <div className="flex items-center space-x-2">
+                        <span className="text-green-400 font-bold">Free</span>
+                      </div>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
       )}
 

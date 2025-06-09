@@ -206,9 +206,6 @@ Player: {user_input}
         return self.conversation_tracker.generate_quality_report(session_id)
     
     def process_message(self, message, session_id="default", context=None):
-        """
-        Process message for API compatibility
-        """
         character = context.get('character', 'tavern_keeper') if context else 'tavern_keeper'
         player_stats = context.get('player_stats') if context else None
         

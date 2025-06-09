@@ -1,6 +1,25 @@
-import time
+import time, yaml, os
 
 class QuestGeneration:
+  def __init__(self):
+    self.quest_templates = {}
+    self._load_quest_templates()
+    
+  def _load_quest_templates(self):
+    config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'quest_templates.yaml')
+    
+    try:
+      with open(config_path, 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
+        
+      if 'quest_templates' in config:
+        self.quest_templates = config['quest_templates']
+        
+    except FileNotFoundError:
+      print(f"Warning: Quest templates configuration file not found at {config_path}")
+    except yaml.YAMLError as e:
+      print(f"Error parsing quest templates configuration: {e}")
+
   def _pre_generate_quests(self):
     print("Pre-generating initial quest pool...")
     self.quest_generator.clean_old_quests()
@@ -17,46 +36,22 @@ class QuestGeneration:
     print(f"Pre-generated {len(self.generated_quests_cache)} quests")
     
   def _generate_quick_template_quests(self):
-    templates = [
-      {
-        "id": f"template_investigation_{int(time.time())}",
-        "title": "INVESTIGATE VILLAGE MYSTERIES",
-        "description": "Strange occurrences have been reported around the village. Investigate and report your findings.",
-        "contact": "Village Elder",
-        "reward_gold": 30,
-        "reward_exp": 60,
-        "type": "investigation",
-        "difficulty": "easy",
-        "requirements": ["level >= 1"],
-        "completion_requirements": ["observe_your_surroundings", "talk_to_townspeople"],
-        "completed_by": [],
-        "generated": True,
-        "generated_at": time.time(),
-        "steps": [
-          {"action": "observe_your_surroundings", "location": "mainPage", "description": "Look around for anything unusual", "completed": False},
-          {"action": "talk_to_townspeople", "location": "mainPage", "description": "Ask locals about recent events", "completed": False}
-        ]
-      },
-      {
-        "id": f"template_delivery_{int(time.time())}_2",
-        "title": "URGENT PACKAGE DELIVERY",
-        "description": "A package needs to be delivered to the tavern keeper. Handle with care.",
-        "contact": "Erik the Merchant",
-        "reward_gold": 25,
-        "reward_exp": 50,
-        "type": "delivery",
-        "difficulty": "easy",
-        "requirements": ["level >= 1"],
-        "completion_requirements": ["talk_erik", "talk_innkeeper"],
-        "completed_by": [],
-        "generated": True,
-        "generated_at": time.time(),
-        "steps": [
-          {"action": "talk_erik", "location": "shop", "description": "Collect the package from Erik", "completed": False},
-          {"action": "talk_innkeeper", "location": "tavern", "description": "Deliver to the innkeeper", "completed": False}
-        ]
-      }
-    ]
+    templates = []
+    current_time = time.time()
+    
+    for template_id, template_data in self.quest_templates.items():
+      quest = template_data.copy()
+      quest["id"] = f"template_{template_id}_{int(current_time)}"
+      quest["completed_by"] = []
+      quest["generated"] = True
+      quest["generated_at"] = current_time
+      
+      if "completion_requirements" not in quest and "steps" in quest:
+        quest["completion_requirements"] = [step["action"] for step in quest["steps"]]
+      
+      templates.append(quest)
+      current_time += 1 
+    
     return templates
     
   def refresh_generated_quests(self, player_level=1, force=False):

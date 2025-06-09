@@ -5,16 +5,18 @@ import { useGame } from '@/contexts/GameContext';
 import { gameApi } from '@/services/gameApi';
 import { Trees, Search, Swords, Gem, Package, AlertTriangle } from 'lucide-react';
 import { DialogMessage, Player } from '@/types/game';
+import { useQuests } from '@/hooks/useQuests';
 
 const ForestLocation: React.FC = () => {
   const { state, dispatch } = useGame();
+  const { performQuestAction } = useQuests();
   const [selectedAction, setSelectedAction] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogMessages, setDialogMessages] = useState<DialogMessage[]>([]);
-
   const forestActions = [
     {
       id: 'explore',
+      id_quest: 'explore_forest',
       name: 'Explore Deeper',
       icon: Search,
       description: 'Search for resources and hidden treasures',
@@ -22,6 +24,7 @@ const ForestLocation: React.FC = () => {
     },
     {
       id: 'hunt',
+      id_quest: 'hunt_creatures',
       name: 'Hunt Creatures',
       icon: Swords,
       description: 'Battle forest creatures for experience and loot',
@@ -29,6 +32,7 @@ const ForestLocation: React.FC = () => {
     },
     {
       id: 'gather',
+      id_quest: 'gather_materials',
       name: 'Gather Materials',
       icon: Package,
       description: 'Collect herbs, wood, and other crafting materials',
@@ -36,6 +40,7 @@ const ForestLocation: React.FC = () => {
     },
     {
       id: 'search_treasure',
+      id_quest: 'search_treasure',
       name: 'Search for Treasure',
       icon: Gem,
       description: 'Look for hidden chests and valuable items',
@@ -43,7 +48,24 @@ const ForestLocation: React.FC = () => {
     },
   ];
 
-  const handleForestAction = async (actionId: string) => {
+  const handleAction = async (action: string) => {
+    try {
+      const response = await performQuestAction(action, 'forest');
+      if (response.message && !response.message.includes('No quest progress')) {
+        dispatch({
+          type: 'ADD_DIALOG_MESSAGE',
+          payload: {
+            speaker: 'Quest Progress',
+            text: response.message,
+          },
+        });
+      }
+    } catch (error) {
+      console.error('Failed to perform action:', error);
+    }
+  };
+
+  const handleForestAction = async (actionId: string, questId: string) => {
     dispatch({ type: 'SET_LOADING', payload: true });
     setSelectedAction(actionId);
 
@@ -55,7 +77,7 @@ const ForestLocation: React.FC = () => {
       };
       setDialogMessages([message]);
       setIsDialogOpen(true);
-
+      handleAction(questId);
       if (response.data?.player) {
         dispatch({ type: 'SET_PLAYER', payload: response.data.player as Player });
       } else {
@@ -146,7 +168,7 @@ const ForestLocation: React.FC = () => {
           const isHealthTooLow = action.danger === 'high' && state.player.health < state.player.maxHealth * 0.5;
           
           return (
-            <button key={action.id} onClick={() => handleForestAction(action.id)}
+            <button key={action.id} onClick={() => handleForestAction(action.id, action.id_quest)}
               disabled={state.isLoading || selectedAction !== null || isHealthTooLow}
               className={`p-6 rounded-lg border-2 transition-all duration-300 ${isHealthTooLow ? 'bg-gradient-to-br from-gray-800/60 via-gray-700/50 to-gray-800/60 border-gray-600 opacity-50 cursor-not-allowed text-gray-400' : `${getDangerBorder(action.danger)} bg-gradient-to-br from-green-900/80 via-emerald-900/70 to-green-900/80 hover:shadow-[0_0_20px_rgba(16,185,129,0.7)] text-green-200`}`}>
               <div className="flex flex-col items-center text-center space-y-3">

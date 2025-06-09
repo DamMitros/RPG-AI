@@ -9,6 +9,8 @@ from game.quest_actions import QuestActions
 
 class QuestSystem(QuestManagement, QuestGeneration, QuestCompletion, QuestProgress, QuestActions):
   def __init__(self, dialog_engine=None):
+    QuestGeneration.__init__(self)
+    
     self.quest_generator = QuestGenerator(dialog_engine)
     self.generated_quests_cache = {}
     self.last_quest_generation = 0
@@ -26,58 +28,32 @@ class QuestSystem(QuestManagement, QuestGeneration, QuestCompletion, QuestProgre
     return {
       # Tavern actions
       "talk_innkeeper": "tavern",
-      "rest": "tavern",
-      "talk_to_local": "tavern",
       "talk_regular": "tavern",
-      "listen_to_gossip": "tavern",
-      "eavesdrop": "tavern",
-      "ask_about_legends": "tavern",
-      
+      "rest": "tavern",
+
       # Shop actions  
-      "talk_merchant": "shop",  
-      "talk_erik": "shop",  
-      "buy_materials": "shop",
-      "buy_item": "shop",
-      "sell_item": "shop",
-      "browse_wares": "shop",
-      "investigate_items": "shop",
+      "buy": "shop",  
+      "sell": "shop",  
+      "talk": "shop",
       
       # Main Page actions
       "observe_your_surroundings": "mainPage",
-      "observe_surroundings": "mainPage",
       "talk_to_townspeople": "mainPage",
-      "question_locals": "mainPage",
-      "follow_suspicious_trail": "mainPage",
+      "follow_a_suspicious_trail": "mainPage",
       "examine_nearby_building": "mainPage",
-      "examine_buildings": "mainPage",
-      "clear_bandits": "mainPage",
-      "gather_herbs": "mainPage",
-      "explore_village": "mainPage",
-      "investigate_rumors": "mainPage",
-      "patrol_area": "mainPage",
-      "scout_location": "mainPage",
-      "investigate_disturbance": "mainPage",
-      "search_for_clues": "mainPage",
-      "help_stranger": "mainPage",
       
       # Forest actions
-      "explore_deeper": "forest",
+      "explore_forest": "forest",
       "hunt_creatures": "forest",
       "gather_materials": "forest",
-      "hunt": "forest",
-      "explore": "forest",
-      "gather": "forest",
-      "search_for_treasure": "forest",
-      "check_traps": "forest",
-      "track_animals": "forest",
-      "study_tracks": "forest",
+      "search_treasure": "forest",
       
       # Mine actions
-      "mine_ore": "mine_entrance",
-      "shallow_mining": "mine_entrance",
-      "deep_mining": "mine_entrance",
-      "gem_hunting": "mine_entrance",
-      "explore_mine": "mine_entrance",
+      "shallow_mining": "mine", 
+      "deep_mining": "mine",
+      "gem_hunting": "mine", 
+      "abandoned_exploration": "mine", 
+      "talk_mysterious_stranger": "mine", 
       
       # Smithy actions
       "craft_equipment": "smithy",
@@ -91,6 +67,5 @@ class QuestSystem(QuestManagement, QuestGeneration, QuestCompletion, QuestProgre
       "talk_stranger": "any",
       "help_stranger": "any", 
       "investigate_rumors": "any",
-      "question_locals": "mainPage",
       "seek_information": "any",
     }
