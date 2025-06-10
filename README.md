@@ -58,6 +58,7 @@ python3 app.py
 2. **Frontend**
 ```bash
 cd frontend
+npm install
 npm run dev
 ```
 
